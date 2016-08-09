@@ -31,9 +31,7 @@
             <li><a href="{{Url('admin/gallery')}}">Gallery Canvas</a></li>
           </ul>
         </div>
-	   <div>
-
-       </div>
+	
 
         <div class="col-sm-5">
 			<canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
@@ -58,6 +56,8 @@
                 <div id="text" class="tab-pane fade in active">
                     <br>
                     <p>Add and properties text.</p>
+                    <label for="text-input">Input text</label>
+                    <textarea class="form-control" rows="4" id="text-input"></textarea><br>
                     
                       <form role="form">
                         <div class="form-group">
@@ -70,49 +70,6 @@
                         </div>
                       </form>
 
-                      <form role="form">
-                        <div class="form-group">
-                          <label for="align_text">Select text position:</label>
-                          <select class="form-control" id="align_text">
-                            <option>left</option>
-                            <option>center</option>
-                            <option>right</option>
-                            <option>justify</option>
-                          </select>
-                        </div>
-                      </form>
-
-                      <form role="form">
-                        <div class="form-group">
-                          <label for="style_text">Select text style:</label>
-                          <select class="form-control" id="style_text">
-                            <option>normal</option>
-                            <option>italic</option>
-                          </select>
-                        </div>
-                      </form>
-
-                      <form role="form">
-                        <div class="form-group">
-                          <label for="weight_text">Select text weight:</label>
-                          <select class="form-control" id="weight_text">
-                            <option>normal</option>
-                            <option>bold</option>
-                          </select>
-                        </div>
-                      </form>
-
-                      <form role="form">
-                        <div class="form-group">
-                          <label for="decoration_text">Select text decoration:</label>
-                          <select class="form-control" id="decoration_text">
-                            <option>normal</option>
-                            <option>underline</option>
-                            <option>line-through</option>
-                            <option>overline</option>
-                          </select>
-                        </div>
-                      </form>
                     <div class="input-group colorpicker-component">
                         <label for="color_js_text">Color text</label>
                         <input id="color_js_text" type="text" value="#57b1ba" class="form-control jscolor jscolor_text" />
@@ -213,7 +170,9 @@
                     <br>
                     <p>Save this canvas to data JSON?</p>
                     <label for="save_json">Input save name</label>
-                    <input id="save_json" type="text" value="canvas 1" class="form-control" /><br>
+                    @foreach($cvn as $iCvn)
+                    <input id="save_json" type="text" value="{!!$iCvn->name!!}" class="form-control" /><br>
+                    @endforeach
                     <button type="button" class="btn btn-primary btn-sm btn_canvas_save">Save canvas</button>
                 </div>
 
@@ -223,6 +182,12 @@
 
       </div>
     </div>
+
+<script type="text/javascript">
+    @foreach($cvn as $iCvn)
+    var jsnLoad = '{!!$iCvn->json_data!!}';
+    @endforeach
+</script>
 
 <script>
 
@@ -243,11 +208,14 @@ var canvas = new fabric.Canvas('c');
 canvas.setHeight(500);
 canvas.setWidth(600);
 
+    canvas.loadFromJSON(jsnLoad, canvas.renderAll.bind(canvas), function(o, object) {
+        fabric.log(o, object);
+    });
 
 //click btn add text
 $('.btn_text_add').click(function(){
 
-    intext = 'This is text!';
+    intext = $('#text-input').val();
     var family = $('#family_text option:selected').text();
     var textcolor = $('#color_js_text').val();
 
@@ -360,14 +328,12 @@ canvas.add(circle);
 //save json fabricjs canvas
 $('.btn_canvas_save').click(function(){
 
-    var jsn = JSON.stringify(canvas);
-
-    $.post('/admin', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'jsn' : jsn}, function(data){
-        if(data == 1){
-            alert('Save successfully!');
-        }
+    $.post('/admin/regedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>}, function(data){
+        //alert(data);
     });
 
+    var jsn = JSON.stringify(canvas);
+    alert(jsn);
 });
 
 
@@ -384,7 +350,7 @@ var jsn = $('#json-input').val();
 //export fabricjs canvas
 $('.btn_canvas_export').click(function(){
 
-    window.open(canvas.toDataURL('png'));
+    alert(canvas.toDataURL('png'));
 });
 
 //=========================image load===============
@@ -427,78 +393,8 @@ $('.jscolor_text').change(function(){
     incolor = $(this).val();
     var Textobject = canvas.getActiveObject();
 
-    alert(Textobject.get('type'));
-
-    if(Textobject.get('type') == 'i-text'){
+    if(Textobject.get('type') == 'text'){
         Textobject.setColor('#'+incolor);
-        canvas.renderAll();   
-    }
-
-});
-
-//js text family
-$('#family_text').change(function(){
-
-    var Textobject = canvas.getActiveObject();
-
-    if(Textobject.get('type') == 'i-text'){
-
-        Textobject.fontFamily = $('#family_text option:selected').text();
-        canvas.renderAll();   
-    }
-
-});
-
-//js text style
-$('#style_text').change(function(){
-
-    var Textobject = canvas.getActiveObject();
-
-    if(Textobject.get('type') == 'i-text'){
-
-        Textobject.fontWeight = $('#style_text option:selected').text();
-
-        canvas.renderAll();   
-    }
-
-});
-
-//js text weight
-$('#weight_text').change(function(){
-
-    var Textobject = canvas.getActiveObject();
-
-    if(Textobject.get('type') == 'i-text'){
-
-        Textobject.fontWeight = $('#weight_text option:selected').text();
-
-        canvas.renderAll();   
-    }
-
-});
-
-//js text decoration
-$('#decoration_text').change(function(){
-
-    var Textobject = canvas.getActiveObject();
-
-    if(Textobject.get('type') == 'i-text'){
-
-        Textobject.textDecoration = $('#decoration_text option:selected').text();
-
-
-        canvas.renderAll();   
-    }
-
-});
-
-$('#align_text').change(function(){
-
-    var Textobject = canvas.getActiveObject();
-
-    if(Textobject.get('type') == 'i-text'){
-
-        Textobject.set({textAlign : $('#align_text option:selected').text()});
         canvas.renderAll();   
     }
 

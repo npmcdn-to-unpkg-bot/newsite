@@ -11,4 +11,11 @@
 |
 */
 
-Route::get('/admin', ['as' => 'admin_create', 'uses' => 'Admin\AdminCVS@create']);
+Route::get('/admin', ['as' => 'admin_create_get', 'uses' => 'Admin\AdminCNV@create']);
+Route::post('/admin', ['as' => 'admin_create_post', 'uses' => 'Admin\AdminCNV@storage']);
+
+Route::get('/admin/gedit/{id}', ['as' => 'admin_regedit_get', 'uses' => 'Admin\AdminCNV@regedit']);
+Route::post('/admin/gedit', ['as' => 'admin_regedit_post', 'uses' => 'Admin\AdminCNV@update']);
+
+Route::get('/admin/gallery', ['as' => 'admin_galery_post', 'uses' => 'Admin\AdminCNV@view']);
+
