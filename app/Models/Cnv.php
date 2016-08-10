@@ -13,7 +13,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllCnv(){
 
-		return $this->paginate(4);
+		return $this->orderBy('id', 'desc')->paginate(4);
 	}
  
  	//=====================================
@@ -30,4 +30,19 @@ class Cnv extends Model{
 	public function addCnv($data){
 		return $this->insert(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv']]);
 	}
+
+ 	//=====================================
+	//method update canvas object JSON
+	//=====================================
+	public function upCnv($data){
+		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv']]);
+	}
+
+ 	//=====================================
+	//method delete canvas object JSON
+	//=====================================
+	public function delCnv($id){
+		$this->where('id', $id)->delete();
+	}
+
 }

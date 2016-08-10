@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAddCanvasTable extends Migration
+class CreateCanvasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,10 @@ class CreateAddCanvasTable extends Migration
      */
     public function up()
     {
-        Schema::create('add_canvas', function (Blueprint $table) {
+        Schema::create('cnv', function (Blueprint $table) {
             $table->increments('id');
+            $table->longText('json_data');
+            $table->string('name', 40);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ class CreateAddCanvasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('add_canvas');
+        Schema::drop('cnv');
     }
 }

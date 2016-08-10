@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Cnv;
 
+use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -16,7 +17,12 @@ class AdminCNV extends Controller{
     //method create cvs
     //===========================
     protected function create(){
-        return view('admin.create');
+
+        if (Auth::check()){
+
+            return view('admin.create');
+        }
+
     }
 
     //===========================
@@ -35,9 +41,12 @@ class AdminCNV extends Controller{
     //===========================
     protected function view(Cnv $cnvModel){
 
-        $allCnv = $cnvModel->getAllCnv();
+        if (Auth::check()){
 
-        return view('admin.view')->withCvn($allCnv);
+            $allCnv = $cnvModel->getAllCnv();
+
+            return view('admin.view')->withCvn($allCnv);
+        }
     }
 
     //===========================
@@ -45,8 +54,33 @@ class AdminCNV extends Controller{
     //===========================
     protected function regedit(Cnv $cnvModel, $id){
 
-        $oneCnv = $cnvModel->getOneCnv($id);
+        if (Auth::check()){
 
-        return view('admin.update')->withCvn($oneCnv);
+            $oneCnv = $cnvModel->getOneCnv($id);
+
+            return view('admin.update')->withCvn($oneCnv);
+        }
     }
+
+    //===========================
+    //method update cvs
+    //===========================
+    protected function update(Cnv $cnvModel, Request $request){
+
+        $data['id_cnv'] = $request->input('id');
+        $data['jsn_cnv'] = $request->input('jsn');
+        $data['name_cnv'] = $request->input('name');
+
+        echo $cnvModel->upCnv($data);
+    }
+
+    //===========================
+    //method delete cvs
+    //===========================
+    protected function delete(Cnv $cnvModel, $id){
+
+        $cnvModel->delCnv($id);
+        return redirect()->back();
+    }
+
 }

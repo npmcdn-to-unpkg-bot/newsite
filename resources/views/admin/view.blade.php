@@ -1,48 +1,16 @@
-<html>
-<head>
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="{{ URL::asset('js/fabric.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('js/jscolor.js') }}"></script>
-  
+@extends('admin.layouts.main')
+    
 
- <body>
-
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Admin Panel</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">LogOut</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-		<BR><BR><BR><BR>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar" style="position:fixed;">
-          <ul class="nav nav-sidebar">
-            <li><a href="{{Url('admin')}}">Create Canvas</a></li>
-            <li><a href="{{Url('admin/gallery')}}">Gallery Canvas</a></li>
-          </ul>
-        </div>
-
-
-
-        <div class="container">
-          <h2>View created canvases</h2>
-          <p>This canvas is static!</p>            
-          <table class="table table-hover">
+@section('content')
+    <div class="container">
+        <h2>View created canvases</h2>
+        <p>This canvas is static!</p>            
+        <table class="table table-hover">
             <thead>
               <tr>
                 <th>name canvas</th>
                 <th>prewiev canvas</th>
-                <th></th>
+                <th>Options</th>
               </tr>
             </thead>
             <tbody>
@@ -91,16 +59,16 @@
 
                     </script>
                 </td>
-                <td><a href="{{Url('admin/gedit/'.$iCvn->id)}}">Regedit</a></td>
-                <td><a href="{{Url('admin/delete/'.$iCvn->id)}}">Delete</a></td>
-              </tr>
+                <td>
+                <a href="{{Url('admin/gedit/'.$iCvn->id)}}">Regedit</a>
+                <br>
+                <a href="{{Url('admin/delete/'.$iCvn->id)}}">Delete</a>
+                </td>
+                
+            </tr>
             @endforeach
             </tbody>
-          </table>
-          <div>{!! $cvn->render() !!}</div>
-        </div>
-
-      </div>
+        </table>
+        <div>{!! $cvn->render() !!}</div>
     </div>
-</body>
-</html>
+@stop
