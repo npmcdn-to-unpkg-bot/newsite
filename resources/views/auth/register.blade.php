@@ -1,31 +1,23 @@
 @extends('admin.layouts.main')
 
 @section('content')
-<form method="POST" action="/auth/register">
-  {!! csrf_field() !!}
 
-  <div>
-    Name
-    <input type="text" name="name" value="{{ old('name') }}">
-  </div>
+<div class="col-sm-2">
+  <form method="POST" action="/auth/register">
+    {!! csrf_field() !!}
 
-  <div>
-    Email
-    <input type="email" name="email" value="{{ old('email') }}">
-  </div>
+    <label for="name">Name</label>
+    	<input type="text" class="form-control" class="form-control" name="name" value="{{ old('name') }}"><br>
 
-  <div>
-    Password
-        <input type="password" name="password">
-  </div>
+    <label for="email">Email</label>
+    	<input type="email" class="form-control" name="email" value="{{ old('email') }}"><br>
 
-  <div>
-    Confirm Password
-    <input type="password" name="password_confirmation">
-  </div>
+    <label for="password">Password</label>
+    	<input type="password" class="form-control" name="password"><br>
 
-  <div>
-    <button type="submit">Register</button>
-  </div>
-</form>
+    <label for="password_confirmation">Confirm password</label>
+     	<input type="password" class="form-control" name="password_confirmation"><br>
+	<button type="submit" class="btn btn-primary">Register</button>
+	</form>
+</div>
 @endsection

@@ -6,7 +6,7 @@
 
 
 <div class="container-fluid bg-3 text-center">
-<h3>View My Canvas</h3><br>
+<h3>View All Canvas</h3><br>
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-4">
@@ -51,13 +51,10 @@
                         canvas.renderAll();
 
                     </script><br><br>
-<form action="{{Url('admin/gedit/'.$iCvn->id)}}" method="get" style="display: inline;">
-    <button type="submit" class="btn btn-warning">Gedit</button>
-</form>
-
-<form action="{{Url('admin/delete/'.$iCvn->id)}}" method="get" style="display: inline;">
-    <button type="submit" class="btn  btn-danger">Delete</button>
-</form>
+    <form action="{{Url('admin/add/'.$iCvn->id)}}" method="get">
+    <br>
+        <button type="submi" class="btn btn-success">add to my canvases</button>
+    </form>
 <br>
 <br>
 <br>

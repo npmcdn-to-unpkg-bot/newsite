@@ -164,7 +164,7 @@ document.getElementById('imgLoader').onchange = function handleImage(e) {
             image.set({
                 left: 250,
                 top: 250,
-                angle: 20,
+                angle: 0,
                 padding: 10,
                 cornersize: 10,
                 width: imagewidth,

@@ -23,10 +23,9 @@ canvas.setWidth(600);
 $('.btn_text_add').click(function(){
 
     intext = 'This is text!';
+
     var family = $('#family_text option:selected').text();
     var textcolor = $('#color_js_text').val();
-
-    family
 
     textObj = new fabric.IText(intext, { left: 0, top: 0 , fill: '#'+textcolor, fontFamily: family});
 
@@ -100,6 +99,7 @@ var circlecolor = $('#color_js_circle').val();
 
 // create a rectangle object
 var circle = new fabric.Circle({
+
   radius: circleradius, fill: '#'+circlecolor, left: 100, top: 100
 });
 
@@ -113,9 +113,11 @@ $('.btn_canvas_save').click(function(){
     var jsn = JSON.stringify(canvas);
 
     $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'jsn' : jsn}, function(data){
+
         if(data == 1){
+
             alert('Save successfully!');
-            document.location = 'http://'+document.domain+'/admin/gallery';
+            document.location = 'http://'+document.domain+'/admin/mycnv';
         }
     });
 
@@ -128,6 +130,7 @@ $('.btn_canvas_load').click(function(){
 var jsn = $('#json-input').val();
 
     canvas.loadFromJSON(jsn, canvas.renderAll.bind(canvas), function(o, object) {
+
         fabric.log(o, object);
     });
 });
@@ -145,7 +148,9 @@ document.getElementById('imgLoader').onchange = function handleImage(e) {
     var imageheight = parseInt($('#image_height').val());
 
     var reader = new FileReader();
+
     reader.onload = function (event) { console.log('load img');
+
         var imgObj = new Image();
         imgObj.src = event.target.result;
         imgObj.onload = function () {
@@ -155,7 +160,7 @@ document.getElementById('imgLoader').onchange = function handleImage(e) {
             image.set({
                 left: 250,
                 top: 250,
-                angle: 20,
+                angle: 0,
                 padding: 10,
                 cornersize: 10,
                 width: imagewidth,
@@ -180,9 +185,11 @@ document.getElementById('imgLoader').onchange = function handleImage(e) {
 $('.jscolor_text').change(function(){
 
     incolor = $(this).val();
+
     var Textobject = canvas.getActiveObject();
 
     if(Textobject.get('type') == 'i-text'){
+
         Textobject.setColor('#'+incolor);
         canvas.renderAll();   
     }
@@ -208,6 +215,7 @@ $('#family_text').change(function(){
 $('.rect_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.rect_opacity input').val(), 10) <= 90){
+
         $('.rect_opacity input').val( parseInt($('.rect_opacity input').val(), 10) + 10);
     }
 
@@ -224,6 +232,7 @@ $('.rect_opacity .btn:first-of-type').click(function(){
 $('.rect_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.rect_opacity input').val(), 10) >= 10){
+
         $('.rect_opacity input').val( parseInt($('.rect_opacity input').val(), 10) - 10);
     }
 
@@ -241,6 +250,7 @@ $('.rect_opacity .btn:last-of-type').click(function(){
 $('.triangle_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.triangle_opacity input').val(), 10) <= 90){
+
         $('.triangle_opacity input').val( parseInt($('.triangle_opacity input').val(), 10) + 10);
     }
 
@@ -257,6 +267,7 @@ $('.triangle_opacity .btn:first-of-type').click(function(){
 $('.triangle_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.triangle_opacity input').val(), 10) >= 10){
+
         $('.triangle_opacity input').val( parseInt($('.triangle_opacity input').val(), 10) - 10);
     }
 
@@ -274,6 +285,7 @@ $('.triangle_opacity .btn:last-of-type').click(function(){
 $('.circle_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.circle_opacity input').val(), 10) <= 90){
+
         $('.circle_opacity input').val( parseInt($('.circle_opacity input').val(), 10) + 10);
     }
 
@@ -290,6 +302,7 @@ $('.circle_opacity .btn:first-of-type').click(function(){
 $('.circle_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.circle_opacity input').val(), 10) >= 10){
+
         $('.circle_opacity input').val( parseInt($('.circle_opacity input').val(), 10) - 10);
     }
 
@@ -307,6 +320,7 @@ $('.circle_opacity .btn:last-of-type').click(function(){
 $('.line_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.line_opacity input').val(), 10) <= 90){
+
         $('.line_opacity input').val( parseInt($('.line_opacity input').val(), 10) + 10);
     }
 
@@ -323,6 +337,7 @@ $('.line_opacity .btn:first-of-type').click(function(){
 $('.line_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.line_opacity input').val(), 10) >= 10){
+
         $('.line_opacity input').val( parseInt($('.line_opacity input').val(), 10) - 10);
     }
 
@@ -340,6 +355,7 @@ $('.line_opacity .btn:last-of-type').click(function(){
 $('.image_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.image_opacity input').val(), 10) <= 90){
+
         $('.image_opacity input').val( parseInt($('.image_opacity input').val(), 10) + 10);
     }
 
@@ -356,6 +372,7 @@ $('.image_opacity .btn:first-of-type').click(function(){
 $('.image_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.image_opacity input').val(), 10) >= 10){
+
         $('.image_opacity input').val( parseInt($('.image_opacity input').val(), 10) - 10);
     }
 
@@ -375,9 +392,11 @@ $('.image_opacity .btn:last-of-type').click(function(){
 $('.jscolor_back_text').change(function(){
 
     incolor = $(this).val();
+
     var Textobject = canvas.getActiveObject();
 
     if(Textobject.get('type') == 'i-text'){
+
         Textobject.set({ textBackgroundColor : '#'+incolor });
         canvas.renderAll();   
     }
@@ -388,6 +407,7 @@ $('.jscolor_back_text').change(function(){
 $('.text_opacity .btn:first-of-type').click(function(){
 
     if(parseInt($('.text_opacity input').val(), 10) <= 90){
+
         $('.text_opacity input').val( parseInt($('.text_opacity input').val(), 10) + 10);
     }
 
@@ -404,6 +424,7 @@ $('.text_opacity .btn:first-of-type').click(function(){
 $('.text_opacity .btn:last-of-type').click(function(){
 
     if(parseInt($('.text_opacity input').val(), 10) >= 10){
+
         $('.text_opacity input').val( parseInt($('.text_opacity input').val(), 10) - 10);
     }
 
@@ -420,8 +441,7 @@ $('.text_opacity .btn:last-of-type').click(function(){
 //js text line height
 $('.text_lheight .btn:first-of-type').click(function(){
 
-
-        $('.text_lheight input').val( parseInt($('.text_lheight input').val(), 10) + 10);
+    $('.text_lheight input').val( parseInt($('.text_lheight input').val(), 10) + 10);
 
     var Textobject = canvas.getActiveObject();
 
@@ -436,6 +456,7 @@ $('.text_lheight .btn:first-of-type').click(function(){
 $('.text_lheight .btn:last-of-type').click(function(){
 
     if(parseInt($('.text_lheight input').val(), 10) > 10){
+
         $('.text_lheight input').val( parseInt($('.text_lheight input').val(), 10) - 10);
     }
 
@@ -457,7 +478,6 @@ $('#style_text').change(function(){
     if(Textobject.get('type') == 'i-text'){
 
         Textobject.fontWeight = $('#style_text option:selected').text();
-
         canvas.renderAll();   
     }
 
@@ -471,7 +491,6 @@ $('#weight_text').change(function(){
     if(Textobject.get('type') == 'i-text'){
 
         Textobject.fontWeight = $('#weight_text option:selected').text();
-
         canvas.renderAll();   
     }
 
@@ -485,8 +504,6 @@ $('#decoration_text').change(function(){
     if(Textobject.get('type') == 'i-text'){
 
         Textobject.textDecoration = $('#decoration_text option:selected').text();
-
-
         canvas.renderAll();   
     }
 
@@ -507,9 +524,11 @@ $('#align_text').change(function(){
 $('.jscolor_rect').change(function(){
 
     incolor = $(this).val();
+
     var Rectobject = canvas.getActiveObject();
 
     if(Rectobject.get('type') == 'rect'){
+
         Rectobject.setColor('#'+incolor);
         canvas.renderAll();   
     }
@@ -519,9 +538,11 @@ $('.jscolor_rect').change(function(){
 $('.jscolor_line').change(function(){
 
     incolor = $(this).val();
+
     var Lineobject = canvas.getActiveObject();
 
     if(Lineobject.get('type') == 'line'){
+
         Lineobject.setStroke('#'+incolor);
         canvas.renderAll();   
     }
@@ -532,9 +553,11 @@ $('.jscolor_line').change(function(){
 $('.jscolor_circle').change(function(){
 
     incolor = $(this).val();
+
     var Circleobject = canvas.getActiveObject();
 
     if(Circleobject.get('type') == 'circle'){
+
         Circleobject.setColor('#'+incolor);
         canvas.renderAll();   
     }
@@ -544,9 +567,11 @@ $('.jscolor_circle').change(function(){
 $('.jscolor_triangle').change(function(){
 
     incolor = $(this).val();
+
     var Triangleobject = canvas.getActiveObject();
 
     if(Triangleobject.get('type') == 'triangle'){
+
         Triangleobject.setColor('#'+incolor);
         canvas.renderAll();   
     }

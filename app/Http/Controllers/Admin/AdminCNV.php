@@ -21,6 +21,8 @@ class AdminCNV extends Controller{
         if (Auth::check()){
 
             return view('admin.create');
+        }else{
+            return redirect()->back();
         }
 
     }
@@ -32,20 +34,38 @@ class AdminCNV extends Controller{
 
         $data['name_cnv'] = $request->input('name');
         $data['jsn_cnv'] = $request->input('jsn');
+        $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->addCnv($data);
     }
 
     //===========================
+    //method add to my cvs
+    //===========================
+    protected function add(Cnv $cnvModel, $id){
+        if(Auth::check()){
+
+            $cnvModel->addMyCnv($id, Auth::user()->id);
+            return redirect('/admin/mycnv');
+
+        }else{
+
+            return redirect('/auth/login');
+        }
+    }
+
+    //===========================
     //method view cvs
     //===========================
-    protected function view(Cnv $cnvModel){
+    protected function myview(Cnv $cnvModel){
 
         if (Auth::check()){
 
-            $allCnv = $cnvModel->getAllCnv();
+            $myAllCnv = $cnvModel->getAllUserCnv(Auth::user()->id);
 
-            return view('admin.view')->withCvn($allCnv);
+            return view('admin.view')->withCvn($myAllCnv);
+        }else{
+            return redirect()->back();
         }
     }
 
@@ -56,7 +76,7 @@ class AdminCNV extends Controller{
 
         if (Auth::check()){
 
-            $oneCnv = $cnvModel->getOneCnv($id);
+            $oneCnv = $cnvModel->getOneUserCnv($id, Auth::user()->id);
 
             return view('admin.update')->withCvn($oneCnv);
         }
@@ -70,6 +90,7 @@ class AdminCNV extends Controller{
         $data['id_cnv'] = $request->input('id');
         $data['jsn_cnv'] = $request->input('jsn');
         $data['name_cnv'] = $request->input('name');
+        $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->upCnv($data);
     }
@@ -80,6 +101,7 @@ class AdminCNV extends Controller{
     protected function delete(Cnv $cnvModel, $id){
 
         $cnvModel->delCnv($id);
+
         return redirect()->back();
     }
 

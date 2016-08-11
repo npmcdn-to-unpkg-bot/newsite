@@ -14,6 +14,7 @@ class CreateCanvasTable extends Migration
     {
         Schema::create('cnv', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('id_user', 4);
             $table->longText('json_data');
             $table->string('name', 40);
             $table->timestamps();

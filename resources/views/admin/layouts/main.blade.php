@@ -13,12 +13,16 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{Url('admin/gallery')}}">Admin Panel</a>
+          <a class="navbar-brand" href="{{Url('/gallery')}}">MyFabricJs</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Home</a></li>
-            <li><a href="{{ Url('auth/logout') }}">LogOut</a></li>
+            <li><a href="{{ Url('/gallery') }}">Gallery</a></li>
+            @if(isset(Auth::user()->name))
+              <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
+            @else
+              <li><a href="{{ Url('auth/login') }}">logIn</a></li>
+            @endif
           </ul>
         </div>
       </div>
@@ -28,8 +32,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="{{Url('admin/create')}}">Create Canvas</a></li>
-            <li><a href="{{Url('admin/gallery')}}">Gallery Canvas</a></li>
+            <li><a href="{{Url('admin/create')}}">Create MyCanvas</a></li>
+            <li><a href="{{Url('admin/mycnv')}}">Gallery MyCanvas</a></li>
           </ul>
         </div>
 
