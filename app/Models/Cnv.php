@@ -17,6 +17,14 @@ class Cnv extends Model{
 	}
 
  	//=====================================
+	//method return one canvas object JSON of id user
+	//=====================================
+	public function getOneCnv($id_cnv){
+
+		return $this->where('id', $id_cnv)->get();
+	}  
+
+ 	//=====================================
 	//method return all user canvas object JSON
 	//=====================================
 	public function getAllUserCnv($id_user){

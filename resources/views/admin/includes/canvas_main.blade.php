@@ -1,7 +1,12 @@
         <div class="col-sm-5">
 			<canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
             <br>
-  
+
+                    <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
+                    <button type="button" class="btn btn-primary" id="btn_shadow">Shadowify</button>
+                    <button type="button" class="btn btn-primary" id="btn_clip">Clip</button>
+                    <button type="button" class="btn btn-danger" id="btn_remove">Remove</button>
+                    <br>
                     <br>
                     <p>Save this canvas to data JSON</p>
                     <label for="save_json">Input save name</label>

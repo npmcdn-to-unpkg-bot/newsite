@@ -141,6 +141,50 @@ $('.btn_canvas_export').click(function(){
     window.open(canvas.toDataURL('png'));
 });
 
+
+
+
+
+
+//bring canvas obj
+$('#btn_shadow').click(function(){
+
+    canvas.getActiveObject().setShadow({color: 'rgba(0,0,0,0.6)',
+                                blur: 20,    
+                                offsetX: 10,
+                                offsetY: 10,
+                                opacity: 0.6,
+                                fillShadow: true, 
+                                strokeShadow: true 
+    });
+    canvas.renderAll();
+});
+
+//shadow canvas obj
+$('#btn_clip').click(function(){
+
+    canvas.getActiveObject().setShadow({});
+    canvas.renderAll();
+});
+
+//bring_front canvas obj
+$('#btn_bring_front').click(function(){
+
+    canvas.getActiveObject().bringToFront();
+    canvas.renderAll();
+});
+
+//remove canvas obj
+$('#btn_remove').click(function(){
+
+    canvas.getActiveObject().remove();
+    canvas.renderAll();
+});
+
+
+
+
+
 //=========================image load===============
 document.getElementById('imgLoader').onchange = function handleImage(e) {
 

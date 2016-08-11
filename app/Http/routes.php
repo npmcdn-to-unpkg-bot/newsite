@@ -29,4 +29,5 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
-Route::get('/gallery', ['as' => 'admin_galery_get', 'uses' => 'PageCNV@views']);
+Route::get('/gallery', ['as' => 'galery_get', 'uses' => 'PageCNV@views']);
+Route::get('/view/{id}', ['as' => 'view_get', 'uses' => 'PageCNV@view']);
