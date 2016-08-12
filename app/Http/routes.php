@@ -31,3 +31,7 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/gallery', ['as' => 'galery_get', 'uses' => 'PageCNV@views']);
 Route::get('/view/{id}', ['as' => 'view_get', 'uses' => 'PageCNV@view']);
+
+Route::get('/', function(){
+	return redirect('gallery');
+});

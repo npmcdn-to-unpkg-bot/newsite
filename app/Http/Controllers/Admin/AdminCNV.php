@@ -34,6 +34,7 @@ class AdminCNV extends Controller{
 
         $data['name_cnv'] = $request->input('name');
         $data['jsn_cnv'] = $request->input('jsn');
+        $data['ch_public'] = $request->input('public');
         $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->addCnv($data);
@@ -90,6 +91,7 @@ class AdminCNV extends Controller{
         $data['id_cnv'] = $request->input('id');
         $data['jsn_cnv'] = $request->input('jsn');
         $data['name_cnv'] = $request->input('name');
+        $data['ch_public'] = $request->input('public');
         $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->upCnv($data);

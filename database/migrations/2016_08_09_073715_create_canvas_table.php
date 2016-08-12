@@ -17,6 +17,7 @@ class CreateCanvasTable extends Migration
             $table->integer('id_user', 4);
             $table->longText('json_data');
             $table->string('name', 40);
+            $table->integer('public', 1)->default(1);
             $table->timestamps();
         });
     }

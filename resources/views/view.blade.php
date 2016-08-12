@@ -7,6 +7,7 @@
 @foreach($cvn as $iCvn)
 <div class="container-fluid bg-1 text-center">
 <h3>View '{{$iCvn->name}}' Canvas</h3><br>
+<p>by {{$iCvn->user_name}}</p>
 <div class="row">
 
 <div class="col-bg-1">
@@ -18,7 +19,6 @@
 </form>
 
     <button type="submit" class="btn  btn-primary" id="export_to_img">Export to image</button>
-
 
 </div>
 

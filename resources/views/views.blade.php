@@ -10,7 +10,7 @@
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-4">
-<p>{{$iCvn->name}}</p>
+<p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}}</p>
 <canvas style="border: 2px solid gray; border-radius: 5px;" id="cnv-{{$iCvn->id}}"></canvas>
 <script type="text/javascript">
 

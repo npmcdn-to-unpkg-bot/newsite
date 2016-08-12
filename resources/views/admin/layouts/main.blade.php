@@ -17,12 +17,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="{{ Url('/gallery') }}">Gallery</a></li>
+
             @if(isset(Auth::user()->name))
               <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
             @else
               <li><a href="{{ Url('auth/login') }}">logIn</a></li>
             @endif
+            
           </ul>
         </div>
       </div>
@@ -34,6 +35,7 @@
           <ul class="nav nav-sidebar">
             <li><a href="{{Url('admin/create')}}">Create MyCanvas</a></li>
             <li><a href="{{Url('admin/mycnv')}}">Gallery MyCanvas</a></li>
+            <li><a href="{{Url('gallery')}}">Gallery AllCanvas</a></li>
           </ul>
         </div>
 

@@ -13,7 +13,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllCnv(){
 
-		return $this->orderBy('id', 'desc')->paginate(6);
+		return $this->select('cnv.*', 'users.name as user_name')->join('users', 'users.id', '=', 'cnv.id_user')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
 	}
 
  	//=====================================
@@ -21,7 +21,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getOneCnv($id_cnv){
 
-		return $this->where('id', $id_cnv)->get();
+		return $this->select('cnv.*', 'users.name as user_name')->join('users', 'users.id', '=', 'cnv.id_user')->where('cnv.id', $id_cnv)->get();
 	}  
 
  	//=====================================
@@ -45,7 +45,7 @@ class Cnv extends Model{
 	//=====================================
 	public function addCnv($data){
 
-		return $this->insert(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user']]);
+		return $this->insert(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public']]);
 	}
 
  	//=====================================
@@ -63,7 +63,7 @@ class Cnv extends Model{
 	//=====================================
 	public function upCnv($data){
 
-		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user']]);
+		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public']]);
 	}
 
  	//=====================================

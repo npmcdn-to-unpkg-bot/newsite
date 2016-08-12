@@ -4,8 +4,11 @@
 
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
                     <button type="button" class="btn btn-primary" id="btn_shadow">Shadowify</button>
-                    <button type="button" class="btn btn-primary" id="btn_clip">Clip</button>
+                    <button type="button" class="btn btn-primary" id="btn_gradient">Gradient</button>
+                    <button type="button" class="btn btn-warning" id="btn_clip">Clip</button>
                     <button type="button" class="btn btn-danger" id="btn_remove">Remove</button>
+                    <label class="checkbox-inline" style="margin-left: 30px;" id="ch_public"><input type="checkbox" value="1">Public</label>
+
                     <br>
                     <br>
                     <p>Save this canvas to data JSON</p>
@@ -17,7 +20,7 @@
                     @endforeach
                         
                     @else
-                        <input id="save_json" style="width: 600px;" type="text" value="Canvas name" class="form-control" /><br>
+                        <input id="save_json" style="width: 600px;" type="text" value="Canvas_{{rand()}}" class="form-control" /><br>
                     @endif
                     <button type="button" class="btn btn-primary btn-sm btn_canvas_save">Save canvas</button>
 

@@ -111,8 +111,21 @@ canvas.add(circle);
 $('.btn_canvas_save').click(function(){
 
     var jsn = JSON.stringify(canvas);
+    var public = 0;
 
-    $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'jsn' : jsn}, function(data){
+    if(canvas.getObjects().length == 0){
+        alert('empty canvas');
+        return false;
+    }
+
+    if($('#ch_public input').is(':checked')){
+        public = 1;
+    }
+
+    $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>,
+                             'name' : $('#save_json').val(),
+                             'jsn' : jsn, 'public' : public}, function(data){
+
 
         if(data == 1){
 
@@ -146,24 +159,33 @@ $('.btn_canvas_export').click(function(){
 
 
 
-//bring canvas obj
+//shadow canvas obj
+var tgll = true;
 $('#btn_shadow').click(function(){
 
-    canvas.getActiveObject().setShadow({color: 'rgba(0,0,0,0.6)',
-                                blur: 20,    
-                                offsetX: 10,
-                                offsetY: 10,
-                                opacity: 0.6,
-                                fillShadow: true, 
-                                strokeShadow: true 
-    });
+    tgll = !tgll;
+
+    if(tgll){
+
+        canvas.getActiveObject().setShadow({color: 'rgba(0,0,0,0.3)',
+                                            blur: 10,    
+                                            offsetX: 4,
+                                            offsetY: 4,
+                                            fillShadow: true, 
+                                            strokeShadow: true 
+                                            });
+
+    }else{
+        canvas.getActiveObject().setShadow({});
+    }
     canvas.renderAll();
+
 });
 
-//shadow canvas obj
+//clip canvas obj
 $('#btn_clip').click(function(){
-
-    canvas.getActiveObject().setShadow({});
+    canvas.getActiveObject().set({fill: incolor});
+    
     canvas.renderAll();
 });
 
@@ -180,6 +202,25 @@ $('#btn_remove').click(function(){
     canvas.getActiveObject().remove();
     canvas.renderAll();
 });
+
+//gradient canvas obj
+$('#btn_gradient').click(function(){
+
+    incolor = canvas.getActiveObject().get('fill');
+    canvas.getActiveObject().setGradient('fill', {
+                                                type: 'linear',
+                                                x1: 0,
+                                                y1: 0,
+                                                x2: canvas.getActiveObject().width,
+                                                y2: 0,
+                                                colorStops: {
+                                                    0: ('rgb('+(Math.random()*255)+','+(Math.random()*255)+','+(Math.random()*255)+')'),
+                                                    1: ('rgb('+(Math.random()*255)+','+(Math.random()*255)+','+(Math.random()*255)+')')
+                                                }
+                                            });
+    canvas.renderAll();
+});
+
 
 
 
@@ -232,11 +273,17 @@ $('.jscolor_text').change(function(){
 
     var Textobject = canvas.getActiveObject();
 
-    if(Textobject.get('type') == 'i-text'){
+
+    if (Textobject.getSelectedText() != '') {
+
+        Textobject.setSelectionStyles({fill: '#'+incolor});
+
+    }else{
 
         Textobject.setColor('#'+incolor);
         canvas.renderAll();   
     }
+        
 
 });
 
@@ -244,6 +291,7 @@ $('.jscolor_text').change(function(){
 $('#family_text').change(function(){
 
     var Textobject = canvas.getActiveObject();
+
 
     if(Textobject.get('type') == 'i-text'){
 
