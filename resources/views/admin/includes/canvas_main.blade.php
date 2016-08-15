@@ -17,7 +17,25 @@
                         <input id="color_js_back_canvas" type="text" value="#ffffff" class="form-control jscolor jscolor_back_canvas" />
                     </div>
                     <br>
-                    <br>
+                    
+                    @if(isset($cat))
+                    <div class="form-group">
+                      <label for="sel1">Select Category:</label>
+                      <select class="form-control" name="id_cat" id="sel_cat">
+
+                      @foreach($cat as $iCat)
+
+                      @if(isset($nowcat) && $nowcat == $iCat->id)
+                        <option selected value="{{$iCat->id}}">{{$iCat->title}}</option>
+                      @else
+                        <option value="{{$iCat->id}}">{{$iCat->title}}</option>
+                      @endif
+                      @endforeach
+
+                      </select>
+                    </div>
+                    @endif
+
                     <br>
                     <p>Save this canvas to data JSON</p>
                     <label for="save_json">Input save name</label>

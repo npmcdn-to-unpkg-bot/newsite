@@ -164,7 +164,8 @@ $('.btn_canvas_save').click(function(){
 
     $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>,
                              'name' : $('#save_json').val(),
-                             'jsn' : jsn, 'public' : public}, function(data){
+                             'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
+                                // alert(data);
 
 
         if(data == 1){

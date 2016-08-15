@@ -6,7 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 	<title></title>
-	
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
 	<link href="{{asset('assets/fonts/font-face/Blogger_Sans.css')}}" rel="stylesheet" />
 
 	<link href="{{asset('assets/css/spectrum.css')}}" rel="stylesheet" />
@@ -17,6 +20,7 @@
 
 	<link href="{{asset('assets/css/style.css')}}" rel="stylesheet" />
 
+	<script type="text/javascript" src="{{ URL::asset('js/fabric.js') }}"></script>
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -134,7 +138,10 @@
 				<div class="row footer-content">
 					<div class="col-xs-12 col-sm-6 b-l">
 						<div class="col-xs-12 col-sm-8 center-block">
-							<form class="form-feedback" action="#" method="post">
+							<form class="form-feedback" action="/feedback" method="post" enctype="multipart/form-data" >
+
+								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+								
 								<div class="col-xs-12 col-sm-6">
 									<input class="form-control" type="text" name="name" placeholder="Your Name" />
 								</div>

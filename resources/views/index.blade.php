@@ -21,7 +21,7 @@
 	
 	<div class="container-fluid text-center section-2">
 		<h1 class="text-warning">Do not wasted your time.<br />Entrust us the job</h1>
-		<a href="#" class="btn btn-warning btn-warning-gradient btn-lg text-uppercase">Get started</a>
+		<a href="{{url('auth/login')}}" class="btn btn-warning btn-warning-gradient btn-lg text-uppercase">Get started</a>
 		<h1>Durable, waterproof vinyl</h1>
 	</div>
 	
@@ -116,57 +116,84 @@
 		</ul>
 		<div class="templates-container">
 			<div class="col-xs-3"></div>
-			<div class="col-xs-6 col-sm-3 template-item">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-1.png')}}" />
+
+
+@foreach($cvn as $iCvn)
+			<div class="col-xs-6 col-sm-3 template-item {{$iCvn->cat_name}}">
+
+				<canvas style="border: 1px solid gray;" id="cnv-{{$iCvn->id}}"></canvas>
+				<script type="text/javascript">
+
+
+				
+
+				    var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
+				    canvas.setHeight(500);
+				    canvas.setWidth(600);
+
+				    var jsn = '{!!$iCvn->json_data!!}';
+
+				    var factor = 0.5;
+
+					if($(window).width() <= 1400){
+						var factor = 0.4;
+					}
+
+					if($(window).width() <= 1120){
+						var factor = 0.3;
+					}
+
+					if($(window).width() <= 860){
+						var factor = 0.2;
+					}
+                      
+				    var myobjects = canvas.getObjects();
+
+				    canvas.loadFromJSON(jsn, canvas.renderAll.bind(canvas), function(o, object){
+
+				        if (canvas.backgroundImage) {
+
+				            var bi = canvas.backgroundImage;
+				            bi.width = bi.width * factor; bi.height = bi.height * factor;
+				        }
+				        
+
+				        var scaleX = object.scaleX;
+				        var scaleY = object.scaleY;
+				        var leftObj = object.left;
+				        var topObj = object.top;
+
+				        var tempScaleX = scaleX * factor;
+				        var tempScaleY = scaleY * factor;
+				        var tempLeft = Math.round(leftObj * factor);
+				        var tempTop = Math.round(topObj * factor);
+
+				        object.scaleX = tempScaleX;
+				        object.scaleY = tempScaleY;
+				        object.left = tempLeft;
+				        object.top = tempTop;
+
+				        object.setCoords();
+
+
+				    });
+
+				        canvas.setHeight(canvas.getHeight() * factor);
+				        canvas.setWidth(canvas.getWidth() * factor);
+				        canvas.renderAll();
+				        canvas.calcOffset();
+
+				</script>
+
 			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-2.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-3.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-4.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-5.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-6.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-7.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item auto">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-8.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-9.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item real_estate">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-10.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-11.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-12.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-13.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-14.png')}}" />
-			</div>
-			<div class="col-xs-6 col-sm-3 template-item event">
-				<img class="img-responsive" src="{{asset('assets/images/templates/template-15.png')}}" />
-			</div>
+@endforeach
+
 		</div>
 	</div>
 	
 	<div class="container-fluid section-4">
 		<h1>Not sure<br />what you need?<br />Take advantage of our<br /><strong>Free design sevices</strong></h1>
-		<a href="#" class="btn btn-warning btn-warning-gradient btn-lg">GET STARTED!</a>
+		<a href="{{url('auth/login')}}" class="btn btn-warning btn-warning-gradient btn-lg">GET STARTED!</a>
 	</div>
 	
 	<div class="container-fluid section-5">
@@ -246,7 +273,6 @@
 		</div>
 	</div>
 	
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>

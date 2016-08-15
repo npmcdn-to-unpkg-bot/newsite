@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Cnv;
+use App\Models\Categories;
 
 use Auth;
 use Validator;
@@ -16,11 +17,13 @@ class AdminCNV extends Controller{
     //===========================
     //method create cvs
     //===========================
-    protected function create(){
+    protected function create(Categories $catModel){
 
         if (Auth::check()){
 
-            return view('admin.create');
+            $cats = $catModel->getAllCat();
+
+            return view('admin.create')->withCat($cats);
         }else{
             return redirect()->back();
         }
@@ -35,6 +38,7 @@ class AdminCNV extends Controller{
         $data['name_cnv'] = $request->input('name');
         $data['jsn_cnv'] = $request->input('jsn');
         $data['ch_public'] = $request->input('public');
+        $data['id_cat'] = $request->input('id_cat');
         $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->addCnv($data);
@@ -73,13 +77,17 @@ class AdminCNV extends Controller{
     //===========================
     //method regedit cvs
     //===========================
-    protected function regedit(Cnv $cnvModel, $id){
+    protected function regedit(Cnv $cnvModel, Categories $catModel, $id){
 
         if (Auth::check()){
 
+            $cats = $catModel->getAllCat();
+
             $oneCnv = $cnvModel->getOneUserCnv($id, Auth::user()->id);
 
-            return view('admin.update')->withCvn($oneCnv);
+            $nowCat = $oneCnv->toArray()[0]['id_cat'];
+
+            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat);
         }
     }
 
@@ -92,6 +100,7 @@ class AdminCNV extends Controller{
         $data['jsn_cnv'] = $request->input('jsn');
         $data['name_cnv'] = $request->input('name');
         $data['ch_public'] = $request->input('public');
+        $data['id_cat'] = $request->input('id_cat');
         $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->upCnv($data);

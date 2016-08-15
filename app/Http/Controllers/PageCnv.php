@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Cnv;
 
+use Mail;
+use Validator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,9 +18,9 @@ class PageCnv extends Controller{
     //===========================
     protected function views(Cnv $cnvModel){
 
-            $allCnv = $cnvModel->getAllCnv();
+        $allCnv = $cnvModel->getAllCnv();
 
-            return view('views')->withCvn($allCnv);
+        return view('views')->withCvn($allCnv);
     }
 
     //===========================
@@ -26,9 +28,9 @@ class PageCnv extends Controller{
     //===========================
     protected function view(Cnv $cnvModel, $id){
 
-            $oneCnv = $cnvModel->getOneCnv($id);
+        $oneCnv = $cnvModel->getOneCnv($id);
 
-            return view('view')->withCvn($oneCnv);
+        return view('view')->withCvn($oneCnv);
     }
 
     //===========================
@@ -36,19 +38,46 @@ class PageCnv extends Controller{
     //===========================
     protected function getHome(Cnv $cnvModel){
 
-            //$oneCnv = $cnvModel->getOneCnv($id);
+        $allCnv = $cnvModel->getAllCnv();
 
-            return view('index');
+        return view('index')->withCvn($allCnv);
     }
 
     //===========================
-    //method home cvs
+    //method feedback cvs
+    //===========================
+    protected function postFeedback(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'email' => 'required|email',
+            'q' => 'required',
+        ]);
+
+        if ($validator->fails()) 
+            return redirect('/')->withErrors($validator)->withInput();
+
+        Mail::send('emails.welcome', ['input' => $request], function($message) use ($request)
+        {
+            $message->to('silverreve23@gmail.com');
+            $message->subject('FeedBack of UP Group Printing');
+            $message->from($request->get('email'));
+            if($request->hasFile('file'))
+                $message->attach($request->file('file')->getPathName(),
+            ['as' => 'attach_file.'.$request->file('file')->getClientOriginalExtension(), 'mime' => $request->file('file')->getMimeType()]);
+        });
+
+        return redirect()->back();
+    }
+
+    //===========================
+    //method o cvs
     //===========================
     protected function getO(Cnv $cnvModel){
 
-            //$oneCnv = $cnvModel->getOneCnv($id);
+        // $allCnv = $cnvModel->getAllCnv();
 
-            return view('order');
+        return view('order');
     }
 
 }

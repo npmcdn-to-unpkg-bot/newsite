@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCanvasTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,9 @@ class CreateCanvasTable extends Migration
      */
     public function up()
     {
-        Schema::create('cnv', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user', 4);
-            $table->string('id_cat', 20)->default('event');
-            $table->longText('json_data');
-            $table->string('name', 40);
-            $table->integer('public', 1)->default(1);
+            $table->string('title', 20);
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateCanvasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('cnv');
+        Schema::drop('categories');
     }
 }

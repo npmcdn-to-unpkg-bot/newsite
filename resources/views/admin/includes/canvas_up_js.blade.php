@@ -168,7 +168,7 @@ $('.btn_canvas_save').click(function(){
     }
 
 
-    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'jsn' : jsn, 'public' : public}, function(data){
+    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
 
         if(data == 1){
             alert('Update successfully!');
