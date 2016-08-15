@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title></title>
+	
+	<link href="fonts/font-face/Blogger_Sans.css" rel="stylesheet" />
+	
+	<link href="css/spectrum.css" rel="stylesheet" />
+				
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="css/font-awesome.css" rel="stylesheet" />
+	<link href="css/style.css" rel="stylesheet" />
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+	
+</head>
+<body>
+    <header>
+		<div class="container-fluid">
+			<div class="col-xs-12 col-sm-3">
+				<a href="/">
+					<img class="img-responsive" src="images/logo.png" alt="UPGROUP" />
+				</a>
+			</div>
+			<div class="col-xs-12 col-sm-5 pull-right">
+				<ul class="header-items">
+					<li>
+						<a href="#">
+							<span>Need help?<br />1.773.669.5155</span>
+							<img src="images/icons/headphone.png" alt="Need help?" />
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>Sign in<br />My account</span>
+							<img src="images/icons/account.png" alt="My account" />
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span>Cart</span>
+							<img src="images/icons/cart.png" alt="cart" />
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-12 col-sm-3 col-sm-offset-1">
+				<div class="dropdown header-nav">
+					<button id="dropdown-toggle-1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Products
+						<i class="fa fa-angle-down" aria-hidden="true"></i>
+					</button>
+					<ul class="dropdown-menu" aria-labelledby="dropdown-toggle-1">
+						<li><a href="#">Plasic details</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" id="dropdown-toggle-2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banners <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+							<ul class="dropdown-menu">
+								<li><a href="#">Item</a></li>
+								<li><a href="#">Item</a></li>
+								<li><a href="#">Item</a></li>
+							</ul>
+						</li>
+						<li><a href="#">Woodencts</a></li>
+						<li><a href="#">Magnetics</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+		<!-- ---------- header-carousel ---------- -->
+		<div class="carousel slide" id="carousel-example-generic" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+			</ol>
+		
+			<div class="carousel-inner header-carousel" role="listbox">
+				<div class="item active">
+					<img src="images/slider-item-1.png" alt="sline1" />
+					<div class="col-xs-12 col-sm-6">
+						<h1>High-quality, custom fabic banner.</h1>
+						<h2>With a 100% Satisfaction Guarantee</h2>
+					</div>
+				</div>
+				<div class="item">
+					<img src="images/slider-item-1.png" alt="sline1" />
+					<div class="col-xs-12 col-sm-6">
+						<h1>High-quality, custom fabic banner.</h1>
+						<h2>With a 100% Satisfaction Guarantee</h2>
+					</div>
+				</div>
+				<div class="item">
+					<img src="images/slider-item-1.png" alt="sline1" />
+					<div class="col-xs-12 col-sm-6">
+						<h1>High-quality, custom fabic banner.</h1>
+						<h2>With a 100% Satisfaction Guarantee</h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	
+	<form class="new-order-form" action="#" method="post">
+		<h1>Your information</h1>
+		
+		<div class="container">
+			<div class="form-group">
+				<div>First name</div>
+				<div><input class="form-control" type="text" name="first_name" /></div>
+			</div>
+			<div class="form-group">
+				<div>Last name</div>
+				<div><input class="form-control" type="text" name="last_name" /></div>
+			</div>
+			<div class="form-group">
+				<div>Email</div>
+				<div>
+					<input class="form-control" type="email" name="email" />
+					<span class="input-desc">Where we'll send your design</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div>Phone</div>
+				<div>
+					<input class="form-control" type="text" name="phone" />
+					<span class="input-desc">In case we need to call you about your order</span>
+				</div>
+			</div>
+		</div>
+
+		<h1 class="details-title">DETAILS (wording, colors, etc.)</h1>
+		
+		<div class="container">
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="company_name_color" value="#57e092" />
+					</div>
+				</div>
+				<div>
+					<input class="form-control" type="text" name="company_name" placeholder="Company Name" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="company_massage_color" value="#57e092" />
+					</div>
+				</div>
+				<div>
+					<input class="form-control" type="text" name="company_massage" placeholder="Company Massage" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="company_phone_color" value="#57e092" />
+					</div>
+				</div>
+				<div>
+					<input class="form-control" type="text" name="company_phone_color" placeholder="Phone|Other" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="company_web_color" value="#57e092" />
+					</div>
+				</div>
+				<div>
+					<input class="form-control" type="text" name="company_web" placeholder="Web|Other" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="activity_color" value="#57e092" />
+					</div>
+				</div>
+				<div>
+					<input class="form-control" type="text" name="activity" placeholder="Activity of" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<div class="color-container">
+						<input class="color" type="hidden" name="logo_color" value="#57e092" />
+					</div>
+				</div>
+				<div class="logo-container">
+					<input class="form-control" type="text" name="logo_text" placeholder="Logo" />
+					<label class="btn btn-warning"><input class="hidden" type="file" name="logo_file" />Upload your Logo</label>
+				</div>
+			</div>
+			<div class="form-group m-0">
+				<div></div>
+				<div style="margin-left:-106px">
+					<textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
+				</div>
+			</div>
+		</div>
+		
+		<h1 style="font-weight:bold">YOU GET A FREE DESIGN EMAIL.<br />AFTER APPROVAL, YOU WILL BE ABLE<br />TO ORDER PRINTS.</h1>
+		
+		<div class="container text-center">
+			<input class="btn btn-warning btn-warning-gradient btn-lg" type="submit" value="SUBMIT" />
+		</div>
+	</form>
+	
+	<footer>
+		<h1>Contact information</h1>
+		<div class="container-fluid">
+			<div class="col-xs-12">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<div class="col-xs-12 col-sm-8 center-block">
+							<h1 class="m-0 text-center">Write to us</h1>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<div class="col-xs-12 col-sm-8 center-block">
+							<h1 class="m-0">Local pickup</h1>
+						</div>
+					</div>
+				</div>
+				<div class="row footer-content">
+					<div class="col-xs-12 col-sm-6 b-l">
+						<div class="col-xs-12 col-sm-8 center-block">
+							<form class="form-feedback" action="#" method="post">
+								<div class="col-xs-12 col-sm-6">
+									<input class="form-control" type="text" name="name" placeholder="Your Name" />
+								</div>
+								<div class="col-xs-12 col-sm-6">
+									<input class="form-control" type="email" name="email" placeholder="Your Email" />
+								</div>
+								<div class="col-xs-12">
+									<input class="form-control" type="text" name="phone" placeholder="Your Phone" />
+								</div>
+								<div class="col-xs-12">
+									<textarea class="form-control" name="q" placeholder="Your Question"></textarea>
+								</div>
+								
+								<div class="col-xs-12 col-sm-6">
+									<label class="btn btn-warning btn-block"><input class="hidden" type="file" name="file" /><i class="fa fa-plus"></i> Attach file</label>
+								</div>
+								<div class="col-xs-12 col-sm-6">
+									<input class="btn btn-pink btn-block" type="submit" value="SEND" />
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<div class="col-xs-12 col-sm-8 center-block">
+							<h4 style="color:#939393">2150 N. WEST St. River Grove, IL 60171</h4>
+							<a href="#">View on the map</a>
+							<div>
+								<a href="#" target="_blank"><img src="images/yelp.png" alt="yelp" /></a>
+								<a href="#" target="_blank"><img src="images/fb.png" alt="fb" /></a>
+							</div>
+							<h1 class="text-warning">1.773.669.5155</h1>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/spectrum.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+		$('.color').spectrum({
+			preferredFormat: "hex",
+			showInput: true,
+			showAlpha: true,
+			showInitial: true,
+			showButtons: false
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

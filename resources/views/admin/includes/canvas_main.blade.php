@@ -1,5 +1,5 @@
         <div class="col-sm-5">
-			<canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
+			      <canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
             <br>
 
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
@@ -7,8 +7,16 @@
                     <button type="button" class="btn btn-primary" id="btn_gradient">Gradient</button>
                     <button type="button" class="btn btn-warning" id="btn_clip">Clip</button>
                     <button type="button" class="btn btn-danger" id="btn_remove">Remove</button>
-                    <label class="checkbox-inline" style="margin-left: 30px;" id="ch_public"><input type="checkbox" value="1">Public</label>
-
+                    <label class="checkbox-inline" style="margin-left: 30px;" id="ch_public">
+                    <input type="checkbox"
+                    @if(isset($cvn)) @foreach($cvn as $iCvn) {{($iCvn->public == 1) ? 'checked' : null}} @endforeach @endif
+                    value="1">Public</label>
+                    <br><br>
+                    <div class="input-group colorpicker-component">
+                        <label for="color_js_back_canvas">Background color canvas</label>
+                        <input id="color_js_back_canvas" type="text" value="#ffffff" class="form-control jscolor jscolor_back_canvas" />
+                    </div>
+                    <br>
                     <br>
                     <br>
                     <p>Save this canvas to data JSON</p>
@@ -267,8 +275,6 @@
 
             </div>
         </div>
-    
-    
 
     </div>
 </div>

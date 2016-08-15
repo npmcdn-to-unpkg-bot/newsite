@@ -31,4 +31,24 @@ class PageCnv extends Controller{
             return view('view')->withCvn($oneCnv);
     }
 
+    //===========================
+    //method home cvs
+    //===========================
+    protected function getHome(Cnv $cnvModel){
+
+            //$oneCnv = $cnvModel->getOneCnv($id);
+
+            return view('index');
+    }
+
+    //===========================
+    //method home cvs
+    //===========================
+    protected function getO(Cnv $cnvModel){
+
+            //$oneCnv = $cnvModel->getOneCnv($id);
+
+            return view('order');
+    }
+
 }
