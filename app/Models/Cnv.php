@@ -11,6 +11,14 @@ class Cnv extends Model{
 	//=====================================
 	//method return all canvas object JSON
 	//=====================================
+	public function getAllGalleryCnv($id_user){
+
+		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->where('id_user', '!=', $id_user)->paginate(6);
+	}
+
+	//=====================================
+	//method return all canvas object JSON
+	//=====================================
 	public function getAllCnv(){
 
 		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);

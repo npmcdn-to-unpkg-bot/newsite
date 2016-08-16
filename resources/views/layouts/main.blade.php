@@ -53,7 +53,7 @@
 				</a>
 			</div>
 			<div class="col-xs-12 col-sm-5 pull-right">
-			<div class="count-cart">23</div>
+			@if(isset($cart))<div class="count-cart">{{$cart}}</div>@endif
 				<ul class="header-items">
 					<li>
 						<a href="#">
@@ -68,7 +68,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="{{url('admin/cart')}}">
 							<span>Cart</span>
 							<img src="{{asset('assets/images/icons/cart.png')}}" alt="cart" />
 						</a>

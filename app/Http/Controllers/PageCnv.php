@@ -2,23 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cnv;
+use Auth;
 
 use Mail;
 use Validator;
 use Illuminate\Http\Request;
 
+use App\Models\Cnv;
+use App\Models\Cart;
+use App\Models\Categories;
+
 use App\Http\Requests;
 
 class PageCnv extends Controller{
-    
+
+    //method boot load
+    public function __construct(Cart $cartModel){
+
+        $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+
+        if($allCart->count() > 0)
+            return view()->share('cart', $allCart->count());
+    }
 
     //===========================
     //method views all cvs
     //===========================
     protected function views(Cnv $cnvModel){
 
-        $allCnv = $cnvModel->getAllCnv();
+        $allCnv = $cnvModel->getAllGalleryCnv(Auth::user()->id);
 
         return view('views')->withCvn($allCnv);
     }

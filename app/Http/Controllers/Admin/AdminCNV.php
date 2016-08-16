@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Cnv;
+use App\Models\Cart;
 use App\Models\Categories;
 
 use Auth;
@@ -14,6 +15,14 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AdminCNV extends Controller{
 
+    //method boot load
+    public function __construct(Cart $cartModel){
+
+        $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+
+        return view()->share('cart', $allCart->count());
+    }
+
     //===========================
     //method create cvs
     //===========================
@@ -24,7 +33,9 @@ class AdminCNV extends Controller{
             $cats = $catModel->getAllCat();
 
             return view('admin.create')->withCat($cats);
+
         }else{
+
             return redirect()->back();
         }
 
@@ -45,17 +56,44 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method storage cart cvs
+    //===========================
+    protected function storageCart(Cart $cartModel, Request $request){
+
+        $data['id_cnv'] = $request->input('id_cnv');
+        $data['id_user'] = Auth::user()->id;
+
+        echo $cartModel->addCnvCart($data);
+    }
+
+    //===========================
     //method add to my cvs
     //===========================
     protected function add(Cnv $cnvModel, $id){
         if(Auth::check()){
 
             $cnvModel->addMyCnv($id, Auth::user()->id);
+
             return redirect('/admin/mycnv');
 
         }else{
 
             return redirect('/auth/login');
+        }
+    }
+
+    //===========================
+    //method view cart my cvs
+    //===========================
+    protected function getCart(Cart $cartModel){
+
+        if(Auth::check()){
+
+            $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+
+            // dd($allCart);
+
+            return view('admin.cart')->withCvn($allCart);
         }
     }
 
@@ -69,7 +107,9 @@ class AdminCNV extends Controller{
             $myAllCnv = $cnvModel->getAllUserCnv(Auth::user()->id);
 
             return view('admin.view')->withCvn($myAllCnv);
+
         }else{
+
             return redirect()->back();
         }
     }

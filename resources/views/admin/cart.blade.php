@@ -24,7 +24,10 @@
 </div>
 
 <div class="container-fluid bg-3 text-center">
-<h3>View My Canvas</h3><br>
+<h3>View My Order Canvas</h3><br>
+<div class="row">
+<div class="col-sm-7">
+
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-4" id='my_name'>
@@ -40,7 +43,7 @@ $(document).ready(function(){
 
     var jsn = '{!!$iCvn->json_data!!}';
 
-    var factor = 0.4;
+    var factor = 0.3;
                       
     var myobjects = canvas.getObjects();
 
@@ -109,16 +112,12 @@ $(document).ready(function(){
 
 <br>
 <br>
-<form action="{{Url('admin/gedit/'.$iCvn->id)}}" method="get" style="display: inline;">
-    <button type="submit" class="btn btn-warning">Gedit</button>
-</form>
 
-<form action="{{Url('admin/delete/'.$iCvn->id)}}" method="get" style="display: inline;">
+<form action="{{Url('admin/delete-cart/'.$iCvn->id)}}" method="get" style="display: inline;">
     <button type="submit" class="btn  btn-danger">Delete</button>
 </form>
 
     <button type="submit" class="btn btn-primary view_cnv-{{$iCvn->id}}" data-toggle="modal" data-target="#myModal">view</button>
-    <button type="submit" class="btn btn-success buy_cnv-{{$iCvn->id}}">order</button>
 
 <br>
 <br>
@@ -128,9 +127,19 @@ $(document).ready(function(){
 
 @endforeach
 
-
+</div>
+</div>
+@if(isset($cart)) 
+    <div class="col-sm-5 text-center">
+    <h2>Count banners: {{$cart}}</h2>
+    <h2>General price: 180 $</h2>
+    <br>
+    <button type="submit" class="btn btn-lg btn-primary">order</button>
+    </div>
+@endif
 
 </div>
+
 <div>{!! $cvn->render() !!}</div>
   </div>
 </div>

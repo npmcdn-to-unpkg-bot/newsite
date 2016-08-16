@@ -13,7 +13,11 @@
 
 Route::get('/admin/create', ['as' => 'admin_create_get', 'uses' => 'Admin\AdminCNV@create']);
 Route::post('/admin/create', ['as' => 'admin_create_post', 'uses' => 'Admin\AdminCNV@storage']);
+Route::post('/admin/create-cart', ['as' => 'admin_create_cart_post', 'uses' => 'Admin\AdminCNV@storageCart']);
+
 Route::get('/admin/add/{id}', ['as' => 'admin_create_get', 'uses' => 'Admin\AdminCNV@add']);
+
+Route::get('/admin/cart', ['as' => 'admin_cart_get', 'uses' => 'Admin\AdminCNV@getCart']);
 
 Route::get('/admin/gedit/{id}', ['as' => 'admin_regedit_get', 'uses' => 'Admin\AdminCNV@regedit']);
 Route::post('/admin/gedit', ['as' => 'admin_regedit_post', 'uses' => 'Admin\AdminCNV@update']);
@@ -30,9 +34,11 @@ Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::get('/gallery', ['as' => 'galery_get', 'uses' => 'PageCNV@views']);
+
 Route::get('/view/{id}', ['as' => 'view_get', 'uses' => 'PageCNV@view']);
 
 Route::get('/', ['as' => 'home_get', 'uses' => 'PageCNV@getHome']);
+
 Route::post('/feedback', ['as' => 'post_feedback', 'uses' => 'PageCNV@postFeedback']);
 
 Route::get('/order', ['as' => 'order_get', 'uses' => 'PageCNV@getOrder']);

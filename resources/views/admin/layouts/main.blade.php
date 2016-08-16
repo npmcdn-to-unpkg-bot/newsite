@@ -6,8 +6,6 @@
   <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/mystyle.css') }}">
 	<script type="text/javascript" src="{{ URL::asset('js/fabric.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/jscolor.js') }}"></script>
-  
-
  <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -18,7 +16,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ Url('/') }}">home</a></li>
-              <li><a href="{{ Url('/cart') }}">cart <span style="background-color: white; padding: 3px; color: black;">23</span></a></li>
+              <li><a href="{{ Url('/admin/cart') }}">cart @if(isset($cart))<span style="background-color: white; padding: 3px; color: black;">  {{$cart}} </span>@endif</a></li>
             @if(isset(Auth::user()->name))
               <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
             @else
