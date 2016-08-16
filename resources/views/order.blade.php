@@ -1,7 +1,10 @@
 @extends('layouts.main')
 
 @section('content')
-	<form class="new-order-form" action="#" method="post">
+	<form class="new-order-form" action="/order" method="post" enctype="multipart/form-data">
+
+		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 		<h1>Your information</h1>
 		
 		<div class="container">
@@ -59,7 +62,7 @@
 					</div>
 				</div>
 				<div>
-					<input class="form-control" type="text" name="company_phone_color" placeholder="Phone|Other" />
+					<input class="form-control" type="text" name="company_phone" placeholder="Phone|Other" />
 				</div>
 			</div>
 			<div class="form-group">

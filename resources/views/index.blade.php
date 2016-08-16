@@ -133,7 +133,7 @@
 
 				    var jsn = '{!!$iCvn->json_data!!}';
 
-				    var factor = 0.5;
+				    var factor = 0.6;
 
 					if($(window).width() <= 1400){
 						var factor = 0.4;
@@ -193,7 +193,7 @@
 	
 	<div class="container-fluid section-4">
 		<h1>Not sure<br />what you need?<br />Take advantage of our<br /><strong>Free design sevices</strong></h1>
-		<a href="{{url('auth/login')}}" class="btn btn-warning btn-warning-gradient btn-lg">GET STARTED!</a>
+		<a href="{{url('/order')}}" class="btn btn-warning btn-warning-gradient btn-lg">GET STARTED!</a>
 	</div>
 	
 	<div class="container-fluid section-5">
@@ -335,7 +335,7 @@
 		});
 
 	</script>
-	
+
 @stop
 
 

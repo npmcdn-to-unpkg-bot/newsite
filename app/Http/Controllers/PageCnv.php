@@ -51,13 +51,14 @@ class PageCnv extends Controller{
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email',
+            'phone' => 'max:12',
             'q' => 'required',
         ]);
 
         if ($validator->fails()) 
-            return redirect('/')->withErrors($validator)->withInput();
+            return redirect('/')->with('errors', 'Incorrectly filleds feedback!')->withInput();
 
-        Mail::send('emails.welcome', ['input' => $request], function($message) use ($request)
+        Mail::send(['html' => 'emails.feedback'], ['input' => $request], function($message) use ($request)
         {
             $message->to('silverreve23@gmail.com');
             $message->subject('FeedBack of UP Group Printing');
@@ -67,17 +68,52 @@ class PageCnv extends Controller{
             ['as' => 'attach_file.'.$request->file('file')->getClientOriginalExtension(), 'mime' => $request->file('file')->getMimeType()]);
         });
 
-        return redirect()->back();
+        return redirect()->back()->with('sended', 'Feedback sunded!');
     }
 
     //===========================
-    //method o cvs
+    //method get order cvs
     //===========================
-    protected function getO(Cnv $cnvModel){
-
-        // $allCnv = $cnvModel->getAllCnv();
+    protected function getOrder(){
 
         return view('order');
+    }
+
+    //===========================
+    //method post order cvs
+    //===========================
+    protected function postOrder(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'phone' => 'max:12',
+            'email' => 'required|email',
+
+            'company_name' => 'required|max:40',
+            'company_massage' => 'required|max:255',
+            'company_phone' => 'max:20',
+            'company_web' => 'max:50',
+            'activity' => 'max:50',
+            'logo_text' => 'required|max:30',
+            'message' => 'required|max:500',
+   
+        ]);
+
+        if ($validator->fails()) 
+            return redirect('/order')->with('errors', 'Incorrectly filleds order feedback!')->withInput();
+
+        Mail::send(['html' => 'emails.order'], ['input' => $request], function($message) use ($request)
+        {
+            $message->to('silverreve23@gmail.com');
+            $message->subject('Order on free design email of UP Group Printing');
+            $message->from($request->get('email'));
+            if($request->hasFile('logo_file'))
+                $message->attach($request->file('logo_file')->getPathName(),
+            ['as' => 'attach_file.'.$request->file('logo_file')->getClientOriginalExtension(), 'mime' => $request->file('logo_file')->getMimeType()]);
+        });
+
+        return redirect('/')->with('sended', 'Order free design form sended!');;
     }
 
 }

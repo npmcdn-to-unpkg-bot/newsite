@@ -35,4 +35,5 @@ Route::get('/view/{id}', ['as' => 'view_get', 'uses' => 'PageCNV@view']);
 Route::get('/', ['as' => 'home_get', 'uses' => 'PageCNV@getHome']);
 Route::post('/feedback', ['as' => 'post_feedback', 'uses' => 'PageCNV@postFeedback']);
 
-Route::get('/o', ['as' => '0_get', 'uses' => 'PageCNV@getO']);
+Route::get('/order', ['as' => 'order_get', 'uses' => 'PageCNV@getOrder']);
+Route::post('/order', ['as' => 'order_post', 'uses' => 'PageCNV@postOrder']);

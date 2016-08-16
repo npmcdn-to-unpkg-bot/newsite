@@ -18,7 +18,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ Url('/') }}">home</a></li>
-
+              <li><a href="{{ Url('/cart') }}">cart <span style="background-color: white; padding: 3px; color: black;">23</span></a></li>
             @if(isset(Auth::user()->name))
               <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
             @else

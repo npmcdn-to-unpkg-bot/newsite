@@ -1,4 +1,14 @@
-
+.count-cart{
+	position: absolute; 
+	top: 0; 
+	right: 0; 
+	min-width: 28px; 
+	background: #25bc66; 
+	font-weight: bold; 
+	border-radius: 15px; 
+	color: white;
+	text-align: center;
+}
 .hr-color {
 	width: 100%;
 	height: 70px;

@@ -30,6 +30,20 @@
 
 </head>
 	<body>
+	
+	@if(session('errors'))
+		<div class="alert alert-danger">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		    <strong>Danger!</strong> {{session('errors')}}
+		</div>
+	@endif
+
+	@if(session('sended'))
+		<div class="alert alert-success">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+		    <strong>Success!</strong> {{session('sended')}}
+		</div>
+	@endif
 
     <header>
 		<div class="container-fluid">
@@ -39,6 +53,7 @@
 				</a>
 			</div>
 			<div class="col-xs-12 col-sm-5 pull-right">
+			<div class="count-cart">23</div>
 				<ul class="header-items">
 					<li>
 						<a href="#">
@@ -66,11 +81,11 @@
 						Products
 						<i class="fa fa-angle-down" aria-hidden="true"></i>
 					</button>
-					<ul class="dropdown-menu" aria-labelledby="dropdown-toggle-1">
+					<ul class="dropdown-menu" id="dropdown-menu-1">
 						<li><a href="#">Plasic details</a></li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" id="dropdown-toggle-2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Banners <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-							<ul class="dropdown-menu">
+							<a href="#dropdown-menu-2" class="dropdown-toggle" id="dropdown-toggle-2">Banners <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+							<ul class="dropdown-menu" id="dropdown-menu-2">
 								<li><a href="#">Item</a></li>
 								<li><a href="#">Item</a></li>
 								<li><a href="#">Item</a></li>
