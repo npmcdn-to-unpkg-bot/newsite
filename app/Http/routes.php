@@ -24,6 +24,8 @@ Route::post('/admin/gedit', ['as' => 'admin_regedit_post', 'uses' => 'Admin\Admi
 
 Route::get('/admin/delete/{id}', ['as' => 'admin_delete_get', 'uses' => 'Admin\AdminCNV@delete']);
 
+Route::get('/admin/delete-cart/{id}', 'Admin\AdminCNV@deleteCart');
+
 Route::get('/admin/mycnv', ['as' => 'admin_mycnv_get', 'uses' => 'Admin\AdminCNV@myview']);
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');

@@ -15,7 +15,7 @@
 //==================================================
 @foreach($cvn as $iCvn)
 var jsnLoad = '{!!$iCvn->json_data!!}';
-var idCnv = {{$iCvn->id}};
+var idCnv = {{$iCvn->id_cnv}};
 @endforeach
 
 //==================================================
@@ -30,8 +30,16 @@ var textObj = null;
 //==================================================
 var canvas = new fabric.Canvas('c');
 
-canvas.setHeight(500);
-canvas.setWidth(600);
+canvas.setHeight(
+
+400
+
+);
+canvas.setWidth(
+
+600
+
+);
 
 canvas.loadFromJSON(jsnLoad, canvas.renderAll.bind(canvas));
 canvas.renderAll();
@@ -168,11 +176,12 @@ $('.btn_canvas_save').click(function(){
     }
 
 
-    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
+    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'id_pr_size' : $('#pr_size_cnv').val(), 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
 
         if(data == 1){
             alert('Update successfully!');
         }
+        
     });
 
 });

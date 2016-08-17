@@ -9,6 +9,14 @@ class Cart extends Model{
     protected $table = 'carts';
 
  	//=====================================
+	//method delete from cart
+	//=====================================
+	public function delMyCart($id){
+
+		return $this->where('id', $id)->delete();
+	}
+
+ 	//=====================================
 	//method add canvas in cart
 	//=====================================
 	public function addCnvCart($data){
@@ -21,7 +29,8 @@ class Cart extends Model{
 	//=====================================
 	public function getAllCnvCart($id){
 
-		return $this->select('cnv.*', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->paginate(6);
+		return $this->select('cnv.*', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->get();
 	}
+
 
 }

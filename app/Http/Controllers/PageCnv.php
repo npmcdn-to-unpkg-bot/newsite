@@ -19,10 +19,13 @@ class PageCnv extends Controller{
     //method boot load
     public function __construct(Cart $cartModel){
 
-        $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+        if (Auth::check()){
 
-        if($allCart->count() > 0)
-            return view()->share('cart', $allCart->count());
+            $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+
+            if($allCart->count() > 0)
+                return view()->share('cart', $allCart->count());
+        }
     }
 
     //===========================
@@ -30,7 +33,7 @@ class PageCnv extends Controller{
     //===========================
     protected function views(Cnv $cnvModel){
 
-        $allCnv = $cnvModel->getAllGalleryCnv(Auth::user()->id);
+        $allCnv = $cnvModel->getAllGalleryCnv();
 
         return view('views')->withCvn($allCnv);
     }

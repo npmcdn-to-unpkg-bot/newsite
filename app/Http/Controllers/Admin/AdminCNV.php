@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Cnv;
 use App\Models\Cart;
 use App\Models\Categories;
+use App\Models\SizePriceCanvas;
+
 
 use Auth;
 use Validator;
@@ -17,22 +19,28 @@ class AdminCNV extends Controller{
 
     //method boot load
     public function __construct(Cart $cartModel){
+        if (Auth::check()){
 
-        $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+            $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
 
-        return view()->share('cart', $allCart->count());
+            return view()->share('cart', $allCart->count());
+        }
     }
 
     //===========================
     //method create cvs
     //===========================
-    protected function create(Categories $catModel){
+    protected function create(Categories $catModel, SizePriceCanvas $rpsizeModel, Cart $cartModel){
 
         if (Auth::check()){
 
+            $prsize = $rpsizeModel->getAllPriceSize();
+
+            $firstPrSize = $rpsizeModel->getFirstPriceSize();
+
             $cats = $catModel->getAllCat();
 
-            return view('admin.create')->withCat($cats);
+            return view('admin.create')->withCat($cats)->withPrsize($prsize)->withFirstprsize($firstPrSize);
 
         }else{
 
@@ -94,6 +102,10 @@ class AdminCNV extends Controller{
             // dd($allCart);
 
             return view('admin.cart')->withCvn($allCart);
+
+        }else{
+
+            return redirect()->back();
         }
     }
 
@@ -117,7 +129,7 @@ class AdminCNV extends Controller{
     //===========================
     //method regedit cvs
     //===========================
-    protected function regedit(Cnv $cnvModel, Categories $catModel, $id){
+    protected function regedit(Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
 
         if (Auth::check()){
 
@@ -125,9 +137,11 @@ class AdminCNV extends Controller{
 
             $oneCnv = $cnvModel->getOneUserCnv($id, Auth::user()->id);
 
+            $prsize = $rpsizeModel->getAllPriceSize();
+
             $nowCat = $oneCnv->toArray()[0]['id_cat'];
 
-            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat);
+            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize);
         }
     }
 
@@ -152,6 +166,18 @@ class AdminCNV extends Controller{
     protected function delete(Cnv $cnvModel, $id){
 
         $cnvModel->delCnv($id);
+
+        return redirect()->back();
+    }
+
+    //===========================
+    //method delete cvs
+    //===========================
+    protected function deleteCart(Cart $cartModel, $id){
+
+        if (Auth::check()){
+            $cartModel->delMyCart($id);
+        }
 
         return redirect()->back();
     }

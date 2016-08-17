@@ -6,6 +6,8 @@
   <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/mystyle.css') }}">
 	<script type="text/javascript" src="{{ URL::asset('js/fabric.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/jscolor.js') }}"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
  <body>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -16,7 +18,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ Url('/') }}">home</a></li>
-              <li><a href="{{ Url('/admin/cart') }}">cart @if(isset($cart))<span style="background-color: white; padding: 3px; color: black;">  {{$cart}} </span>@endif</a></li>
+              <li><a href="{{ Url('/admin/cart') }}">cart @if(isset($cart))<span id="count_cart_span_admin" style="background-color: white; padding: 3px; color: black;">  {{$cart}} </span>@endif</a></li>
             @if(isset(Auth::user()->name))
               <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
             @else

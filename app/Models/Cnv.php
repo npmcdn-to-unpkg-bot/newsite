@@ -11,9 +11,9 @@ class Cnv extends Model{
 	//=====================================
 	//method return all canvas object JSON
 	//=====================================
-	public function getAllGalleryCnv($id_user){
+	public function getAllGalleryCnv(){
 
-		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->where('id_user', '!=', $id_user)->paginate(6);
+		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
 	}
 
 	//=====================================
@@ -45,7 +45,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getOneUserCnv($id_cnv, $id_user){
 
-		return $this->where('id', $id_cnv)->where('id_user', $id_user)->get();
+		return $this->select('cnv.*', 'sp.*', 'sp.title as title_sp', 'cnv.id as id_cnv')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('cnv.id', $id_cnv)->where('cnv.id_user', $id_user)->get();
 	}  
 
  	//=====================================
@@ -81,5 +81,6 @@ class Cnv extends Model{
 
 		$this->where('id', $id)->delete();
 	}
+
 
 }

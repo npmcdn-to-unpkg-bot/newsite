@@ -140,7 +140,7 @@ $(document).ready(function(){
 
 </div>
 
-<div>{!! $cvn->render() !!}</div>
+{{-- <div>{!! $cvn->render() !!}</div> --}}
   </div>
 </div>
 @stop

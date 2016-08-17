@@ -85,6 +85,8 @@ $(document).ready(function(){
                 if(data == 1){
 
                     alert('Added to cart!');
+                    $('#count_cart_span_admin').text(parseInt($('#count_cart_span_admin').text())+1);
+                    $('#count_cart_span_admin').css({'background':'green', 'color':'white', 'font-weight':'bold'});
                 }
             });
 
