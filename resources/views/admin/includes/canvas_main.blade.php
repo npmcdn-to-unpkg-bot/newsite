@@ -1,12 +1,7 @@
         <div class="col-sm-5">
 			      <canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
             <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <p id="alert_resized" style="display: none;color:red;">Click to canvas</p>
+ 
                     <input type="hidden" id="pr_size_cnv" name="pr_size" value="">
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
                     <button type="button" class="btn btn-primary" id="btn_shadow">Shadowify</button>
@@ -35,39 +30,6 @@
                       <script>
                         $(document).ready(function() {
                           // var c = new fabric.StaticCanvas('c');
-
-                          $( "#slider" ).slider({
-                            min: 1,
-                            max: {{$prsize->count()}},
-                            step: 1,
-
-                            slide: function( event, ui ) {
-                              $('#alert_resized').fadeIn(500).fadeOut(2000);
-                              var i = 1;
-                              
-
-                              @foreach($prsize as $iprSize)
-
-                                if (ui.value == i){
-
-                                  $('#pr_size_cnv').val({{$iprSize->id}});
-                                  $( "#price_ban" ).val( "{{$iprSize->price}}");
-                                  $( "#size_ban" ).val( "{{$iprSize->size}} {{$iprSize->title}}" );
-
-                                      // c.setHeight({{$iprSize->size_h}});
-                                      // c.setWidth({{$iprSize->size_w}});
-                                      // c.clear();
-                                      // c.renderAll();
-                                      // c.calcOffset();
-                                }
-                                i++;
-
-                              @endforeach
-
-
-                            }
-
-                          });
 
                           
 

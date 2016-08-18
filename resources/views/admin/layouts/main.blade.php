@@ -37,6 +37,15 @@
             <li><a href="{{Url('admin/create')}}">Create MyCanvas</a></li>
             <li><a href="{{Url('admin/mycnv')}}">Gallery MyCanvas</a></li>
             <li><a href="{{Url('gallery')}}">Gallery AllCanvas</a></li>
+            <br>
+
+            @if(Auth::user()->is_admin)
+            <li><a href="{{Url('admin/sizeprice')}}">Size and Price</a></li>
+            <li><a href="{{Url('admin/categories')}}">Categories</a></li>
+            <li><a href="{{Url('admin/orders')}}">Order Banner</a></li>
+            <li><a href="{{Url('admin/settings')}}">Settings</a></li>
+            @endif
+
           </ul>
         </div>
 

@@ -28,6 +28,11 @@ Route::get('/admin/delete-cart/{id}', 'Admin\AdminCNV@deleteCart');
 
 Route::get('/admin/mycnv', ['as' => 'admin_mycnv_get', 'uses' => 'Admin\AdminCNV@myview']);
 
+Route::get('/admin/settings', ['as' => 'admin_sett_get', 'uses' => 'Admin\AdminCNV@getSettings']);
+Route::get('/admin/sizeprice', ['as' => 'admin_sizeprice_get', 'uses' => 'Admin\AdminCNV@getSizePrice']);
+Route::get('/admin/categories', ['as' => 'admin_cat_get', 'uses' => 'Admin\AdminCNV@getCatSettings']);
+Route::get('/admin/orders', ['as' => 'admin_allorder_get', 'uses' => 'Admin\AdminCNV@getAllOrder']);
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -45,3 +50,5 @@ Route::post('/feedback', ['as' => 'post_feedback', 'uses' => 'PageCNV@postFeedba
 
 Route::get('/order', ['as' => 'order_get', 'uses' => 'PageCNV@getOrder']);
 Route::post('/order', ['as' => 'order_post', 'uses' => 'PageCNV@postOrder']);
+
+Route::get('/index/{id}', ['as' => 'index_get', 'uses' => 'PageCNV@getIndex']);

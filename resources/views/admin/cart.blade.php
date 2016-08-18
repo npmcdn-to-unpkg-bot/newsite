@@ -132,9 +132,9 @@ $(document).ready(function(){
 @if(isset($cart)) 
     <div class="col-sm-5 text-center">
     <h2>Count banners: {{$cart}}</h2>
-    <h2>General price: 180 $</h2>
+    <h2>General price: {{$price}}</h2>
     <br>
-    <button type="submit" class="btn btn-lg btn-primary">order</button>
+    <button type="submit" class="btn btn-lg btn-primary">order all banners</button>
     </div>
 @endif
 

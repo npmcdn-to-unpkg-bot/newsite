@@ -63,7 +63,7 @@ class Cnv extends Model{
 
 		$cnv = $this->where('id', $id)->first()->toArray();
 		
-		return $this->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'], 'id_user' => $id_user]);
+		return $this->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'], 'id_user' => $id_user, 'id_pr_size' => $data['id_pr_size']]);
 	}
 
  	//=====================================
@@ -71,7 +71,7 @@ class Cnv extends Model{
 	//=====================================
 	public function upCnv($data){
 
-		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public'], 'id_cat'=>$data['id_cat']]);
+		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public'], 'id_cat'=>$data['id_cat'], 'id_pr_size' => $data['id_pr_size']]);
 	}
 
  	//=====================================

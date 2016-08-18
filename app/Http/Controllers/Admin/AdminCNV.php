@@ -59,6 +59,7 @@ class AdminCNV extends Controller{
         $data['ch_public'] = $request->input('public');
         $data['id_cat'] = $request->input('id_cat');
         $data['id_user'] = Auth::user()->id;
+        $data['id_pr_size'] = $request->input('id_pr_size');
 
         echo $cnvModel->addCnv($data);
     }
@@ -78,6 +79,7 @@ class AdminCNV extends Controller{
     //method add to my cvs
     //===========================
     protected function add(Cnv $cnvModel, $id){
+
         if(Auth::check()){
 
             $cnvModel->addMyCnv($id, Auth::user()->id);
@@ -99,9 +101,14 @@ class AdminCNV extends Controller{
 
             $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
 
-            // dd($allCart);
+            $cartPrice = 0;
 
-            return view('admin.cart')->withCvn($allCart);
+            foreach ($allCart as $iCart) {
+                
+                $cartPrice += $iCart->price;
+            }
+
+            return view('admin.cart')->withCvn($allCart)->withPrice($cartPrice);
 
         }else{
 
@@ -155,6 +162,7 @@ class AdminCNV extends Controller{
         $data['name_cnv'] = $request->input('name');
         $data['ch_public'] = $request->input('public');
         $data['id_cat'] = $request->input('id_cat');
+        $data['id_pr_size'] = $request->input('id_pr_size');
         $data['id_user'] = Auth::user()->id;
 
         echo $cnvModel->upCnv($data);
@@ -163,9 +171,10 @@ class AdminCNV extends Controller{
     //===========================
     //method delete cvs
     //===========================
-    protected function delete(Cnv $cnvModel, $id){
+    protected function delete(Cart $cartModel, Cnv $cnvModel, $id){
 
         $cnvModel->delCnv($id);
+        $cartModel->deleteCnvCart($id);
 
         return redirect()->back();
     }
@@ -176,10 +185,80 @@ class AdminCNV extends Controller{
     protected function deleteCart(Cart $cartModel, $id){
 
         if (Auth::check()){
+
             $cartModel->delMyCart($id);
         }
 
         return redirect()->back();
     }
 
+    //===========================
+    //method settings site
+    //===========================
+    protected function getSettings(){
+
+        if (Auth::check()){
+            
+            return view('admin.settings');
+            
+        }else{
+
+            return redirect()->back();
+        }
+
+    }
+
+    //===========================
+    //method settings size and price
+    //===========================
+    protected function getSizePrice(SizePriceCanvas $rpsizeModel){
+
+        if (Auth::check()){
+
+            $prsize = $rpsizeModel->getAllPriceSize();
+            
+            return view('admin.sizeprice')->withPrsize($prsize);
+            
+        }else{
+
+            return redirect()->back();
+        }
+
+    }
+
+    //===========================
+    //method settings categories
+    //===========================
+    protected function getCatSettings(Categories $catModel){
+
+        if (Auth::check()){
+
+            $allCat = $catModel->getAllCat();
+            
+            return view('admin.categories')->withCat($allCat);
+            
+        }else{
+
+            return redirect()->back();
+        }
+
+    }
+
+    //===========================
+    //method settings allorders
+    //===========================
+    protected function getAllOrder(){
+
+        if (Auth::check()){
+            
+            return view('admin.allorders');
+            
+        }else{
+
+            return redirect()->back();
+        }
+
+    }
+
+//end class
 }

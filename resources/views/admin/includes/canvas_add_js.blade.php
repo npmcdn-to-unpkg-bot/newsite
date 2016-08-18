@@ -26,16 +26,61 @@ var canvas = new fabric.Canvas('c');
 //canvas size
 //==================================================
 canvas.setHeight(
-    400
 
+@if(isset($firstprsize)) {{$firstprsize->size_h}}
+@else 
+400
+@endif
 
 );
 canvas.setWidth(
 
+@if(isset($firstprsize)) {{$firstprsize->size_w}}
+@else 
 600
+@endif
 
 );
 
+//==================================================
+//slider bar to resize canvas
+//==================================================
+$( "#slider" ).slider({
+min: 1,
+max: {{$prsize->count()}},
+step: 1,
+
+slide: function( event, ui ) {
+
+    var i = 1;
+
+    var size_now_canvas_id = null;
+                              
+
+    @foreach($prsize as $iprSize)
+
+    if (ui.value == i){
+
+        size_now_canvas_id
+
+        $('#pr_size_cnv').val({{$iprSize->id}});
+        $( "#price_ban" ).val( "{{$iprSize->price}}");
+        $( "#size_ban" ).val( "{{$iprSize->size}} {{$iprSize->title}}" );
+
+            canvas.setHeight({{$iprSize->size_h}});
+            canvas.setWidth({{$iprSize->size_w}});
+                                      
+            canvas.renderAll();
+            canvas.calcOffset();
+    }
+    i++;
+
+    @endforeach
+
+
+    }
+
+});
 
 //==================================================
 //click btn add text
@@ -173,7 +218,7 @@ $('.btn_canvas_save').click(function(){
 
     $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>,
                              'name' : $('#save_json').val(),
-                             'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
+                             'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val(), 'id_pr_size' : $('#pr_size_cnv').val()}, function(data){
                                 // alert(data);
 
 

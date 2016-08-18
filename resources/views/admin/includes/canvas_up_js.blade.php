@@ -32,17 +32,60 @@ var canvas = new fabric.Canvas('c');
 
 canvas.setHeight(
 
-400
+@if(isset($firstprsize)) {{$firstprsize->size_h}}
+@else 
+@foreach($cvn as $iCvn) {{$iCvn->size_h}} @endforeach
+@endif
 
 );
 canvas.setWidth(
 
-600
+@if(isset($firstprsize)) {{$firstprsize->size_w}}
+@else 
+@foreach($cvn as $iCvn) {{$iCvn->size_w}} @endforeach
+@endif
 
 );
 
 canvas.loadFromJSON(jsnLoad, canvas.renderAll.bind(canvas));
 canvas.renderAll();
+
+//==================================================
+//slider bar to resize canvas
+//==================================================
+$( "#slider" ).slider({
+
+min: 1,
+max: {{$prsize->count()}},
+step: 1,
+
+slide: function( event, ui ) {
+
+    var i = 1;
+                              
+
+    @foreach($prsize as $iprSize)
+
+    if (ui.value == i){
+
+        $('#pr_size_cnv').val({{$iprSize->id}});
+        $( "#price_ban" ).val( "{{$iprSize->price}}");
+        $( "#size_ban" ).val( "{{$iprSize->size}} {{$iprSize->title}}" );
+
+            canvas.setHeight({{$iprSize->size_h}});
+            canvas.setWidth({{$iprSize->size_w}});
+                                      
+            canvas.renderAll();
+            canvas.calcOffset();
+    }
+    i++;
+
+    @endforeach
+
+
+    },
+
+});
 
 //==================================================
 //click btn add text
@@ -176,7 +219,7 @@ $('.btn_canvas_save').click(function(){
     }
 
 
-    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'id_pr_size' : $('#pr_size_cnv').val(), 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val()}, function(data){
+    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'id_pr_size' : $('#pr_size_cnv').val(), 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val(), 'id_pr_size' : $('#pr_size_cnv').val()}, function(data){
 
         if(data == 1){
             alert('Update successfully!');

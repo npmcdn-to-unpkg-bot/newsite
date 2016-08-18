@@ -17,6 +17,14 @@ class Cart extends Model{
 	}
 
  	//=====================================
+	//method delete canvas in cart where id canvas
+	//=====================================
+	public function deleteCnvCart($id){
+
+		return $this->where('id_cnv', $id)->delete();
+	}
+
+ 	//=====================================
 	//method add canvas in cart
 	//=====================================
 	public function addCnvCart($data){
@@ -29,7 +37,7 @@ class Cart extends Model{
 	//=====================================
 	public function getAllCnvCart($id){
 
-		return $this->select('cnv.*', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->get();
+		return $this->select('cnv.*', 'size_prices.price', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->get();
 	}
 
 

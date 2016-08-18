@@ -131,4 +131,13 @@ class PageCnv extends Controller{
         return redirect('/')->with('sended', 'Order free design form sended!');;
     }
 
+    //===========================
+    //method get index tests
+    //===========================
+    protected function getIndex($id){
+
+        return view('index'.$id);
+    }
+
+//end class
 }
