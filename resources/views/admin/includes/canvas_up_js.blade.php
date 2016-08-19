@@ -219,7 +219,7 @@ $('.btn_canvas_save').click(function(){
     }
 
 
-    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'id_pr_size' : $('#pr_size_cnv').val(), 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val(), 'id_pr_size' : $('#pr_size_cnv').val()}, function(data){
+    $.post('/admin/gedit', {'_token' : <?php echo '\''.csrf_token().'\''; ?>, 'name' : $('#save_json').val(), 'id' : idCnv, 'id_pr_size' : $('#pr_size_cnv').val(), 'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val(), 'id_pr_size' : parseInt($('#pr_size_cnv').val())}, function(data){
 
         if(data == 1){
             alert('Update successfully!');

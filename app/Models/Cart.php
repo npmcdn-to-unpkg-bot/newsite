@@ -39,6 +39,12 @@ class Cart extends Model{
 
 		return $this->select('cnv.*', 'size_prices.price', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->get();
 	}
+ 	//=====================================
+	//method get all cart
+	//=====================================
+	public function getAllCarts(){
 
+		return $this->select('cnv.*', 'users.name as user_name', 'size_prices.price', 'cnv.id as id_cnv', 'carts.id as id')->join('users', 'carts.id_user', '=', 'users.id')->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->paginate(6);
+	}
 
 }

@@ -33,6 +33,14 @@ Route::get('/admin/sizeprice', ['as' => 'admin_sizeprice_get', 'uses' => 'Admin\
 Route::get('/admin/categories', ['as' => 'admin_cat_get', 'uses' => 'Admin\AdminCNV@getCatSettings']);
 Route::get('/admin/orders', ['as' => 'admin_allorder_get', 'uses' => 'Admin\AdminCNV@getAllOrder']);
 
+Route::post('/admin/add_prsize', ['as' => 'admin_add_pr_size_post', 'uses' => 'Admin\AdminCNV@postAddPrSize']);
+Route::post('/admin/up_prsize', ['as' => 'admin_up_pr_size_post', 'uses' => 'Admin\AdminCNV@postUpPrSize']);
+Route::post('/admin/del_prsize', ['as' => 'admin_del_pr_size_post', 'uses' => 'Admin\AdminCNV@postDelPrSize']);
+
+Route::post('/admin/add_cat', ['as' => 'admin_add_pr_cat_post', 'uses' => 'Admin\AdminCNV@postAddCat']);
+Route::post('/admin/up_cat', ['as' => 'admin_up_pr_cat_post', 'uses' => 'Admin\AdminCNV@postUpCat']);
+Route::post('/admin/del_cat', ['as' => 'admin_del_pr_cat_post', 'uses' => 'Admin\AdminCNV@postDelCat']);
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');

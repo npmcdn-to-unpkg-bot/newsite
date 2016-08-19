@@ -119,7 +119,10 @@ $(document).ready(function(){
 </form>
 
     <button type="submit" class="btn btn-primary view_cnv-{{$iCvn->id}}" data-toggle="modal" data-target="#myModal">view</button>
+    
+@if(!isset(Auth::user()->is_admin))
     <button type="submit" class="btn btn-success buy_cnv-{{$iCvn->id}}">order</button>
+@endif
 
 <br>
 <br>

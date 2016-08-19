@@ -12,6 +12,7 @@ use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
@@ -50,6 +51,25 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method regedit cvs
+    //===========================
+    protected function regedit(Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
+
+        if (Auth::check()){
+
+            $cats = $catModel->getAllCat();
+
+            $oneCnv = $cnvModel->getOneUserCnv($id, Auth::user()->id);
+
+            $prsize = $rpsizeModel->getAllPriceSize();
+
+            $nowCat = $oneCnv->toArray()[0]['id_cat'];
+
+            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize);
+        }
+    }
+
+    //===========================
     //method storage cvs
     //===========================
     protected function storage(Cnv $cnvModel, Request $request){
@@ -62,6 +82,174 @@ class AdminCNV extends Controller{
         $data['id_pr_size'] = $request->input('id_pr_size');
 
         echo $cnvModel->addCnv($data);
+    }
+
+    //===========================
+    //method add pr_size
+    //===========================
+    protected function postAddPrSize(SizePriceCanvas $rpsizeModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+
+            'add_pr_size_title' => 'required|max:55',
+            'add_pr_size_size' => 'required|max:5',
+            'add_pr_size_price' => 'required|max:5',
+            'add_pr_size_width' => 'required|max:10',
+            'add_pr_size_height' => 'required|max:10',
+
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = $request->input('add_pr_size_title');
+        $data['size'] = $request->input('add_pr_size_size');
+        $data['price'] = $request->input('add_pr_size_price');
+        $data['width'] = $request->input('add_pr_size_width');
+        $data['height'] = $request->input('add_pr_size_height');
+
+        $add = $rpsizeModel->addPrSize($data);
+
+        if($add)
+            return redirect()->back()->with('successadmin', 'Added one new Price and Size!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+
+        return redirect()->back();
+    }
+
+    //===========================
+    //method update pr_size
+    //===========================
+    protected function postUpPrSize(SizePriceCanvas $rpsizeModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+
+            'up_pr_size_title' => 'required|max:55',
+            'up_pr_size_size' => 'required|max:5',
+            'up_pr_size_price' => 'required|max:5',
+            'up_pr_size_width' => 'required|max:10',
+            'up_pr_size_height' => 'required|max:10',
+
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = $request->input('up_pr_size_title');
+        $data['size'] = $request->input('up_pr_size_size');
+        $data['price'] = $request->input('up_pr_size_price');
+        $data['width'] = $request->input('up_pr_size_width');
+        $data['height'] = $request->input('up_pr_size_height');
+        $data['id'] = $request->input('up_pr_size_id');
+
+        $up = $rpsizeModel->upPrSize($data);
+
+        if($up)
+            return redirect()->back()->with('successadmin', 'Update Price and Size!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+
+    }
+
+    //===========================
+    //method delete pr_size
+    //===========================
+    protected function postDelPrSize(SizePriceCanvas $rpsizeModel, Request $request){
+
+        $data['id'] = $request->input('del_pr_size_id');
+
+        $del = $rpsizeModel->delPrSize($data['id']);
+
+        if($del)
+            return redirect()->back()->with('successadmin', 'Deleted Price and Size!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
+    //method add categories
+    //===========================
+    protected function postAddCat(Categories $catModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'add_cat_title' => 'required|max:55',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = $request->input('add_cat_title');
+        
+
+        if($request->hasFile('add_cat_image') && $request->file('add_cat_image')->isValid()){
+
+            $data['image'] = $request->file('add_cat_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('add_cat_image')->move(public_path('assets/images/'), $data['image']);
+
+
+
+        }else{
+
+            $data['image'] = 'noimage.png';
+        }
+
+
+        $catModel->addCat($data);
+
+        return redirect()->back()->with('successadmin', 'Added one new category!');
+    }
+
+    //===========================
+    //method update categories
+    //===========================
+    protected function postUpCat(Categories $catModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'up_cat_title' => 'required|max:55',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = $request->input('up_cat_title');
+        $data['id'] = $request->input('up_cat_id');
+
+        if($request->hasFile('up_cat_image') && $request->file('up_cat_image')->isValid()){
+
+            $data['image'] = $request->file('up_cat_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_cat_image')->move(public_path('assets/images/'), $data['image']);
+
+
+
+        }else{
+
+            $data['image'] = null;
+        }
+
+
+        $catModel->upCat($data);
+
+        return redirect()->back()->with('successadmin', 'Update category!');
+    }
+
+    //===========================
+    //method delete categories
+    //===========================
+    protected function postDelCat(Categories $catModel, Request $request){
+
+        $data['id'] = $request->input('del_cat_id');
+
+        $del = $catModel->delCat($data);
+
+        if($del)
+            return redirect()->back()->with('successadmin', 'Delete category!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
     }
 
     //===========================
@@ -130,25 +318,6 @@ class AdminCNV extends Controller{
         }else{
 
             return redirect()->back();
-        }
-    }
-
-    //===========================
-    //method regedit cvs
-    //===========================
-    protected function regedit(Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
-
-        if (Auth::check()){
-
-            $cats = $catModel->getAllCat();
-
-            $oneCnv = $cnvModel->getOneUserCnv($id, Auth::user()->id);
-
-            $prsize = $rpsizeModel->getAllPriceSize();
-
-            $nowCat = $oneCnv->toArray()[0]['id_cat'];
-
-            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize);
         }
     }
 
@@ -247,11 +416,15 @@ class AdminCNV extends Controller{
     //===========================
     //method settings allorders
     //===========================
-    protected function getAllOrder(){
+    protected function getAllOrder(Cart $cartModel){
 
         if (Auth::check()){
+
+            $carts = $cartModel->getAllCarts();
+
+            // dd($carts);
             
-            return view('admin.allorders');
+            return view('admin.allorders')->withOrders($carts);
             
         }else{
 

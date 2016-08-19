@@ -23,6 +23,13 @@ class Cnv extends Model{
 
 		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
 	}
+	//=====================================
+	//method return all canvas object JSON
+	//=====================================
+	public function getAllHomeCnv(){
+
+		return $this->select('cnv.*', 'categories.image as cat_img', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->get();
+	}
 
  	//=====================================
 	//method return one canvas object JSON of id user
@@ -53,7 +60,7 @@ class Cnv extends Model{
 	//=====================================
 	public function addCnv($data){
 
-		return $this->insert(['name'=>$data['name_cnv'], 'id_cat' => $data['id_cat'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public']]);
+		return $this->insert(['name'=>$data['name_cnv'], 'id_cat' => $data['id_cat'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public'], 'id_pr_size'=>$data['id_pr_size']]);
 	}
 
  	//=====================================
@@ -63,7 +70,7 @@ class Cnv extends Model{
 
 		$cnv = $this->where('id', $id)->first()->toArray();
 		
-		return $this->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'], 'id_user' => $id_user, 'id_pr_size' => $data['id_pr_size']]);
+		return $this->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'], 'id_user' => $id_user, 'id_pr_size' => $cnv['id_pr_size']]);
 	}
 
  	//=====================================

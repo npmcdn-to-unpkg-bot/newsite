@@ -51,11 +51,12 @@ class PageCnv extends Controller{
     //===========================
     //method home cvs
     //===========================
-    protected function getHome(Cnv $cnvModel){
+    protected function getHome(Cnv $cnvModel, Categories $catModel){
 
-        $allCnv = $cnvModel->getAllCnv();
+        $allCnv = $cnvModel->getAllHomeCnv();
+        $cats = $catModel->getAllCat();
 
-        return view('index')->withCvn($allCnv);
+        return view('index')->withCvn($allCnv)->withCat($cats);
     }
 
     //===========================

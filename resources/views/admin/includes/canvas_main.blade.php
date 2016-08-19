@@ -2,7 +2,10 @@
 			      <canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
             <br>
  
-                    <input type="hidden" id="pr_size_cnv" name="pr_size" value="">
+                    <input type="hidden" id="pr_size_cnv" name="pr_size" value="
+                    @if(isset($firstprsize)){{$firstprsize->id}} 
+                    @else @foreach($cvn as $iCvn) {{$iCvn->id_pr_size}} @endforeach
+                    @endif">
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
                     <button type="button" class="btn btn-primary" id="btn_shadow">Shadowify</button>
                     <button type="button" class="btn btn-primary" id="btn_gradient">Gradient</button>
@@ -26,15 +29,6 @@
                        @else @foreach($cvn as $iCvn) {{$iCvn->size}} {{$iCvn->title}} @endforeach @endif">
                     </p>
                     <div id="slider" style="width: 600px;"></div>
-                    
-                      <script>
-                        $(document).ready(function() {
-                          // var c = new fabric.StaticCanvas('c');
-
-                          
-
-                        });
-                      </script>
 
                     <br><br>
                     <div class="input-group colorpicker-component">

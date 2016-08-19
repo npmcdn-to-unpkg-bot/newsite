@@ -88,31 +88,15 @@
 		<h1 class="text-center">Popular templates</h1>
 		
 		<ul class="template-filter">
+
+		@foreach($cat as $iCat)
 			<li>
-				<a href="#" data-filter=".real_estate" class="active">
-					<img class="img-responsive" src="{{asset('assets/images/real_estate.png')}}" alt="" />
+				<a href="#" data-filter=".{{$iCat->title}}" class="active">
+					<img class="img-responsive" src="{{asset('assets/images/'.$iCat->image)}}" alt="" />
 				</a>
 			</li>
-			<li>
-				<a href="#" data-filter=".food">
-					<img class="img-responsive" src="{{asset('assets/images/food.png')}}" alt="" />
-				</a>
-			</li>
-			<li>
-				<a href="#" data-filter=".auto">
-					<img class="img-responsive" src="{{asset('assets/images/auto.png')}}" alt="" />
-				</a>
-			</li>
-			<li>
-				<a href="#" data-filter=".event">
-					<img class="img-responsive" src="{{asset('assets/images/event.png')}}" alt="" />
-				</a>
-			</li>
-			<li>
-				<a href="#" data-filter=".restaurant">
-					<img class="img-responsive" src="{{asset('assets/images/restaurant.png')}}" alt="" />
-				</a>
-			</li>
+		@endforeach
+
 		</ul>
 		<div class="templates-container">
 			<div class="col-xs-3"></div>

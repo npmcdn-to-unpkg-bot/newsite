@@ -10,45 +10,59 @@
 
 
 {{-- content --}}
-        <div class="col-md-8">
+        <div class="col-md-12">
   
               <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#update_cat">Update</a></li>
+                <li class="active"><a data-toggle="tab" href="#update_cat">Update/Delete</a></li>
                 <li><a data-toggle="tab" href="#add_cat">Add</a></li>
               </ul>
 
               <div class="tab-content">
                 <div id="update_cat" class="tab-pane fade in active">
                     <br>
-                    <p>Update categories.</p>
-                    <br>
+                    <p>Update categories.</p><br>
                     
-                        <div class="row" style="">
-                            <div class="col-sm-3">
+                    <div class="row" style="">
+                        <div class="col-sm-3">
                                 <label>image</label>
-                            </div>
-                            <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-6">
                                 <label>title</label>
-                            </div>
-                            <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-2">
                                 
-                            </div>
-           
-                        </div><br>
+                        </div>
+                    </div><br>
 
-                        @foreach($cat as $iCat)
-                        <form>
+                    @foreach($cat as $iCat)
+
+                        <form class="form-cat" action="/admin/up_cat" method="post" enctype="multipart/form-data">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="up_cat_id" value="{{$iCat->id}}">
+
                         <div class="row" style="">
+
                             <div class="col-sm-3">
-                            <input type="file" id="inpf_cat_up_{{$iCat->id}}" style="display: none;">
+                            <input type="file" id="inpf_cat_up_{{$iCat->id}}" name="up_cat_image" style="display: none;">
                                 <img src="{{asset('assets/images/'.$iCat->image)}}" class="img-rounded" id="img_cat_up_{{$iCat->id}}" width="70" height="60">
                             </div>
-                            <div class="col-sm-6">
-                                <input name="add_cat" type="text" class="form-control" style="margin-top: 13px;" value="{{$iCat->title}}" />
+                            <div class="col-sm-5">
+                                <input name="up_cat_title" type="text" class="form-control" style="margin-top: 17px;" value="{{$iCat->title}}" />
                             </div>
                             <div class="col-sm-2">
-                                <button type="submit" class="btn btn-primary btn-md" style="margin-top: 13px;">update categories</button>
+                                <button type="submit" class="btn btn-primary btn-md" style="margin-top: 17px;">update categories</button>
                             </div>
+                        </form>
+
+                            <div class="col-sm-2">
+                                <form class="form-cat-delete" action="/admin/del_cat" method="post" >
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <input type="hidden" name="del_cat_id" value="{{$iCat->id}}">
+                                    <button type="submit" class="btn btn-danger btn-md" style="margin-top: 17px;">delete categories</button>
+                                </form>
+                            </div>
+
                         </div><br><br>
 
                         <script type="text/javascript">
@@ -79,27 +93,27 @@
                         });
 
                         </script>
-                        </form>
-                        @endforeach
 
-                    
 
-                    <br>
-
-                    
+                    @endforeach
                 </div>
 
                 <div id="add_cat" class="tab-pane fade">
+                <div class="col-md-offset-3 col-md-5">
                     <br>
                     <p>Add categories.</p>
                     <br>
                     <div class="form-group">
-                    <form action="">
+                      <form class="form-cat" action="/admin/add_cat" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                         <label for="align_text">title</label><br>
-                        <input name="add_cat" type="text" class="form-control" />
+
+                        <input name="add_cat_title" type="text" class="form-control" />
                         <br>
                         <img src="{{asset('assets/images/noimage.png')}}" class="img-rounded" id="img_cat_new" width="202" height="134"><br>
-                        <input type="file" style="display: none;" id="inpf_cat_new"><br>
+
+                        <input type="file" style="display: none;" name="add_cat_image" id="inpf_cat_new"><br>
 
                         <script type="text/javascript">
       
@@ -135,6 +149,7 @@
                     </div>           
                     <button type="submit" class="btn btn-primary btn-sm">add new category</button>
                     </form>
+                    </div>
                 </div>
 
             </div>
