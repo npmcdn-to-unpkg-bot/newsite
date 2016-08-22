@@ -49,7 +49,9 @@
 		<div class="container-fluid">
 			<div class="col-xs-12 col-sm-3">
 				<a href="/">
-					<img class="img-responsive" src="{{asset('assets/images/logo.png')}}" alt="UPGROUP" />
+				@foreach($logo as $iLogo)
+					<img class="img-responsive" src="{{asset('assets/images/'.$iLogo->logo)}}" alt="UPGROUP" />
+				@endforeach
 				</a>
 			</div>
 			<div class="col-xs-12 col-sm-5 pull-right">
@@ -107,27 +109,24 @@
 			</ol>
 		
 			<div class="carousel-inner header-carousel" role="listbox">
-				<div class="item active">
-					<img src="{{asset('assets/images/slider-item-1.png')}}" alt="sline1" />
-					<div class="col-xs-12 col-sm-6">
-						<h1>High-quality, custom fabic banner.</h1>
-						<h2>With a 100% Satisfaction Guarantee</h2>
-					</div>
-				</div>
+
+			@foreach($slider as $iSlider)
+
 				<div class="item">
-					<img src="{{asset('assets/images/slider-item-1.png')}}" alt="sline1" />
+					<img src="{{asset('assets/images/'.$iSlider->images)}}" />
 					<div class="col-xs-12 col-sm-6">
 						<h1>High-quality, custom fabic banner.</h1>
 						<h2>With a 100% Satisfaction Guarantee</h2>
 					</div>
 				</div>
-				<div class="item">
-					<img src="{{asset('assets/images/slider-item-1.png')}}" alt="sline1" />
-					<div class="col-xs-12 col-sm-6">
-						<h1>High-quality, custom fabic banner.</h1>
-						<h2>With a 100% Satisfaction Guarantee</h2>
-					</div>
-				</div>
+			@endforeach
+
+			<script type="text/javascript">
+	
+				$('.header-carousel :first-child').attr('class', 'item active');
+	
+			</script>
+
 			</div>
 		</div>
 	</header>

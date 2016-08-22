@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCartsTable extends Migration
+class CreateSlidersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,9 @@ class CreateCartsTable extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('id_user');
-            $table->integer('id_cnv');
-            $table->boolean('status')->nullable();
+            $table->string('images', 255);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateCartsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('carts');
+        Schema::drop('sliders');
     }
 }

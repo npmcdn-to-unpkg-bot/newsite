@@ -105,15 +105,30 @@
 @foreach($cvn as $iCvn)
 			<div class="col-xs-6 col-sm-3 template-item {{$iCvn->cat_name}}">
 
-				<canvas style="border: 1px solid gray;" id="cnv-{{$iCvn->id}}"></canvas>
+				<canvas style="border: 1px solid #E1E1E1;" id="cnv-{{$iCvn->id}}"></canvas>
 				<script type="text/javascript">
 
 
 				
 
 				    var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
-				    canvas.setHeight(500);
-				    canvas.setWidth(600);
+
+		            canvas.setHeight(
+
+		                @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}
+		                @else 
+		                400
+		                @endif
+
+		            );
+		            canvas.setWidth(
+
+		                @if(!empty($iCvn->size_w)) {{$iCvn->size_w}}
+		                @else 
+		                600
+		                @endif
+
+		            );
 
 				    var jsn = '{!!$iCvn->json_data!!}';
 

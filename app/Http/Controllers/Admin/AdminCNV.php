@@ -6,6 +6,9 @@ use App\Models\Cnv;
 use App\Models\Cart;
 use App\Models\Categories;
 use App\Models\SizePriceCanvas;
+use App\Models\Slider;
+use App\Models\Social;
+use App\Models\Settings;
 
 
 use Auth;
@@ -287,7 +290,7 @@ class AdminCNV extends Controller{
 
         if(Auth::check()){
 
-            $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
+            $allCart = $cartModel->getAllCnvCartOrdered(Auth::user()->id);
 
             $cartPrice = 0;
 
@@ -364,17 +367,119 @@ class AdminCNV extends Controller{
     //===========================
     //method settings site
     //===========================
-    protected function getSettings(){
+    protected function getSettings(Slider $sliderModel, Settings $settModel, Social $socModel){
 
         if (Auth::check()){
+
+            $allSlider = $sliderModel->getAllSliders();
+            $logo = $settModel->getLogo();
+            $soc = $socModel->getSoc();
             
-            return view('admin.settings');
+            return view('admin.settings')->withSlider($allSlider)->withLogo($logo)->withSoc($soc);
             
         }else{
 
             return redirect()->back();
         }
 
+    }
+
+    //===========================
+    //method add slider
+    //===========================
+    protected function postAddSlider(Slider $sliderModel, Request $request){
+
+        if($request->hasFile('add_slider_image')){
+
+            $data['image'] = $request->file('add_slider_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('add_slider_image')->move(public_path('assets/images/'), $data['image']);
+
+            $sliderModel->addSlider($data);
+        }else{
+            return redirect()->back()->with('errorsadmin', 'Error!');
+        }
+
+        return redirect()->back()->with('successadmin', 'Added one new image slider!');
+    }
+
+    //===========================
+    //method update slider
+    //===========================
+    protected function postUpSlider(Slider $sliderModel, Request $request){
+
+        $data['id'] = $request->input('up_slider_id');
+
+        if($request->hasFile('up_slider_image') && $request->file('up_slider_image')->isValid()){
+
+            $data['image'] = $request->file('up_slider_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_slider_image')->move(public_path('assets/images/'), $data['image']);
+
+            $sliderModel->upSlider($data);
+        }
+
+        return redirect()->back()->with('successadmin', 'Update slider!');
+    }
+
+    //===========================
+    //method delete slider
+    //===========================
+    protected function postDelSlider(Slider $sliderModel, Request $request){
+
+        $data['id'] = $request->input('del_slider_id');
+
+        $del = $sliderModel->delSlider($data);
+
+        if($del)
+            return redirect()->back()->with('successadmin', 'Delete image slider!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
+    //method update logo
+    //===========================
+    protected function postUpLogo(Settings $settModel, Request $request){
+
+        $data['id'] = $request->input('up_logo_id');
+
+        if($request->hasFile('up_logo_image') && $request->file('up_logo_image')->isValid()){
+
+            $data['image'] = $request->file('up_logo_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_logo_image')->move(public_path('assets/images/'), $data['image']);
+
+            $settModel->upLogo($data);
+
+            return redirect()->back()->with('successadmin', 'Update slider!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
+    //method update Social network
+    //===========================
+    protected function postUpSoc(Social $socModel, Request $request){
+
+        $data['id'] = $request->input('up_soc_id');
+
+        $valid = Validator::make($request->all(), [
+            'up_soc_title' => 'required|max:255',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['href'] = $request->input('up_soc_title');
+
+        $socModel->upSoc($data);
+
+        return redirect()->back()->with('successadmin', 'Update!');  
     }
 
     //===========================
@@ -422,13 +527,50 @@ class AdminCNV extends Controller{
 
             $carts = $cartModel->getAllCarts();
 
-            // dd($carts);
-            
             return view('admin.allorders')->withOrders($carts);
             
         }else{
 
             return redirect()->back();
+        }
+
+    }
+
+    //===========================
+    //method get status
+    //===========================
+    protected function getStatus(Cart $cartModel){
+
+        if (Auth::check()){
+
+            $carts = $cartModel->getAllCartsStatus();
+
+            return view('admin.status')->withOrders($carts);
+            
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+    //===========================
+    //method add orders
+    //===========================
+    protected function postAddOrders(Cart $cartModel, Request $request){
+
+        $data['id'] = $request->input('add_orders_user_id');
+
+        if(true){
+
+            $addOrdered = $cartModel->addOrdered($data);
+
+            if($addOrdered)
+                return redirect()->back()->with('successadmin', 'Order successfull!');
+            else
+                return redirect()->back()->with('errorsadmin', 'Error!');
+
+        }else{
+            return redirect()->back()->with('errorsadmin', 'Error!');
         }
 
     }

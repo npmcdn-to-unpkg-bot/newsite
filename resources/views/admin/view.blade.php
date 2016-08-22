@@ -15,7 +15,7 @@
         <div class="modal-body modal-lg">
         <div class="container-fluid">
               <div class="col-sm-10"><canvas style="" id="prev_cnv"></canvas></div>
-              <div class="col-sm-2" id="modal_prev_name" style="line-height: 500px;font-weight:bold;"></div>
+              <div class="col-sm-2" id="modal_prev_name" style="font-weight:bold;"></div>
         </div>
                 
           </div>
@@ -27,20 +27,35 @@
 <h3>View My Canvas</h3><br>
 <div class="row">
 @foreach($cvn as $iCvn)
-<div class="col-sm-4" id='my_name'>
-<p>{{$iCvn->name}}</p>
-<canvas style="border: 2px solid gray; border-radius: 5px;" id="cnv-{{$iCvn->id}}"></canvas>
+<div class="col-sm-6" id='my_name'>
+    <p>{{$iCvn->name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}})</p>
+<canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
 <script type="text/javascript">
 
 $(document).ready(function(){
 
-    var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
-    canvas.setHeight(500);
-    canvas.setWidth(600);
+    var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');  
+
+            canvas.setHeight(
+
+                @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}
+                @else 
+                400
+                @endif
+
+            );
+            canvas.setWidth(
+
+                @if(!empty($iCvn->size_w)) {{$iCvn->size_w}}
+                @else 
+                600
+                @endif
+
+            );
 
     var jsn = '{!!$iCvn->json_data!!}';
 
-    var factor = 0.4;
+    var factor = 0.6;
                       
     var myobjects = canvas.getObjects();
 

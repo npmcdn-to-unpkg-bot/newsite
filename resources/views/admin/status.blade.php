@@ -7,12 +7,20 @@
 
 
 <div class="container-fluid bg-3 text-center">
-<h3>View All Canvas</h3><br>
+<h3>View All Canvases Status</h3><br>
 <div class="row">
 @foreach($orders as $iOrder)
 <div class="col-sm-4">
-<p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}})</p>
-<canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iOrder->id}}"></canvas>
+<p>{{$iOrder->name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) 
+
+@if($iOrder->status == true)
+&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+@else
+&nbsp;&nbsp;<span class="glyphicon glyphicon-hourglass"></span>
+@endif
+</p>
+    <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iOrder->id}}">
+    </canvas>
 <script type="text/javascript">
 
     var canvas = new fabric.StaticCanvas('cnv-{{$iOrder->id}}');

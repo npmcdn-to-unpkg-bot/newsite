@@ -33,18 +33,44 @@ class Cart extends Model{
 	}
 
  	//=====================================
+	//method update canvas in cart as ordered
+	//=====================================
+	public function addOrdered($data){
+
+		return $this->where('id_user', $data['id'])->update(['ordered' => 1]);
+	}
+
+ 	//=====================================
 	//method get all user canvas of cart
 	//=====================================
 	public function getAllCnvCart($id){
 
-		return $this->select('cnv.*', 'size_prices.price', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->get();
+		return $this->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->get();
 	}
+
+ 	//=====================================
+	//method get all user canvas of cart ordered
+	//=====================================
+	public function getAllCnvCartOrdered($id){
+
+		return $this->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv', 'carts.id as id')->where('carts.id_user', $id)->where('ordered', false)->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->get();
+	}
+
  	//=====================================
 	//method get all cart
 	//=====================================
 	public function getAllCarts(){
 
-		return $this->select('cnv.*', 'users.name as user_name', 'size_prices.price', 'cnv.id as id_cnv', 'carts.id as id')->join('users', 'carts.id_user', '=', 'users.id')->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->paginate(6);
+		return $this->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name', 'cnv.id as id_cnv', 'carts.id as id')->join('users', 'carts.id_user', '=', 'users.id')->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->paginate(6);
 	}
 
+ 	//=====================================
+	//method get all cart status
+	//=====================================
+	public function getAllCartsStatus(){
+
+		return $this->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name', 'cnv.id as id_cnv', 'carts.id as id')->join('users', 'carts.id_user', '=', 'users.id')->join('cnv', 'cnv.id', '=', 'carts.id_cnv')->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')->where('ordered', true)->paginate(6);
+	}
+
+//end class
 }

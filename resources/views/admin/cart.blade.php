@@ -15,7 +15,7 @@
         <div class="modal-body modal-lg">
         <div class="container-fluid">
               <div class="col-sm-10"><canvas style="" id="prev_cnv"></canvas></div>
-              <div class="col-sm-2" id="modal_prev_name" style="line-height: 500px;font-weight:bold;"></div>
+              <div class="col-sm-2" id="modal_prev_name" style="font-weight:bold;"></div>
         </div>
                 
           </div>
@@ -31,8 +31,8 @@
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-4" id='my_name'>
-<p>{{$iCvn->name}}</p>
-<canvas style="border: 2px solid gray; border-radius: 5px;" id="cnv-{{$iCvn->id}}"></canvas>
+        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}})</p>
+<canvas style="border: 1px solid gray; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -117,7 +117,7 @@ $(document).ready(function(){
     <button type="submit" class="btn  btn-danger">Delete</button>
 </form>
 
-    <button type="submit" class="btn btn-primary view_cnv-{{$iCvn->id}}" data-toggle="modal" data-target="#myModal">view</button>
+    <button type="button" class="btn btn-primary view_cnv-{{$iCvn->id}}" data-toggle="modal" data-target="#myModal">view</button>
 
 <br>
 <br>
@@ -132,9 +132,13 @@ $(document).ready(function(){
 @if(isset($cart)) 
     <div class="col-sm-5 text-center">
     <h2>Count banners: {{$cart}}</h2>
-    <h2>General price: {{$price}}</h2>
+    <h2>General price: {{$price}} $</h2>
     <br>
-    <button type="submit" class="btn btn-lg btn-primary">order all banners</button>
+    <form action="/admin/add_orders" method="post">
+    <input type="hidden" name="_token" value="{{csrf_token()}}">
+    <input type="hidden" name="add_orders_user_id" value="{{Auth::user()->id}}">
+        <button type="submit" class="btn btn-lg btn-primary">order all banners</button>
+    </form>
     </div>
 @endif
 

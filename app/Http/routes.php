@@ -33,13 +33,25 @@ Route::get('/admin/sizeprice', ['as' => 'admin_sizeprice_get', 'uses' => 'Admin\
 Route::get('/admin/categories', ['as' => 'admin_cat_get', 'uses' => 'Admin\AdminCNV@getCatSettings']);
 Route::get('/admin/orders', ['as' => 'admin_allorder_get', 'uses' => 'Admin\AdminCNV@getAllOrder']);
 
+Route::post('/admin/add_orders', ['as' => 'admin_add_orders_post', 'uses' => 'Admin\AdminCNV@postAddOrders']);
+
 Route::post('/admin/add_prsize', ['as' => 'admin_add_pr_size_post', 'uses' => 'Admin\AdminCNV@postAddPrSize']);
 Route::post('/admin/up_prsize', ['as' => 'admin_up_pr_size_post', 'uses' => 'Admin\AdminCNV@postUpPrSize']);
 Route::post('/admin/del_prsize', ['as' => 'admin_del_pr_size_post', 'uses' => 'Admin\AdminCNV@postDelPrSize']);
 
-Route::post('/admin/add_cat', ['as' => 'admin_add_pr_cat_post', 'uses' => 'Admin\AdminCNV@postAddCat']);
-Route::post('/admin/up_cat', ['as' => 'admin_up_pr_cat_post', 'uses' => 'Admin\AdminCNV@postUpCat']);
-Route::post('/admin/del_cat', ['as' => 'admin_del_pr_cat_post', 'uses' => 'Admin\AdminCNV@postDelCat']);
+Route::post('/admin/add_cat', ['as' => 'admin_add_cat_post', 'uses' => 'Admin\AdminCNV@postAddCat']);
+Route::post('/admin/up_cat', ['as' => 'admin_up_cat_post', 'uses' => 'Admin\AdminCNV@postUpCat']);
+Route::post('/admin/del_cat', ['as' => 'admin_del_cat_post', 'uses' => 'Admin\AdminCNV@postDelCat']);
+
+Route::post('/admin/add_slider', ['as' => 'admin_add_slider_post', 'uses' => 'Admin\AdminCNV@postAddSlider']);
+Route::post('/admin/up_slider', ['as' => 'admin_up_slider_post', 'uses' => 'Admin\AdminCNV@postUpSlider']);
+Route::post('/admin/del_slider', ['as' => 'admin_del_slider_post', 'uses' => 'Admin\AdminCNV@postDelSlider']);
+
+Route::post('/admin/up_logo', ['as' => 'admin_up_logo_post', 'uses' => 'Admin\AdminCNV@postUpLogo']);
+
+Route::post('/admin/up_soc', ['as' => 'admin_up_soc_post', 'uses' => 'Admin\AdminCNV@postUpSoc']);
+
+Route::get('/admin/status', ['as' => 'admin_status_get', 'uses' => 'Admin\AdminCNV@getStatus']);
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

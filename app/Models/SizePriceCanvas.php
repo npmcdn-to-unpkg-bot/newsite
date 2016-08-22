@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SizePriceCanvas extends Model
-{
+class SizePriceCanvas extends Model{
+	
     protected $table = 'size_prices';
 
     //=====================================

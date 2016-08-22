@@ -31,12 +31,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-              <li><a href="{{ Url('/') }}">home</a></li>
+              <li><a href="{{ Url('/') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;home</a></li>
             @if(!isset(Auth::user()->is_admin))
-              <li><a href="{{ Url('/admin/cart') }}">cart @if(isset($cart))<span id="count_cart_span_admin" style="background-color: white; padding: 3px; color: black;">  {{$cart}} </span>@endif</a></li>
+              <li><a href="{{ Url('/admin/cart') }}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;cart @if(isset($cart))<span id="count_cart_span_admin" style="background-color: white; padding: 0 3px; color: black;">  {{$cart}} </span>@endif</a></li>
             @endif
             @if(isset(Auth::user()->name))
-              <li><a href="{{ Url('auth/logout') }}">{{ Auth::user()->name}} > logOut</a></li>
+              <li><a href="{{ Url('auth/logout') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;{{ Auth::user()->name}} > logOut</a></li>
             @else
               <li><a href="{{ Url('auth/login') }}">logIn</a></li>
             @endif
@@ -50,16 +50,17 @@
       <div class="row">
         <div class="col-sm-2 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="{{Url('admin/create')}}">Create MyCanvas</a></li>
-            <li><a href="{{Url('admin/mycnv')}}">Gallery MyCanvas</a></li>
-            <li><a href="{{Url('gallery')}}">Gallery AllCanvas</a></li>
+            <li><a href="{{Url('admin/create')}}"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Create MyCanvas</a></li>
+            <li><a href="{{Url('admin/mycnv')}}"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;Gallery MyCanvas</a></li>
+            <li><a href="{{Url('admin/status')}}"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Status Ordered</a></li>
+            <li><a href="{{Url('gallery')}}"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;Gallery AllCanvas</a></li>
             <br>
 
             @if(isset(Auth::user()->is_admin) && Auth::user()->is_admin)
-            <li><a href="{{Url('admin/sizeprice')}}">Size and Price</a></li>
-            <li><a href="{{Url('admin/categories')}}">Categories</a></li>
-            <li><a href="{{Url('admin/orders')}}">Order Banner</a></li>
-            <li><a href="{{Url('admin/settings')}}">Settings</a></li>
+            <li><a href="{{Url('admin/sizeprice')}}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;Size and Price</a></li>
+            <li><a href="{{Url('admin/categories')}}"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;&nbsp;&nbsp;Categories</a></li>
+            <li><a href="{{Url('admin/orders')}}"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;Order Banner</a></li>
+            <li><a href="{{Url('admin/settings')}}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;Settings</a></li>
             @endif
 
           </ul>

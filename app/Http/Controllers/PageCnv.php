@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 use App\Models\Cnv;
 use App\Models\Cart;
 use App\Models\Categories;
+use App\Models\SizePriceCanvas;
+use App\Models\Slider;
+use App\Models\Social;
+use App\Models\Settings;
 
 use App\Http\Requests;
 
@@ -51,12 +55,15 @@ class PageCnv extends Controller{
     //===========================
     //method home cvs
     //===========================
-    protected function getHome(Cnv $cnvModel, Categories $catModel){
+    protected function getHome(Cnv $cnvModel, Categories $catModel, Settings $settModel, Slider $sliderModel, Social $socModel){
 
         $allCnv = $cnvModel->getAllHomeCnv();
         $cats = $catModel->getAllCat();
+        $logo = $settModel->getLogo();
+        $slider = $sliderModel->getAllSliders();
+        $soc = $socModel->getSoc();
 
-        return view('index')->withCvn($allCnv)->withCat($cats);
+        return view('index')->withCvn($allCnv)->withCat($cats)->withLogo($logo)->withSlider($slider)->withSoc($soc);
     }
 
     //===========================

@@ -111,7 +111,7 @@
 
                         <input name="add_cat_title" type="text" class="form-control" />
                         <br>
-                        <img src="{{asset('assets/images/noimage.png')}}" class="img-rounded" id="img_cat_new" width="202" height="134"><br>
+                        <img src="{{asset('assets/images/noimage.png')}}" class="img-rounded" id="img_cat_new" width="150" height="134"><br>
 
                         <input type="file" style="display: none;" name="add_cat_image" id="inpf_cat_new"><br>
 

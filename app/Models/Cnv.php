@@ -13,7 +13,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllGalleryCnv(){
 
-		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
+		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
 	}
 
 	//=====================================
@@ -28,7 +28,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllHomeCnv(){
 
-		return $this->select('cnv.*', 'categories.image as cat_img', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->get();
+		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'categories.image as cat_img', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->orderBy('id', 'desc')->where('cnv.public', 1)->get();
 	}
 
  	//=====================================
@@ -36,7 +36,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getOneCnv($id_cnv){
 
-		return $this->select('cnv.*', 'users.name as user_name')->join('users', 'users.id', '=', 'cnv.id_user')->where('cnv.id', $id_cnv)->get();
+		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'users.name as user_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('cnv.id', $id_cnv)->get();
 	}  
 
  	//=====================================
@@ -44,7 +44,7 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllUserCnv($id_user){
 
-		return $this->where('id_user', $id_user)->orderBy('id', 'desc')->paginate(6);
+		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('id_user', $id_user)->orderBy('id', 'desc')->paginate(6);
 	}
  
  	//=====================================

@@ -6,75 +6,94 @@
 
 
 <div class="container-fluid bg-3 text-center">
+
 <h3>View All Canvas</h3><br>
+
 <div class="row">
+
 @foreach($cvn as $iCvn)
-<div class="col-sm-4">
-<p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}}</p>
-<canvas style="border: 2px solid gray; border-radius: 5px;" id="cnv-{{$iCvn->id}}"></canvas>
-<script type="text/javascript">
 
-    var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
-    canvas.setHeight(500);
-    canvas.setWidth(600);
+    <div class="col-sm-6">
 
-    var jsn = '{!!$iCvn->json_data!!}';
+    <div class="row">
 
-    var factor = 0.4;
-                      
-    var myobjects = canvas.getObjects();
+        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}})</p>
+        <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
+        <script type="text/javascript">
 
-    canvas.loadFromJSON(jsn, canvas.renderAll.bind(canvas), function(o, object){
+            var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
 
-        if (canvas.backgroundImage) {
+            canvas.setHeight(
 
-            var bi = canvas.backgroundImage;
-            bi.width = bi.width * factor; bi.height = bi.height * factor;
-        }
-        
+                @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}
+                @else 
+                400
+                @endif
 
-        var scaleX = object.scaleX;
-        var scaleY = object.scaleY;
-        var leftObj = object.left;
-        var topObj = object.top;
+            );
+            canvas.setWidth(
 
-        var tempScaleX = scaleX * factor;
-        var tempScaleY = scaleY * factor;
-        var tempLeft = Math.round(leftObj * factor);
-        var tempTop = Math.round(topObj * factor);
+                @if(!empty($iCvn->size_w)) {{$iCvn->size_w}}
+                @else 
+                600
+                @endif
 
-        object.scaleX = tempScaleX;
-        object.scaleY = tempScaleY;
-        object.left = tempLeft;
-        object.top = tempTop;
+            );
 
-        object.setCoords();
+            var jsn = '{!!$iCvn->json_data!!}';
+
+            var factor = 0.6;
+                              
+            var myobjects = canvas.getObjects();
+
+            canvas.loadFromJSON(jsn, canvas.renderAll.bind(canvas), function(o, object){
+
+                if (canvas.backgroundImage) {
+
+                    var bi = canvas.backgroundImage;
+                    bi.width = bi.width * factor; bi.height = bi.height * factor;
+                }
+                
+
+                var scaleX = object.scaleX;
+                var scaleY = object.scaleY;
+                var leftObj = object.left;
+                var topObj = object.top;
+
+                var tempScaleX = scaleX * factor;
+                var tempScaleY = scaleY * factor;
+                var tempLeft = Math.round(leftObj * factor);
+                var tempTop = Math.round(topObj * factor);
+
+                object.scaleX = tempScaleX;
+                object.scaleY = tempScaleY;
+                object.left = tempLeft;
+                object.top = tempTop;
+
+                object.setCoords();
 
 
-    });
+            });
 
-        canvas.setHeight(canvas.getHeight() * factor);
-        canvas.setWidth(canvas.getWidth() * factor);
-        canvas.renderAll();
-        canvas.calcOffset();
+                canvas.setHeight(canvas.getHeight() * factor);
+                canvas.setWidth(canvas.getWidth() * factor);
+                canvas.renderAll();
+                canvas.calcOffset();
 
-</script>
-<br>
-<br>
+        </script>
+        <br><br>
+        </div>
+        <div class="row">
+            <form action="{{Url('admin/add/'.$iCvn->id)}}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-success">add to my canvases</button>
+            </form>
 
-    <form action="{{Url('admin/add/'.$iCvn->id)}}" method="get" style="display: inline;">
-        <button type="submit" class="btn btn-success">add to my canvases</button>
-    </form>
-
-    <form action="{{Url('view/'.$iCvn->id)}}" method="get" style="display: inline;">
-        <button type="submit" class="btn btn-primary">view</button>
-    </form>
-
-<br>
-<br>
-<br>
-<br>
-</div>
+            <form action="{{Url('view/'.$iCvn->id)}}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-primary">view</button>
+            </form>
+        </div>
+        <br><br><br><br>
+    </div>
 @endforeach
 
 
