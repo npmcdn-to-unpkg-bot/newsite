@@ -17,7 +17,7 @@
 
     <div class="row">
 
-        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}})</p>
+        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$)</p>
         <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
         <script type="text/javascript">
 
@@ -91,11 +91,44 @@
             <form action="{{Url('view/'.$iCvn->id)}}" method="get" style="display: inline;">
                 <button type="submit" class="btn btn-primary">view</button>
             </form>
+                @if(isset(Auth::user()->is_admin) && Auth::user()->is_admin)
+                    <label class="checkbox-inline" style="margin-left: 30px;" id="ch_main_{{$iCvn->id}}">
+                    <input type="checkbox" 
+                    {{($iCvn->main == 1) ? 'checked' : null}} 
+                    value="1">View on Index</label>
+                    <br><br>
+                @endif
+
         </div>
         <br><br><br><br>
     </div>
 @endforeach
 
+@if(isset(Auth::user()->is_admin) && Auth::user()->is_admin)
+@foreach($cvn as $iCvn)
+    <script type="text/javascript">
+                    
+    $(function(){
+
+    var ch_main = 0;
+
+        $('#ch_main_{{$iCvn->id}} :checkbox').change(function(){
+
+            if($('#ch_main_{{$iCvn->id}} :checkbox').is(':checked'))
+                ch_main = 1;
+            else
+                ch_main = 0;
+
+
+            $.post('/admin/up_main', {'main' : ch_main, '_token' : <?php echo '\''.csrf_token().'\''; ?>, 'id': {{$iCvn->id}}}, function(data, textStatus){
+
+            });
+        });                     
+    });
+
+    </script>
+@endforeach
+@endif
 
 </div>
 <div>{!! $cvn->render() !!}</div>

@@ -11,7 +11,15 @@
 <div class="row">
 @foreach($orders as $iOrder)
 <div class="col-sm-4">
-<p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}})</p>
+<p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}})
+
+@if($iOrder->status == true)
+&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+@else
+&nbsp;&nbsp;<span class="glyphicon glyphicon-hourglass"></span>
+@endif
+
+</p>
 <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iOrder->id}}"></canvas>
 <script type="text/javascript">
 
@@ -77,13 +85,21 @@
 </script>
 <br>
 <br>
+    <a href="{{url('/admin/wait')}}" class="btn btn-info">
+        <span class="glyphicon glyphicon-hourglass"></span> Wait
+    </a>
+    <a href="{{url('/admin/done')}}" class="btn btn-info">
+        <span class="glyphicon glyphicon-ok"></span> Done
+    </a>
+<br>
+<br>
+<br>
 
-<br>
-<br>
-<br>
 <br>
 </div>
 @endforeach
+
+
 
 
 </div>

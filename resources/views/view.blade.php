@@ -26,8 +26,23 @@
 $(document).ready(function(){
 
     var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
-    canvas.setHeight(500);
-    canvas.setWidth(600);
+
+            canvas.setHeight(
+
+                @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}
+                @else 
+                400
+                @endif
+
+            );
+            canvas.setWidth(
+
+                @if(!empty($iCvn->size_w)) {{$iCvn->size_w}}
+                @else 
+                600
+                @endif
+
+            );
 
     var jsn = '{!!$iCvn->json_data!!}';
 
@@ -40,6 +55,8 @@ $(document).ready(function(){
     $('#export_to_img').click(function(){
         window.open(canvas.toDataURL('png'));
     });
+
+    canvas.renderAll();
 });
 </script>
 

@@ -9,6 +9,10 @@ use App\Models\SizePriceCanvas;
 use App\Models\Slider;
 use App\Models\Social;
 use App\Models\Settings;
+use App\Models\Sub;
+use App\Models\QandA;
+use App\Models\Material;
+use App\Models\Menu;
 
 
 use Auth;
@@ -34,7 +38,7 @@ class AdminCNV extends Controller{
     //===========================
     //method create cvs
     //===========================
-    protected function create(Categories $catModel, SizePriceCanvas $rpsizeModel, Cart $cartModel){
+    protected function create(Material $matModel, Categories $catModel, SizePriceCanvas $rpsizeModel, Cart $cartModel){
 
         if (Auth::check()){
 
@@ -44,7 +48,9 @@ class AdminCNV extends Controller{
 
             $cats = $catModel->getAllCat();
 
-            return view('admin.create')->withCat($cats)->withPrsize($prsize)->withFirstprsize($firstPrSize);
+            $allMat = $matModel->getMat();
+
+            return view('admin.create')->withCat($cats)->withPrsize($prsize)->withFirstprsize($firstPrSize)->withMat($allMat);
 
         }else{
 
@@ -56,7 +62,7 @@ class AdminCNV extends Controller{
     //===========================
     //method regedit cvs
     //===========================
-    protected function regedit(Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
+    protected function regedit(Material $matModel, Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
 
         if (Auth::check()){
 
@@ -67,8 +73,11 @@ class AdminCNV extends Controller{
             $prsize = $rpsizeModel->getAllPriceSize();
 
             $nowCat = $oneCnv->toArray()[0]['id_cat'];
+            $nowMat = $oneCnv->toArray()[0]['id_material'];
 
-            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize);
+            $allMat = $matModel->getMat();
+
+            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize)->withMat($allMat)->withNowmat($nowMat);
         }
     }
 
@@ -83,8 +92,26 @@ class AdminCNV extends Controller{
         $data['id_cat'] = $request->input('id_cat');
         $data['id_user'] = Auth::user()->id;
         $data['id_pr_size'] = $request->input('id_pr_size');
+        $data['id_mat'] = $request->input('id_mat');
 
         echo $cnvModel->addCnv($data);
+    }
+
+    //===========================
+    //method update cvs
+    //===========================
+    protected function update(Cnv $cnvModel, Request $request){
+
+        $data['id_cnv'] = $request->input('id');
+        $data['jsn_cnv'] = $request->input('jsn');
+        $data['name_cnv'] = $request->input('name');
+        $data['ch_public'] = $request->input('public');
+        $data['id_cat'] = $request->input('id_cat');
+        $data['id_pr_size'] = $request->input('id_pr_size');
+        $data['id_user'] = Auth::user()->id;
+        $data['id_mat'] = $request->input('id_mat');
+
+        echo $cnvModel->upCnv($data);
     }
 
     //===========================
@@ -234,7 +261,6 @@ class AdminCNV extends Controller{
             $data['image'] = null;
         }
 
-
         $catModel->upCat($data);
 
         return redirect()->back()->with('successadmin', 'Update category!');
@@ -308,6 +334,196 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method view subs
+    //===========================
+    protected function getSubs(Sub $subModel){
+
+        if(Auth::check()){
+
+            $allSubs = $subModel->getSubs();
+
+            return view('admin.subs')->withSub($allSubs);
+
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+    //===========================
+    //method del subs
+    //===========================
+    protected function delSubs(Sub $subModel, $id){
+
+        $data['id'] = $id;
+
+        if(Auth::check()){
+
+            $subModel->delSubs($data);
+            return redirect()->back()->with('successadmin', 'Deleted User!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');;
+
+    }
+
+    //===========================
+    //method view qa
+    //===========================
+    protected function getQA(QandA $qaModel){
+
+        if(Auth::check()){
+
+            $allQA = $qaModel->getQA();
+
+            return view('admin.qa')->withQa($allQA);
+
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+    //===========================
+    //method update categories
+    //===========================
+    protected function postUpQA(QandA $qaModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'q' => 'required|max:255',
+            'a' => 'required',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['q'] = htmlspecialchars($request->input('q'), ENT_QUOTES);
+        $data['a'] = htmlspecialchars($request->input('a'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $qaModel->upQA($data);
+
+        return redirect()->back()->with('successadmin', 'Update Q and A!');
+    }
+
+    //===========================
+    //method update categories
+    //===========================
+    protected function postAddQA(QandA $qaModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'q' => 'required|max:255',
+            'a' => 'required',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['q'] = htmlspecialchars($request->input('q'), ENT_QUOTES);
+        $data['a'] = htmlspecialchars($request->input('a'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $qaModel->addQA($data);
+
+        return redirect()->back()->with('successadmin', 'Add Q and A!');
+    }
+
+    //===========================
+    //method del qa
+    //===========================
+    protected function postDelQA(QandA $qaModel, Request $request){
+
+        $data['id'] = $request->get('id');
+
+        if(Auth::check()){
+
+            $qaModel->delQA($data);
+            return redirect()->back()->with('successadmin', 'Deleted Q nad A!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');
+
+    }
+
+    //===========================
+    //method view material
+    //===========================
+    protected function getMaterial(Material $matModel){
+
+        if(Auth::check()){
+
+            $allMat = $matModel->getMat();
+
+            return view('admin.material')->withMat($allMat);
+
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+   //===========================
+    //method update material
+    //===========================
+    protected function postUpMaterial(Material $matModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $matModel->upMat($data);
+
+        return redirect()->back()->with('successadmin', 'Update Material!');
+    }
+
+    //===========================
+    //method add material
+    //===========================
+    protected function postAddMaterial(Material $matModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $matModel->addMat($data);
+
+        return redirect()->back()->with('successadmin', 'Add Material!');
+    }
+
+    //===========================
+    //method del material
+    //===========================
+    protected function postDelMaterial(Material $matModel, Request $request){
+
+        $data['id'] = $request->get('id');
+
+        if(Auth::check()){
+
+            $matModel->delMat($data);
+            return redirect()->back()->with('successadmin', 'Material!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');
+
+    }
+
+    //===========================
     //method view cvs
     //===========================
     protected function myview(Cnv $cnvModel){
@@ -322,22 +538,6 @@ class AdminCNV extends Controller{
 
             return redirect()->back();
         }
-    }
-
-    //===========================
-    //method update cvs
-    //===========================
-    protected function update(Cnv $cnvModel, Request $request){
-
-        $data['id_cnv'] = $request->input('id');
-        $data['jsn_cnv'] = $request->input('jsn');
-        $data['name_cnv'] = $request->input('name');
-        $data['ch_public'] = $request->input('public');
-        $data['id_cat'] = $request->input('id_cat');
-        $data['id_pr_size'] = $request->input('id_pr_size');
-        $data['id_user'] = Auth::user()->id;
-
-        echo $cnvModel->upCnv($data);
     }
 
     //===========================
@@ -501,6 +701,99 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method get menu
+    //===========================
+    protected function getMenu(Menu $menuModel){
+
+        if (Auth::check()){
+
+            $allMenu = $menuModel->getMenu();
+            
+            return view('admin.menu')->withMenu($allMenu);
+            
+        }else{
+
+            return redirect()->back();
+        }
+
+    }
+
+    //===========================
+    //method add item menu
+    //===========================
+    protected function postAddMenu(Menu $menuModel, Request $request){
+
+        if(Auth::check()){
+
+            $valid = Validator::make($request->all(), [
+                'item' => 'required|max:40',
+                'anchor' => 'required|max:20',
+            ]);
+
+            if($valid->fails())
+                return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+                $data['id'] = $request->input('id');
+                $data['item'] = $request->input('item');
+                $data['anchor'] = $request->input('anchor');
+
+                $menuModel->addMenu($data);
+
+                return redirect()->back()->with('successadmin', 'Added one new item to menu!');
+
+        }else{
+
+            return redirect()->back();
+        }
+
+        
+    }
+
+    //===========================
+    //method update slider
+    //===========================
+    protected function postUpMenu(Menu $menuModel, Request $request){
+
+        if(Auth::check()){
+
+            $valid = Validator::make($request->all(), [
+                'item' => 'required|max:40',
+                'anchor' => 'required|max:20',
+            ]);
+
+            if($valid->fails())
+                return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+                $data['id'] = $request->input('id');
+                $data['item'] = $request->input('item');
+                $data['anchor'] = $request->input('anchor');
+
+                $menuModel->upMenu($data);
+
+                return redirect()->back()->with('successadmin', 'Update one new item to menu!');
+        }else{
+
+        }
+
+        return redirect()->back();
+    }
+
+    //===========================
+    //method delete slider
+    //===========================
+    protected function postDelMenu(Menu $menuModel, Request $request){
+
+        $data['id'] = $request->input('id');
+
+        $del = $menuModel->delMenu($data);
+
+        if($del)
+            return redirect()->back()->with('successadmin', 'Delete item menu!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
     //method settings categories
     //===========================
     protected function getCatSettings(Categories $catModel){
@@ -573,6 +866,19 @@ class AdminCNV extends Controller{
             return redirect()->back()->with('errorsadmin', 'Error!');
         }
 
+    }
+
+    //===========================
+    //method update view main banners
+    //===========================
+    protected function postUpMain(Cnv $cnvModel, Request $request){
+
+        $data['id'] = $request->input('id');
+        $data['main'] = $request->input('main');
+
+        $cnvModel->upMain($data);
+
+        return;
     }
 
 //end class

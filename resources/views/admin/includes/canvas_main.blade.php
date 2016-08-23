@@ -1,6 +1,7 @@
         <div class="col-sm-5">
 			      <canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
-            <br>
+
+                    <br>
  
                     <input type="hidden" id="pr_size_cnv" name="pr_size" value="
                     @if(isset($firstprsize)){{$firstprsize->id}} 
@@ -16,7 +17,11 @@
                     @if(isset($cvn)) @foreach($cvn as $iCvn) {{($iCvn->public == 1) ? 'checked' : null}} @endforeach @endif
                     value="1">Public</label>
                     <br><br>
-
+                    <div class="input-group colorpicker-component">
+                        <label for="color_js_back_canvas">Background color canvas</label>
+                        <input id="color_js_back_canvas" type="text" value="#ffffff" class="form-control jscolor jscolor_back_canvas" />
+                    </div>
+                    <br>
 
                     {{-- slider --}}
                     <p>
@@ -31,12 +36,25 @@
                     <div id="slider" style="width: 600px;"></div>
 
                     <br><br>
-                    <div class="input-group colorpicker-component">
-                        <label for="color_js_back_canvas">Background color canvas</label>
-                        <input id="color_js_back_canvas" type="text" value="#ffffff" class="form-control jscolor jscolor_back_canvas" />
+
+                    @if(isset($mat))
+                    <div class="form-group">
+                      <label for="sel1">Select Material:</label>
+                      <select class="form-control" style="width: 600px;" name="id_mat" id="sel_mat">
+
+                      @foreach($mat as $iMat)
+
+                      @if(isset($nowmat) && $nowmat == $iMat->id)
+                        <option selected value="{{$iMat->id}}">{{$iMat->title}} <span style="font-weight: bold;"> {{"(+$iMat->price$)"}}</span></option>
+                      @else
+                        <option value="{{$iMat->id}}">{{$iMat->title}} <span style="font-weight: bold;"> {{"(+$iMat->price$)"}}</span></option>
+                      @endif
+                      @endforeach
+
+                      </select>
                     </div>
-                    <br>
-                    
+                    @endif
+
                     @if(isset($cat))
                     <div class="form-group">
                       <label for="sel1">Select Category:</label>

@@ -15,6 +15,8 @@ use App\Models\SizePriceCanvas;
 use App\Models\Slider;
 use App\Models\Social;
 use App\Models\Settings;
+use App\Models\Sub;
+use App\Models\QandA;
 
 use App\Http\Requests;
 
@@ -55,25 +57,26 @@ class PageCnv extends Controller{
     //===========================
     //method home cvs
     //===========================
-    protected function getHome(Cnv $cnvModel, Categories $catModel, Settings $settModel, Slider $sliderModel, Social $socModel){
+    protected function getHome(Cnv $cnvModel, QandA $qaModel, Categories $catModel, Settings $settModel, Slider $sliderModel, Social $socModel){
 
         $allCnv = $cnvModel->getAllHomeCnv();
         $cats = $catModel->getAllCat();
         $logo = $settModel->getLogo();
         $slider = $sliderModel->getAllSliders();
         $soc = $socModel->getSoc();
+        $allQA = $qaModel->getQA();
 
-        return view('index')->withCvn($allCnv)->withCat($cats)->withLogo($logo)->withSlider($slider)->withSoc($soc);
+        return view('index')->withCvn($allCnv)->withCat($cats)->withLogo($logo)->withSlider($slider)->withSoc($soc)->withQa($allQA);
     }
 
     //===========================
     //method feedback cvs
     //===========================
-    protected function postFeedback(Request $request){
+    protected function postFeedback(Sub $subModel, Request $request){
 
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:subs',
             'phone' => 'max:12',
             'q' => 'required',
         ]);
@@ -81,7 +84,10 @@ class PageCnv extends Controller{
         if ($validator->fails()) 
             return redirect('/')->with('errors', 'Incorrectly filleds feedback!')->withInput();
 
-        Mail::send(['html' => 'emails.feedback'], ['input' => $request], function($message) use ($request)
+        $data['email'] = $request->get('email');
+        $data['name'] = $request->get('name');
+
+        $mail = Mail::send(['html' => 'emails.feedback'], ['input' => $request], function($message) use ($request)
         {
             $message->to('silverreve23@gmail.com');
             $message->subject('FeedBack of UP Group Printing');
@@ -90,6 +96,9 @@ class PageCnv extends Controller{
                 $message->attach($request->file('file')->getPathName(),
             ['as' => 'attach_file.'.$request->file('file')->getClientOriginalExtension(), 'mime' => $request->file('file')->getMimeType()]);
         });
+
+        if($mail)
+            $subModel->addSub($data);
 
         return redirect()->back()->with('sended', 'Feedback sunded!');
     }

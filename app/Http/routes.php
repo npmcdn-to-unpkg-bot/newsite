@@ -53,6 +53,26 @@ Route::post('/admin/up_soc', ['as' => 'admin_up_soc_post', 'uses' => 'Admin\Admi
 
 Route::get('/admin/status', ['as' => 'admin_status_get', 'uses' => 'Admin\AdminCNV@getStatus']);
 
+Route::post('/admin/up_main', ['as' => 'admin_up_main_post', 'uses' => 'Admin\AdminCNV@postUpMain']);
+
+Route::get('/admin/subs', ['as' => 'admin_subs_get', 'uses' => 'Admin\AdminCNV@getSubs']);
+Route::get('/admin/del_sub/{id}', ['as' => 'admin_del_subs_get', 'uses' => 'Admin\AdminCNV@delSubs']);
+
+Route::get('/admin/qa', ['as' => 'admin_qa_get', 'uses' => 'Admin\AdminCNV@getQA']);
+Route::post('/admin/del_qa', ['as' => 'admin_del_qa_post', 'uses' => 'Admin\AdminCNV@postDelQA']);
+Route::post('/admin/up_qa', ['as' => 'admin_up_qa_post', 'uses' => 'Admin\AdminCNV@postUpQA']);
+Route::post('/admin/add_qa', ['as' => 'admin_add_qa_post', 'uses' => 'Admin\AdminCNV@postAddQA']);
+
+Route::get('/admin/menu', ['as' => 'admin_menu_get', 'uses' => 'Admin\AdminCNV@getMenu']);
+Route::post('/admin/del_menu', ['as' => 'admin_del_menu_post', 'uses' => 'Admin\AdminCNV@postDelMenu']);
+Route::post('/admin/up_menu', ['as' => 'admin_up_menu_post', 'uses' => 'Admin\AdminCNV@postUpMenu']);
+Route::post('/admin/add_menu', ['as' => 'admin_add_menu_post', 'uses' => 'Admin\AdminCNV@postAddMenu']);
+
+Route::get('/admin/material', ['as' => 'admin_material_get', 'uses' => 'Admin\AdminCNV@getMaterial']);
+Route::post('/admin/add_material', ['as' => 'admin_add_material_post', 'uses' => 'Admin\AdminCNV@postAddMaterial']);
+Route::post('/admin/del_material', ['as' => 'admin_del_material_post', 'uses' => 'Admin\AdminCNV@postDelMaterial']);
+Route::post('/admin/up_material', ['as' => 'admin_up_material_post', 'uses' => 'Admin\AdminCNV@postUpMaterial']);
+
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');

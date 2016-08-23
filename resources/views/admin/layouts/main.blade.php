@@ -27,7 +27,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{{Url('/gallery')}}">UP GROUP Printing | Admin Panel</a>
+          <a class="navbar-brand" href="{{Url('/gallery')}}"><span class="glyphicon glyphicon-asterisk" ></span> UP GROUP Printing Admin Panel</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -38,7 +38,7 @@
             @if(isset(Auth::user()->name))
               <li><a href="{{ Url('auth/logout') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;{{ Auth::user()->name}} > logOut</a></li>
             @else
-              <li><a href="{{ Url('auth/login') }}">logIn</a></li>
+              <li><a href="{{ Url('auth/login') }}"><span class="glyphicon glyphicon-user"></span>&nbsp;logIn</a></li>
             @endif
             
           </ul>
@@ -52,12 +52,19 @@
           <ul class="nav nav-sidebar">
             <li><a href="{{Url('admin/create')}}"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Create MyCanvas</a></li>
             <li><a href="{{Url('admin/mycnv')}}"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;Gallery MyCanvas</a></li>
+
+            @if(!isset(Auth::user()->is_admin))
             <li><a href="{{Url('admin/status')}}"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Status Ordered</a></li>
+            @endif
             <li><a href="{{Url('gallery')}}"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;Gallery AllCanvas</a></li>
             <br>
 
             @if(isset(Auth::user()->is_admin) && Auth::user()->is_admin)
             <li><a href="{{Url('admin/sizeprice')}}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;Size and Price</a></li>
+            <li><a href="{{Url('admin/material')}}"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;&nbsp;Material</a></li>
+            <li><a href="{{Url('admin/menu')}}"><span class="glyphicon glyphicon-option-horizontal"></span>&nbsp;&nbsp;&nbsp;Menu Items</a></li>
+            <li><a href="{{Url('admin/qa')}}"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;&nbsp;Question & Answer</a></li>
+            <li><a href="{{Url('admin/subs')}}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Subscriptions</a></li>
             <li><a href="{{Url('admin/categories')}}"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;&nbsp;&nbsp;Categories</a></li>
             <li><a href="{{Url('admin/orders')}}"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;Order Banner</a></li>
             <li><a href="{{Url('admin/settings')}}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;Settings</a></li>

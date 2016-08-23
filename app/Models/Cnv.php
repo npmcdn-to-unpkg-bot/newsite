@@ -13,7 +13,17 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllGalleryCnv(){
 
-		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
+		return $this
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size',
+				'sp.title', 'users.name as user_name', 'categories.title as cat_name', 'mat.title as mat_title',
+				'mat.price as mat_price')
+		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
+		->join('users', 'users.id', '=', 'cnv.id_user')
+		->join('categories', 'categories.id', '=', 'cnv.id_cat')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->orderBy('id', 'desc')
+		->where('cnv.public', 1)
+		->paginate(6);
 	}
 
 	//=====================================
@@ -21,14 +31,31 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllCnv(){
 
-		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->orderBy('id', 'desc')->where('cnv.public', 1)->paginate(6);
+		return $this->select('cnv.*', 'users.name as user_name', 'categories.title as cat_name',
+							'mat.title as mat_title', 'mat.price as mat_price')
+		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
+		->join('users', 'users.id', '=', 'cnv.id_user')
+		->join('categories', 'categories.id', '=', 'cnv.id_cat')
+		->orderBy('id', 'desc')
+		->where('cnv.public', 1)
+
+		->paginate(6);
 	}
 	//=====================================
 	//method return all canvas object JSON
 	//=====================================
 	public function getAllHomeCnv(){
 
-		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'categories.image as cat_img', 'users.name as user_name', 'categories.title as cat_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->orderBy('id', 'desc')->where('cnv.public', 1)->get();
+		return $this
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'categories.image as cat_img',
+				'users.name as user_name', 'categories.title as cat_name')
+		->join('users', 'users.id', '=', 'cnv.id_user')
+		->join('categories', 'categories.id', '=', 'cnv.id_cat')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->orderBy('id', 'desc')
+		->where('cnv.public', 1)
+		->where('cnv.main', 1)
+		->get();
 	}
 
  	//=====================================
@@ -36,7 +63,13 @@ class Cnv extends Model{
 	//=====================================
 	public function getOneCnv($id_cnv){
 
-		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'users.name as user_name')->join('users', 'users.id', '=', 'cnv.id_user')->join('categories', 'categories.id', '=', 'cnv.id_cat')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('cnv.id', $id_cnv)->get();
+		return $this
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'users.name as user_name')
+		->join('users', 'users.id', '=', 'cnv.id_user')
+		->join('categories', 'categories.id', '=', 'cnv.id_cat')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->where('cnv.id', $id_cnv)
+		->get();
 	}  
 
  	//=====================================
@@ -44,7 +77,14 @@ class Cnv extends Model{
 	//=====================================
 	public function getAllUserCnv($id_user){
 
-		return $this->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('id_user', $id_user)->orderBy('id', 'desc')->paginate(6);
+		return $this
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title',
+				'mat.title as mat_title', 'mat.price as mat_price')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
+		->where('id_user', $id_user)
+		->orderBy('id', 'desc')
+		->paginate(6);
 	}
  
  	//=====================================
@@ -52,7 +92,12 @@ class Cnv extends Model{
 	//=====================================
 	public function getOneUserCnv($id_cnv, $id_user){
 
-		return $this->select('cnv.*', 'sp.*', 'sp.title as title_sp', 'cnv.id as id_cnv')->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')->where('cnv.id', $id_cnv)->where('cnv.id_user', $id_user)->get();
+		return $this
+		->select('cnv.*', 'sp.*', 'sp.title as title_sp', 'cnv.id as id_cnv')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->where('cnv.id', $id_cnv)
+		->where('cnv.id_user', $id_user)
+		->get();
 	}  
 
  	//=====================================
@@ -60,7 +105,11 @@ class Cnv extends Model{
 	//=====================================
 	public function addCnv($data){
 
-		return $this->insert(['name'=>$data['name_cnv'], 'id_cat' => $data['id_cat'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public'], 'id_pr_size'=>$data['id_pr_size']]);
+		return $this
+		->insert(['name'=>$data['name_cnv'], 'id_cat' => $data['id_cat'], 
+				'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 
+				'public'=>$data['ch_public'], 'id_pr_size'=>$data['id_pr_size'], 
+				'id_material'=>$data['id_mat']]);
 	}
 
  	//=====================================
@@ -68,9 +117,14 @@ class Cnv extends Model{
 	//=====================================
 	public function addMyCnv($id, $id_user){
 
-		$cnv = $this->where('id', $id)->first()->toArray();
+		$cnv = $this
+		->where('id', $id)
+		->first()
+		->toArray();
 		
-		return $this->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'], 'id_user' => $id_user, 'id_pr_size' => $cnv['id_pr_size']]);
+		return $this
+		->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'],
+				'id_user' => $id_user, 'id_pr_size' => $cnv['id_pr_size']]);
 	}
 
  	//=====================================
@@ -78,7 +132,22 @@ class Cnv extends Model{
 	//=====================================
 	public function upCnv($data){
 
-		return $this->where('id', $data['id_cnv'])->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 'public'=>$data['ch_public'], 'id_cat'=>$data['id_cat'], 'id_pr_size' => $data['id_pr_size']]);
+		return $this
+		->where('id', $data['id_cnv'])
+		->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'],
+				'id_user'=>$data['id_user'], 'public'=>$data['ch_public'],
+				'id_cat'=>$data['id_cat'], 'id_pr_size' => $data['id_pr_size'], 
+				'id_material'=>$data['id_mat']]);
+	}
+
+ 	//=====================================
+	//method update canvas main colum
+	//=====================================
+	public function upMain($data){
+
+		return $this
+		->where('id', $data['id'])
+		->update(['main'=>$data['main']]);
 	}
 
  	//=====================================
@@ -86,7 +155,9 @@ class Cnv extends Model{
 	//=====================================
 	public function delCnv($id){
 
-		$this->where('id', $id)->delete();
+		$this
+		->where('id', $id)
+		->delete();
 	}
 
 

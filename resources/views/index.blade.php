@@ -233,42 +233,33 @@
 	</div>
 	
 	<div class="hr-color"></div>
-	
+
 	<!-- ---------- section-questions ---------- -->
 	<div class="container-fluid section-questions">
 		<h1 class="text-center">Frequently asked question</h1>
 		
 		<div class="panel-group" id="questions-accordion">
-			<div class="panel panel-default open">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse" data-parent="#questions-accordion" href="#q-1">What would you like Give us an idea of the logo you're looking for with our quick and easy form?</a>
-					</h4>
-				</div>
-				<div id="q-1" class="panel-collapse collapse in">
-					<div class="panel-body">Unlike all of our other signs which are printed directly onto the material, our vinyl lettering is created from colored vinyl. Our machines and production staff then cut and weed (remove the excess) and apply the transfer tape to your lettering to prepare it for installation. Because we do not print on cut vinyl, the number of colors to choose from is limited. If you are interested in a design with gradients or many colors within the design, vinyl lettering is not a fit. But we can still help you, so please contact us.</div>
-				</div>
-			</div>
+
+@foreach($qa as $iQA)
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse" data-parent="#questions-accordion" href="#q-2">What is your vinyl lettering made from?</a>
+						<a class="collapsed" data-toggle="collapse" data-parent="#questions-accordion" href="#q-{{$iQA->id}}">{{$iQA->question}}</a>
 					</h4>
 				</div>
-				<div id="q-2" class="panel-collapse collapse">
-					<div class="panel-body">Unlike all of our other signs which are printed directly onto the material, our vinyl lettering is created from colored vinyl. Our machines and production staff then cut and weed (remove the excess) and apply the transfer tape to your lettering to prepare it for installation. Because we do not print on cut vinyl, the number of colors to choose from is limited. If you are interested in a design with gradients or many colors within the design, vinyl lettering is not a fit. But we can still help you, so please contact us.</div>
+				<div id="q-{{$iQA->id}}" class="panel-collapse collapse">
+					<div class="panel-body">{{$iQA->answer}}</div>
 				</div>
 			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a class="collapsed" data-toggle="collapse" data-parent="#questions-accordion" href="#q-3">Do you offer alternative types of vinyl lettering like reflective or marine vinyl?</a>
-					</h4>
-				</div>
-				<div id="q-3" class="panel-collapse collapse">
-					<div class="panel-body">Unlike all of our other signs which are printed directly onto the material, our vinyl lettering is created from colored vinyl. Our machines and production staff then cut and weed (remove the excess) and apply the transfer tape to your lettering to prepare it for installation. Because we do not print on cut vinyl, the number of colors to choose from is limited. If you are interested in a design with gradients or many colors within the design, vinyl lettering is not a fit. But we can still help you, so please contact us.</div>
-				</div>
-			</div>
+@endforeach
+<script>
+	$(document).ready(function(){
+
+		$('.panel-default').first().attr('class', 'panel panel-default open');
+		$('.panel-collapse').first().attr('class', 'panel-collapse collapse in');
+		
+	});
+</script>
 		</div>
 	</div>
 	

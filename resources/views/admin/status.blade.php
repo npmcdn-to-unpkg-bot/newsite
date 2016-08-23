@@ -11,7 +11,7 @@
 <div class="row">
 @foreach($orders as $iOrder)
 <div class="col-sm-4">
-<p>{{$iOrder->name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) 
+<p>{{$iOrder->name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) | {{$iOrder->mat_title}}(+{{$iOrder->mat_price}}$)
 
 @if($iOrder->status == true)
 &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
@@ -44,7 +44,7 @@
 
     var jsn = '{!!$iOrder->json_data!!}';
 
-    var factor = 0.4;
+    var factor = 0.5;
                       
     var myobjects = canvas.getObjects();
 
