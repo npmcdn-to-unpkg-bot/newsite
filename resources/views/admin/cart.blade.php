@@ -31,15 +31,29 @@
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-4" id='my_name'>
-        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}})</p>
+        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$)</p>
 <canvas style="border: 1px solid gray; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
 <script type="text/javascript">
 
 $(document).ready(function(){
 
     var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
-    canvas.setHeight(500);
-    canvas.setWidth(600);
+            canvas.setHeight(
+
+                @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}
+                @else 
+                400
+                @endif
+
+            );
+            canvas.setWidth(
+
+                @if(!empty($iCvn->size_w)) {{$iCvn->size_w}}
+                @else 
+                600
+                @endif
+
+            );
 
     var jsn = '{!!$iCvn->json_data!!}';
 

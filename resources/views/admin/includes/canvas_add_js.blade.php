@@ -98,6 +98,13 @@ $('.btn_text_add').click(function(){
 });
 
 //==================================================
+//discard Active Object fabric js
+//==================================================
+canvas.on("object:added", function(options) {
+    canvas.discardActiveObject();
+});
+
+//==================================================
 //click btn add rectangle
 //==================================================
 $('.btn_rect_add').click(function(){

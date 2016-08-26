@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Sub extends Model{
 
 	protected $table = 'subs';
@@ -22,6 +23,14 @@ class Sub extends Model{
 	public function getSubs(){
 
 		return $this->get();
+	}
+
+    //=====================================
+	//method get subs 
+	//=====================================
+	public function getOneSub($email){
+
+		return $this->where('email', $email)->get();
 	}
 
     //=====================================

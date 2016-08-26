@@ -58,6 +58,8 @@ Route::post('/admin/up_main', ['as' => 'admin_up_main_post', 'uses' => 'Admin\Ad
 Route::get('/admin/subs', ['as' => 'admin_subs_get', 'uses' => 'Admin\AdminCNV@getSubs']);
 Route::get('/admin/del_sub/{id}', ['as' => 'admin_del_subs_get', 'uses' => 'Admin\AdminCNV@delSubs']);
 
+Route::get('/admin/del_user/{id}', ['as' => 'admin_del_user_get', 'uses' => 'Admin\AdminCNV@delUser']);
+
 Route::get('/admin/qa', ['as' => 'admin_qa_get', 'uses' => 'Admin\AdminCNV@getQA']);
 Route::post('/admin/del_qa', ['as' => 'admin_del_qa_post', 'uses' => 'Admin\AdminCNV@postDelQA']);
 Route::post('/admin/up_qa', ['as' => 'admin_up_qa_post', 'uses' => 'Admin\AdminCNV@postUpQA']);
@@ -72,6 +74,15 @@ Route::get('/admin/material', ['as' => 'admin_material_get', 'uses' => 'Admin\Ad
 Route::post('/admin/add_material', ['as' => 'admin_add_material_post', 'uses' => 'Admin\AdminCNV@postAddMaterial']);
 Route::post('/admin/del_material', ['as' => 'admin_del_material_post', 'uses' => 'Admin\AdminCNV@postDelMaterial']);
 Route::post('/admin/up_material', ['as' => 'admin_up_material_post', 'uses' => 'Admin\AdminCNV@postUpMaterial']);
+
+Route::get('/admin/wait/{id}', ['as' => 'admin_up_wait_get', 'uses' => 'Admin\AdminCNV@getUpWait']);
+Route::get('/admin/done/{id}', ['as' => 'admin_up_done_get', 'uses' => 'Admin\AdminCNV@getUpDone']);
+
+Route::get('/admin/dispatch', 'Admin\AdminCNV@getDispatch');
+Route::post('/admin/dispatch', 'Admin\AdminCNV@postDispatch');
+
+Route::get('/conf_order/{email}', 'PageCNV@getConfOrder');
+Route::post('/conf_order_send', 'PageCNV@postConfOrderSend');
 
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -92,3 +103,9 @@ Route::get('/order', ['as' => 'order_get', 'uses' => 'PageCNV@getOrder']);
 Route::post('/order', ['as' => 'order_post', 'uses' => 'PageCNV@postOrder']);
 
 Route::get('/index/{id}', ['as' => 'index_get', 'uses' => 'PageCNV@getIndex']);
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/laravel-filemanager', '\Tsawler\Laravelfilemanager\controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\Tsawler\Laravelfilemanager\controllers\LfmController@upload');
+});
+

@@ -6,7 +6,11 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.*",
+        "tsawler/laravel-filemanager": "^0.6.2",
+        "unisharp/laravel-filemanager": "^1.6",
+        "unisharp/laravel-ckeditor": "^4.5",
+        "jdavidbakr/replaceable-model": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -101,6 +101,14 @@ $('.btn_text_add').click(function(){
     textObj = new fabric.IText(intext, { left: 0, top: 0 , fill: '#'+textcolor, fontFamily: family});
 
     canvas.add(textObj);
+
+});
+
+//==================================================
+//discard Active Object fabric js
+//==================================================
+canvas.on("object:added", function(options) {
+    canvas.discardActiveObject();
 });
 
 //==================================================

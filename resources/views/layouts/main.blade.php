@@ -84,17 +84,9 @@
 						<i class="fa fa-angle-down" aria-hidden="true"></i>
 					</button>
 					<ul class="dropdown-menu" id="dropdown-menu-1">
-						<li><a href="#">Plasic details</a></li>
-						<li class="dropdown">
-							<a href="#dropdown-menu-2" class="dropdown-toggle" id="dropdown-toggle-2">Banners <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-							<ul class="dropdown-menu" id="dropdown-menu-2">
-								<li><a href="#">Item</a></li>
-								<li><a href="#">Item</a></li>
-								<li><a href="#">Item</a></li>
-							</ul>
-						</li>
-						<li><a href="#">Woodencts</a></li>
-						<li><a href="#">Magnetics</a></li>
+						@foreach($menu as $iMenu)
+							<li><a href="#{{$iMenu->anchor}}">{{$iMenu->item}}</a></li>
+						@endforeach
 					</ul>
 				</div>
 			</div>
@@ -109,7 +101,8 @@
 			</ol>
 		
 			<div class="carousel-inner header-carousel" role="listbox">
-
+			
+			
 			@foreach($slider as $iSlider)
 
 				<div class="item">
@@ -120,12 +113,14 @@
 					</div>
 				</div>
 			@endforeach
-
+			
+			@if(!$slider->isEmpty())
 			<script type="text/javascript">
 	
 				$('.header-carousel :first-child').attr('class', 'item active');
 	
 			</script>
+			@endif
 
 			</div>
 		</div>
@@ -183,8 +178,9 @@
 							<h4 style="color:#939393">2150 N. WEST St. River Grove, IL 60171</h4>
 							<a href="#">View on the map</a>
 							<div>
-								<a href="#" target="_blank"><img src="{{asset('assets/images/yelp.png')}}" alt="yelp" /></a>
-								<a href="#" target="_blank"><img src="{{asset('assets/images/fb.png')}}" alt="fb" /></a>
+							@foreach($soc as $iSoc)
+								<a href="{{$iSoc->href}}" target="_blank"><img src="{{asset('assets/images/'.$iSoc->image)}}" /></a>
+							@endforeach
 							</div>
 							<h1 class="text-warning">1.773.669.5155</h1>
 						</div>

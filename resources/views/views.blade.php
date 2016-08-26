@@ -19,10 +19,12 @@
 
         <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$)</p>
         <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
+        
         <script type="text/javascript">
 
             var canvas = new fabric.StaticCanvas('cnv-{{$iCvn->id}}');
 
+            
             canvas.setHeight(
 
                 @if(!empty($iCvn->size_h)) {{$iCvn->size_h}}

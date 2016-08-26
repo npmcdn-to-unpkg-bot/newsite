@@ -23,4 +23,29 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    //=====================================
+    //method get users
+    //=====================================
+    public function getUser(){
+
+        return $this->get();
+    }
+
+    //=====================================
+    //method get admin
+    //=====================================
+    public function getAdmin(){
+
+        return $this->where('is_admin', 1)->get();
+    }
+
+    //=====================================
+    //method del user
+    //=====================================
+    public function delUser($data){
+
+        return $this->where('id', $data['id'])->delete();
+    }
+
 }

@@ -54,10 +54,10 @@
                                 <label>price</label>
                             </div>
                             <div class="col-sm-2">
-                                <label>width</label>
+                                <label>width(zoom 10 px)</label>
                             </div>
                             <div class="col-sm-2">
-                                <label>height</label>
+                                <label>height(zoom 10 px)</label>
                             </div>
                             <div class="col-sm-2">
   
@@ -126,10 +126,10 @@
                             <label>size(title)</label><br>
                             <input name="add_pr_size_size" type="text" class="text-center form-control" />
                             <br>
-                            <label>width</label><br>
+                            <label>width(zoom 10 px)</label><br>
                             <input name="add_pr_size_width" type="text" class="text-center form-control" />
                             <br>
-                            <label>height</label><br>
+                            <label>height(zoom 10 px)</label><br>
                             <input name="add_pr_size_height" type="text" class="text-center form-control" />
                             <br>
                         </div>           

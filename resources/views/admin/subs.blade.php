@@ -74,6 +74,27 @@
 
                     @endforeach
 
+                    @foreach($user as $iUser)
+
+                        <div class="row" style="">
+                            <div class="col-sm-2 col-sm-offset-3" style="margin-top: 7px;">
+                                <p>{{$iUser->name}}</p>
+                            </div>
+                            <div class="col-sm-2" style="margin-top: 7px;">
+                                <p>{{$iUser->email}}</p>
+                            </div>
+
+                            <div class="col-sm-1">
+
+                            <form class="form" action="/admin/del_user/{{ $iUser->id }}" method="get">
+                                <button type="submit" class="btn btn-danger btn-md">delete</button>
+                            </form>
+
+                            </div>
+                        </div><br><br>
+
+                    @endforeach
+
                 </div>
 
                 </div>

@@ -7,6 +7,8 @@
 	<script type="text/javascript" src="{{ URL::asset('js/fabric.js') }}"></script>
   <script type="text/javascript" src="{{ URL::asset('js/jscolor.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <script src="//cdn.ckeditor.com/4.5.10/standard/ckeditor.js"></script>
+
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 </head>
 <body>
@@ -67,6 +69,7 @@
             <li><a href="{{Url('admin/subs')}}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Subscriptions</a></li>
             <li><a href="{{Url('admin/categories')}}"><span class="glyphicon glyphicon-paperclip"></span>&nbsp;&nbsp;&nbsp;Categories</a></li>
             <li><a href="{{Url('admin/orders')}}"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;Order Banner</a></li>
+            <li><a href="{{Url('admin/dispatch')}}"><span class="glyphicon glyphicon-send"></span>&nbsp;&nbsp;&nbsp;Dispatch</a></li>
             <li><a href="{{Url('admin/settings')}}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&nbsp;Settings</a></li>
             @endif
 

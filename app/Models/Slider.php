@@ -21,6 +21,10 @@ class Slider extends Model{
 	//=====================================
 	public function delSlider($data){
 
+        $image = $this->where('id', $data['id'])->select('images')->get()->toArray()[0];
+
+        $st = \File::delete('assets/images/'.$image['images']);
+
 		return $this->where('id', $data['id'])->delete();
 	}
 
@@ -37,6 +41,10 @@ class Slider extends Model{
 	//=====================================
 	public function upSlider($data){
 
+        $image = $this->where('id', $data['id'])->select('images')->get()->toArray()[0];
+
+        $st = \File::delete('assets/images/'.$image['images']);
+        
 		return $this->where('id', $data['id'])->update(['images'=>$data['image']]);
 	}
 }

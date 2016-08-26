@@ -10,8 +10,8 @@
 <h3>View All Canvas</h3><br>
 <div class="row">
 @foreach($orders as $iOrder)
-<div class="col-sm-4">
-<p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}})
+<div class="col-sm-6">
+<p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) | {{$iOrder->mat_title}}(+{{$iOrder->mat_price}}$)
 
 @if($iOrder->status == true)
 &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
@@ -44,7 +44,7 @@
 
     var jsn = '{!!$iOrder->json_data!!}';
 
-    var factor = 0.4;
+    var factor = 0.5;
                       
     var myobjects = canvas.getObjects();
 
@@ -85,10 +85,10 @@
 </script>
 <br>
 <br>
-    <a href="{{url('/admin/wait')}}" class="btn btn-info">
+    <a href="{{url('/admin/wait/'.$iOrder->id)}}" class="btn btn-info">
         <span class="glyphicon glyphicon-hourglass"></span> Wait
     </a>
-    <a href="{{url('/admin/done')}}" class="btn btn-info">
+    <a href="{{url('/admin/done/'.$iOrder->id)}}" class="btn btn-info">
         <span class="glyphicon glyphicon-ok"></span> Done
     </a>
 <br>

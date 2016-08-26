@@ -20,6 +20,10 @@ class Settings extends Model{
 	//method up logo
 	//=====================================
     public function upLogo($data){
+
+        $image = $this->where('id', $data['id'])->select('logo')->get()->toArray()[0];
+
+        $st = \File::delete('assets/images/'.$image['logo']);
     	
     	return $this->where('id', $data['id'])->update(['logo'=>$data['image']]);
     }

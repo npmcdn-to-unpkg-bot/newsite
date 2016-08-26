@@ -7,7 +7,7 @@
 
 		<h1>Your information</h1>
 		
-		<div class="container">
+		<div class="container form-1">
 			<div class="form-group">
 				<div>First name</div>
 				<div><input class="form-control" type="text" name="first_name" /></div>
@@ -34,7 +34,7 @@
 
 		<h1 class="details-title">DETAILS (wording, colors, etc.)</h1>
 		
-		<div class="container">
+		<div class="container form-2">
 			<div class="form-group">
 				<div>
 					<div class="color-container">
@@ -97,7 +97,7 @@
 				</div>
 			</div>
 			<div class="form-group m-0">
-				<div></div>
+				<div class="empty"></div>
 				<div style="margin-left:-106px">
 					<textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
 				</div>
@@ -125,6 +125,13 @@
 			showInitial: true,
 			showButtons: false
 		});
+		if($(document).width() < 500) {
+			$('.form-1 .form-group > div:first-child').each(function(){
+				var label = $(this).text();
+				
+				$(this).hide().siblings('div').find('.form-control').attr('placeholder', label);
+			});
+		}
 	</script>
 
 @stop

@@ -13,8 +13,9 @@ use App\Models\Sub;
 use App\Models\QandA;
 use App\Models\Material;
 use App\Models\Menu;
+use App\User;
 
-
+use Mail;
 use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -322,7 +323,7 @@ class AdminCNV extends Controller{
 
             foreach ($allCart as $iCart) {
                 
-                $cartPrice += $iCart->price;
+                $cartPrice += $iCart->price + $iCart->mat_price;
             }
 
             return view('admin.cart')->withCvn($allCart)->withPrice($cartPrice);
@@ -336,13 +337,14 @@ class AdminCNV extends Controller{
     //===========================
     //method view subs
     //===========================
-    protected function getSubs(Sub $subModel){
+    protected function getSubs(Sub $subModel, User $userModel){
 
         if(Auth::check()){
 
             $allSubs = $subModel->getSubs();
+            $allUsers = $userModel->getUser();
 
-            return view('admin.subs')->withSub($allSubs);
+            return view('admin.subs')->withSub($allSubs)->withUser($allUsers);
 
         }else{
 
@@ -360,6 +362,23 @@ class AdminCNV extends Controller{
         if(Auth::check()){
 
             $subModel->delSubs($data);
+            return redirect()->back()->with('successadmin', 'Deleted User!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');;
+
+    }
+
+    //===========================
+    //method del subs
+    //===========================
+    protected function delUser(User $userModel, $id){
+
+        $data['id'] = $id;
+
+        if(Auth::check()){
+
+            $userModel->delUser($data);
             return redirect()->back()->with('successadmin', 'Deleted User!');
         }
 
@@ -818,7 +837,7 @@ class AdminCNV extends Controller{
 
         if (Auth::check()){
 
-            $carts = $cartModel->getAllCarts();
+            $carts = $cartModel->getAllCartsOrdered();
 
             return view('admin.allorders')->withOrders($carts);
             
@@ -879,6 +898,85 @@ class AdminCNV extends Controller{
         $cnvModel->upMain($data);
 
         return;
+    }
+
+    //===========================
+    //method update done
+    //===========================
+    protected function getUpDone(Cart $cartModel, $id){
+
+        $up = $cartModel->upDoneWait($id, 1);
+
+        if($up)
+            return redirect()->back()->with('successadmin', 'Order successfull!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
+    //method update wait
+    //===========================
+    protected function getUpWait(Cart $cartModel, $id){
+
+        $up = $cartModel->upDoneWait($id, 0);
+
+        if($up)
+            return redirect()->back()->with('successadmin', 'Order successfull!');
+        else
+            return redirect()->back()->with('errorsadmin', 'Error!');
+    }
+
+    //===========================
+    //method update wait
+    //===========================
+    protected function getDispatch(Sub $subModel, User $userModel){
+
+        if(Auth::check()){
+
+            return view('admin.dispatch');
+        }
+
+    }
+
+    //===========================
+    //method update wait
+    //===========================
+    protected function postDispatch(Sub $subModel, User $userModel, Request $request){
+
+        if(Auth::check()){
+
+            $subs = $subModel->getSubs();
+            $users = $userModel->getUser();
+            $adminEmails = $userModel->getAdmin();
+
+            foreach ($adminEmails as $iEmail) {
+                $adminEmail = $iEmail->email;
+            }
+
+            foreach ($subs as $iSub) {
+                $data['users'][] = $iSub->email;
+            }
+
+            foreach ($users as $iUser) {
+                $data['users'][] = $iUser->email;
+            }
+
+
+            foreach($data['users'] as $iEmail){
+
+                $dispatch = Mail::send(['html' => 'emails.dispatch'], 
+                                        ['input' => $request], function($message) 
+                                                                use ($request, $adminEmail, $iEmail)
+                {
+                    $message->to($iEmail);
+                    $message->subject('UP Group Printing');
+                    $message->from($adminEmail);
+                });
+            }
+
+            return redirect()->back()->with('successadmin', 'Dispatch Sended!');
+  
+        }
     }
 
 //end class

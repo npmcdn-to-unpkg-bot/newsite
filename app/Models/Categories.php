@@ -29,6 +29,10 @@ class Categories extends Model{
 	//=====================================
 	public function delCat($data){
 
+		$image = $this->where('id', $data['id'])->select('image')->get()->toArray()[0];
+
+        $st = \File::delete('assets/images/'.$image['image']);
+
 		return $this->where('id', $data['id'])->delete();
 	}
 
@@ -37,10 +41,18 @@ class Categories extends Model{
 	//=====================================
 	public function upCat($data){
 
-		if (!empty($data['image'])) 
+		if (!empty($data['image'])){
+
+		    $image = $this->where('id', $data['id'])->select('image')->get()->toArray()[0];
+
+        	$st = \File::delete('assets/images/'.$image['image']);
+
 			return $this->where('id', $data['id'])->update(['title'=>$data['title'], 'image'=>$data['image']]);
-		else
+
+		}
+		else{
 			return $this->where('id', $data['id'])->update(['title'=>$data['title']]);
+		}
 
 	}
 }
