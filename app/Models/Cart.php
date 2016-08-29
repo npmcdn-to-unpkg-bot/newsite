@@ -122,6 +122,7 @@ class Cart extends Model{
 		->where('ordered', 1)
 		->paginate(6);
 	}
+	
 
  	//=====================================
 	//method get all cart status
