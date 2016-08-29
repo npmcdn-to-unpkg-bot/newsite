@@ -126,7 +126,7 @@ class Cart extends Model{
  	//=====================================
 	//method get all cart status
 	//=====================================
-	public function getAllCartsStatus(){
+	public function getAllCartsStatus($user){
 
 		return $this
 		->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name',
@@ -137,6 +137,7 @@ class Cart extends Model{
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
 		->where('ordered', true)
+		->where('users.id', $user)
 		->paginate(6);
 	}
 

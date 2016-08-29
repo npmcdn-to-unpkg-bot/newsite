@@ -12,6 +12,8 @@ use App\Models\Settings;
 use App\Models\Sub;
 use App\Models\QandA;
 use App\Models\Material;
+use App\Models\Hanger;
+use App\Models\Component;
 use App\Models\Menu;
 use App\User;
 
@@ -39,7 +41,7 @@ class AdminCNV extends Controller{
     //===========================
     //method create cvs
     //===========================
-    protected function create(Material $matModel, Categories $catModel, SizePriceCanvas $rpsizeModel, Cart $cartModel){
+    protected function create(Material $matModel, Hanger $hanModel, Categories $catModel, SizePriceCanvas $rpsizeModel, Cart $cartModel){
 
         if (Auth::check()){
 
@@ -51,7 +53,14 @@ class AdminCNV extends Controller{
 
             $allMat = $matModel->getMat();
 
-            return view('admin.create')->withCat($cats)->withPrsize($prsize)->withFirstprsize($firstPrSize)->withMat($allMat);
+            $allHan = $hanModel->getHan();
+
+            return view('admin.create')
+                        ->withCat($cats)
+                        ->withPrsize($prsize)
+                        ->withFirstprsize($firstPrSize)
+                        ->withMat($allMat)
+                        ->withHan($allHan);
 
         }else{
 
@@ -61,9 +70,64 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method create quickly cvs
+    //===========================
+    protected function createQ(Material $matModel, Hanger $hanModel, Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id, $size, $hanger, $material){
+
+            $cats = $catModel->getAllCat();
+
+            $oneCnv = $cnvModel->getOneQCnv($id);
+
+            $prsize = $rpsizeModel->getAllPriceSize();
+
+            $allHan = $hanModel->getHan();
+
+            $nowCat = $oneCnv->toArray()[0]['id_cat'];
+            $nowMat = $material;
+            $nowHan = $hanger;
+            $nowPrSize = $size;
+
+            $allMat = $matModel->getMat();
+
+            return view('admin.createq')
+                        ->withCvn($oneCnv)
+                        ->withCat($cats)
+                        ->withNowcat($nowCat)
+                        ->withPrsize($prsize)
+                        ->withNowprsize($nowPrSize)
+                        ->withMat($allMat)
+                        ->withNowmat($nowMat)
+                        ->withHan($allHan)
+                        ->withNowhan($nowHan)
+                        ->withIdcnv($id);
+
+    }
+
+    //===========================
+    //method get prepair
+    //===========================
+    protected function getPrepair(Material $matModel, SizePriceCanvas $rpsizeModel, Hanger $hanModel){
+
+        $prsize = $rpsizeModel->getAllPriceSize();
+
+        $firstPrSize = $rpsizeModel->getFirstPriceSize();
+
+        $allMat = $matModel->getMat();
+
+        $allHan = $hanModel->getHan();
+
+        return view('admin.prepair')
+                    ->withPrsize($prsize)
+                    ->withFirstprsize($firstPrSize)
+                    ->withMat($allMat)
+                    ->withHan($allHan);
+
+    }
+
+    //===========================
     //method regedit cvs
     //===========================
-    protected function regedit(Material $matModel, Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
+    protected function regedit(Material $matModel, Hanger $hanModel, Cnv $cnvModel, Categories $catModel, Cart $cartModel, SizePriceCanvas $rpsizeModel, $id){
 
         if (Auth::check()){
 
@@ -73,12 +137,23 @@ class AdminCNV extends Controller{
 
             $prsize = $rpsizeModel->getAllPriceSize();
 
+            $allHan = $hanModel->getHan();
+
             $nowCat = $oneCnv->toArray()[0]['id_cat'];
             $nowMat = $oneCnv->toArray()[0]['id_material'];
+            $nowHan = $oneCnv->toArray()[0]['id_hanger'];
 
             $allMat = $matModel->getMat();
 
-            return view('admin.update')->withCvn($oneCnv)->withCat($cats)->withNowcat($nowCat)->withPrsize($prsize)->withMat($allMat)->withNowmat($nowMat);
+            return view('admin.update')
+                        ->withCvn($oneCnv)
+                        ->withCat($cats)
+                        ->withNowcat($nowCat)
+                        ->withPrsize($prsize)
+                        ->withMat($allMat)
+                        ->withNowmat($nowMat)
+                        ->withHan($allHan)
+                        ->withNowhan($nowHan);
         }
     }
 
@@ -87,15 +162,54 @@ class AdminCNV extends Controller{
     //===========================
     protected function storage(Cnv $cnvModel, Request $request){
 
-        $data['name_cnv'] = $request->input('name');
-        $data['jsn_cnv'] = $request->input('jsn');
-        $data['ch_public'] = $request->input('public');
-        $data['id_cat'] = $request->input('id_cat');
-        $data['id_user'] = Auth::user()->id;
-        $data['id_pr_size'] = $request->input('id_pr_size');
-        $data['id_mat'] = $request->input('id_mat');
+        if(Auth::check()){
 
-        echo $cnvModel->addCnv($data);
+            $data['name_cnv'] = $request->input('name');
+            $data['jsn_cnv'] = $request->input('jsn');
+            $data['ch_public'] = $request->input('public');
+            $data['id_cat'] = $request->input('id_cat');
+            $data['id_user'] = Auth::user()->id;
+            $data['id_pr_size'] = $request->input('id_pr_size');
+            $data['id_mat'] = $request->input('id_mat');
+            $data['id_hanger'] = $request->input('id_hanger');
+
+            echo $cnvModel->addCnv($data);
+
+        }
+        
+    }
+
+    //===========================
+    //method storage quickly cvs
+    //===========================
+    protected function addQ(Cnv $cnvModel, Request $request){
+
+        if(Auth::check()){
+
+            // dd($request->all());
+
+            // $data['name_cnv'] = $request->input('name');
+            // $data['jsn_cnv'] = $request->session()->('jsn');
+            // $data['ch_public'] = $request->input('public');
+            // $data['id_cat'] = $request->input('id_cat');
+            // $data['id_user'] = Auth::user()->id;
+            // $data['id_pr_size'] = $request->input('id_pr_size');
+            // $data['id_mat'] = $request->input('id_mat');
+            // $data['id_hanger'] = $request->input('id_hanger');
+
+            // $cnvModel->addCnv($data);
+
+            return redirect('admin/mycnv');
+
+        }else{
+
+            $request->session()->put('jsn', $request->get('jsn_sess'));
+            $request->session()->put('q_url', $request->get('id_cnv').'/'.$request->get('pr_size').'/'.$request->get('id_han').'/'.$request->get('id_mat'));
+
+            return redirect('auth/login');
+
+        }
+        
     }
 
     //===========================
@@ -111,6 +225,7 @@ class AdminCNV extends Controller{
         $data['id_pr_size'] = $request->input('id_pr_size');
         $data['id_user'] = Auth::user()->id;
         $data['id_mat'] = $request->input('id_mat');
+        $data['id_hanger'] = $request->input('id_hanger');
 
         echo $cnvModel->upCnv($data);
     }
@@ -479,6 +594,190 @@ class AdminCNV extends Controller{
 
             return redirect()->back();
         }
+    }
+
+    //===========================
+    //method get hanger
+    //===========================
+    protected function getHanger(Hanger $hanModel){
+
+        if(Auth::check()){
+
+            $allHan = $hanModel->getHan();
+
+            return view('admin.hanger')->withHan($allHan);
+
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+
+   //===========================
+    //method update material
+    //===========================
+    protected function postUpHanger(Hanger $hanModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $hanModel->upHan($data);
+
+        return redirect()->back()->with('successadmin', 'Update Material!');
+    }
+
+    //===========================
+    //method add material
+    //===========================
+    protected function postAddHanger(Hanger $hanModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $hanModel->addHan($data);
+
+        return redirect()->back()->with('successadmin', 'Add Material!');
+    }
+
+    //===========================
+    //method del material
+    //===========================
+    protected function postDelHanger(Hanger $hanModel, Request $request){
+
+        $data['id'] = $request->get('id');
+
+        if(Auth::check()){
+
+            $hanModel->delHan($data);
+            return redirect()->back()->with('successadmin', 'Material!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');
+
+    }
+
+    //===========================
+    //method get components
+    //===========================
+    protected function getComponents(Component $compModel){
+
+        if(Auth::check()){
+
+            $allComp = $compModel->getComponents();
+
+            return view('admin.components')->withComp($allComp);
+
+        }else{
+
+            return redirect()->back();
+        }
+    }
+
+   //===========================
+    //method update material
+    //===========================
+    protected function postUpComponents(Component $compModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        if($request->hasFile('up_component_image') && $request->file('up_component_image')->isValid()){
+
+            $data['image'] = $request->file('up_component_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_component_image')->move(public_path('assets/images/'), $data['image']);
+
+
+        }else{
+
+            return redirect()->back()->with('errorsadmin', 'No select image!');
+        }
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $compModel->upComponents($data);
+
+        return redirect()->back()->with('successadmin', 'Update Component!');
+    }
+
+    //===========================
+    //method add material
+    //===========================
+    protected function postAddComponents(Component $compModel, Request $request){
+
+        $valid = Validator::make($request->all(), [
+            'title' => 'required|max:100',
+            'price' => 'numeric',
+        ]);
+
+        if($valid->fails())
+            return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+
+        if($request->hasFile('add_component_image') && $request->file('add_component_image')->isValid()){
+
+            $data['image'] = $request->file('add_component_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('add_component_image')->move(public_path('assets/images/'), $data['image']);
+
+
+        }else{
+
+            return redirect()->back()->with('errorsadmin', 'No select image!');
+        }
+
+        $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
+        $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
+        $data['id'] = $request->input('id');
+
+        $compModel->addComponents($data);
+
+        return redirect()->back()->with('successadmin', 'Add Component!');
+    }
+
+    //===========================
+    //method del material
+    //===========================
+    protected function postDelComponents(Component $compModel, Request $request){
+
+        $data['id'] = $request->get('id');
+
+        if(Auth::check()){
+
+            $compModel->delComponents($data);
+            return redirect()->back()->with('successadmin', 'Component!');
+        }
+
+        return redirect()->back()->with('errorsadmin', 'Error!');
+
     }
 
    //===========================
@@ -855,7 +1154,7 @@ class AdminCNV extends Controller{
 
         if (Auth::check()){
 
-            $carts = $cartModel->getAllCartsStatus();
+            $carts = $cartModel->getAllCartsStatus(Auth::user()->id);
 
             return view('admin.status')->withOrders($carts);
             
@@ -977,6 +1276,16 @@ class AdminCNV extends Controller{
             return redirect()->back()->with('successadmin', 'Dispatch Sended!');
   
         }
+    }
+
+    //===========================
+    //method select design
+    //===========================
+    protected function getSelDesign(Cnv $cnvModel, Request $request){
+
+        $allCnv = $cnvModel->getAllSelectedCnv($request->get('prepair_size'));
+
+        return view('admin.seldesign')->withCvn($allCnv)->withParam($request->all());
     }
 
 //end class

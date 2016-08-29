@@ -64,6 +64,8 @@
             @if(isset(Auth::user()->is_admin) && Auth::user()->is_admin)
             <li><a href="{{Url('admin/sizeprice')}}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;Size and Price</a></li>
             <li><a href="{{Url('admin/material')}}"><span class="glyphicon glyphicon-file"></span>&nbsp;&nbsp;&nbsp;Material</a></li>
+            <li><a href="{{Url('admin/hanger')}}"><span class="glyphicon glyphicon-pushpin"></span>&nbsp;&nbsp;&nbsp;Hangers</a></li>
+            <li><a href="{{Url('admin/components')}}"><span class="glyphicon glyphicon-link"></span>&nbsp;&nbsp;&nbsp;Components</a></li>
             <li><a href="{{Url('admin/menu')}}"><span class="glyphicon glyphicon-option-horizontal"></span>&nbsp;&nbsp;&nbsp;Menu Items</a></li>
             <li><a href="{{Url('admin/qa')}}"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;&nbsp;Question & Answer</a></li>
             <li><a href="{{Url('admin/subs')}}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;&nbsp;Subscriptions</a></li>

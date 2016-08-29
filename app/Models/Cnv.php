@@ -27,6 +27,25 @@ class Cnv extends Model{
 	}
 
 	//=====================================
+	//method return all canvas selected design
+	//=====================================
+	public function getAllSelectedCnv($size){
+
+		return $this
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size',
+				'sp.title', 'users.name as user_name', 'categories.title as cat_name', 'mat.title as mat_title',
+				'mat.price as mat_price')
+		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
+		->join('users', 'users.id', '=', 'cnv.id_user')
+		->join('categories', 'categories.id', '=', 'cnv.id_cat')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->orderBy('id', 'desc')
+		->where('cnv.public', 1)
+		->where('cnv.id_pr_size', $size)
+		->paginate(6);
+	}
+
+	//=====================================
 	//method return all canvas object JSON
 	//=====================================
 	public function getAllCnv(){
@@ -101,6 +120,18 @@ class Cnv extends Model{
 	}  
 
  	//=====================================
+	//method return one canvas object JSON of id user
+	//=====================================
+	public function getOneQCnv($id_cnv){
+
+		return $this
+		->select('cnv.*', 'sp.*', 'sp.title as title_sp', 'cnv.id as id_cnv')
+		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
+		->where('cnv.id', $id_cnv)
+		->get();
+	}  
+
+ 	//=====================================
 	//method add canvas object JSON
 	//=====================================
 	public function addCnv($data){
@@ -109,7 +140,7 @@ class Cnv extends Model{
 		->insert(['name'=>$data['name_cnv'], 'id_cat' => $data['id_cat'], 
 				'json_data'=>$data['jsn_cnv'], 'id_user'=>$data['id_user'], 
 				'public'=>$data['ch_public'], 'id_pr_size'=>$data['id_pr_size'], 
-				'id_material'=>$data['id_mat']]);
+				'id_material'=>$data['id_mat'], 'id_hanger'=>$data['id_hanger']]);
 	}
 
  	//=====================================
@@ -137,7 +168,7 @@ class Cnv extends Model{
 		->update(['name'=>$data['name_cnv'], 'json_data'=>$data['jsn_cnv'],
 				'id_user'=>$data['id_user'], 'public'=>$data['ch_public'],
 				'id_cat'=>$data['id_cat'], 'id_pr_size' => $data['id_pr_size'], 
-				'id_material'=>$data['id_mat']]);
+				'id_material'=>$data['id_mat'], 'id_hanger'=>$data['id_hanger']]);
 	}
 
  	//=====================================

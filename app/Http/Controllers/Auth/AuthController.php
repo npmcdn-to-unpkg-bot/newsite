@@ -8,7 +8,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /*
@@ -29,15 +29,21 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/gallery';
+    // protected $redirectTo = '/gallery';
 
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+
+        if(!empty($request->session()->get('q_url')))
+            $this->redirectTo = 'admin/create_q/'.$request->session()->get('q_url');
+        else
+            $this->redirectTo = '/gallery';
+
         $this->middleware('guest', ['except' => ['logout', 'getLogout']]);
     }
 

@@ -15,6 +15,14 @@ Route::get('/admin/create', ['as' => 'admin_create_get', 'uses' => 'Admin\AdminC
 Route::post('/admin/create', ['as' => 'admin_create_post', 'uses' => 'Admin\AdminCNV@storage']);
 Route::post('/admin/create-cart', ['as' => 'admin_create_cart_post', 'uses' => 'Admin\AdminCNV@storageCart']);
 
+Route::get('/admin/create_q/{id}/{size}/{hanger}/{material}/', ['as' => 'admin_create_q_get', 'uses' => 'Admin\AdminCNV@createQ']);
+Route::post('/admin/add_q', ['as' => 'admin_add_q_post', 'uses' => 'Admin\AdminCNV@addQ']);
+
+Route::get('/admin/add_q', ['as' => 'admin_add_q_get', 'uses' => 'Admin\AdminCNV@getAddQ']);
+
+Route::get('/admin/prepair', ['as' => 'admin_prepair_get', 'uses' => 'Admin\AdminCNV@getPrepair']);
+Route::get('/admin/seldesign', ['as' => 'admin_seldesign_get', 'uses' => 'Admin\AdminCNV@getSelDesign']);
+
 Route::get('/admin/add/{id}', ['as' => 'admin_create_get', 'uses' => 'Admin\AdminCNV@add']);
 
 Route::get('/admin/cart', ['as' => 'admin_cart_get', 'uses' => 'Admin\AdminCNV@getCart']);
@@ -74,6 +82,16 @@ Route::get('/admin/material', ['as' => 'admin_material_get', 'uses' => 'Admin\Ad
 Route::post('/admin/add_material', ['as' => 'admin_add_material_post', 'uses' => 'Admin\AdminCNV@postAddMaterial']);
 Route::post('/admin/del_material', ['as' => 'admin_del_material_post', 'uses' => 'Admin\AdminCNV@postDelMaterial']);
 Route::post('/admin/up_material', ['as' => 'admin_up_material_post', 'uses' => 'Admin\AdminCNV@postUpMaterial']);
+
+Route::get('/admin/hanger', ['as' => 'admin_hanger_get', 'uses' => 'Admin\AdminCNV@getHanger']);
+Route::post('/admin/add_hanger', ['as' => 'admin_add_hanger_post', 'uses' => 'Admin\AdminCNV@postAddHanger']);
+Route::post('/admin/del_hanger', ['as' => 'admin_del_hanger_post', 'uses' => 'Admin\AdminCNV@postDelHanger']);
+Route::post('/admin/up_hanger', ['as' => 'admin_up_hanger_post', 'uses' => 'Admin\AdminCNV@postUpHanger']);
+
+Route::get('/admin/components', ['as' => 'admin_components_get', 'uses' => 'Admin\AdminCNV@getComponents']);
+Route::post('/admin/add_components', ['as' => 'admin_add_components_post', 'uses' => 'Admin\AdminCNV@postAddComponents']);
+Route::post('/admin/del_components', ['as' => 'admin_del_components_post', 'uses' => 'Admin\AdminCNV@postDelComponents']);
+Route::post('/admin/up_components', ['as' => 'admin_up_components_post', 'uses' => 'Admin\AdminCNV@postUpComponents']);
 
 Route::get('/admin/wait/{id}', ['as' => 'admin_up_wait_get', 'uses' => 'Admin\AdminCNV@getUpWait']);
 Route::get('/admin/done/{id}', ['as' => 'admin_up_done_get', 'uses' => 'Admin\AdminCNV@getUpDone']);

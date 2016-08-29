@@ -2,16 +2,28 @@
 			      <canvas id="c" style="border: 1px solid #CBCBCA;"></canvas>
 
                     <br>
- 
-                    <input type="hidden" id="pr_size_cnv" name="pr_size" value="
-                    @if(isset($firstprsize)){{$firstprsize->id}} 
-                    @else @foreach($cvn as $iCvn) {{$iCvn->id_pr_size}} @endforeach
-                    @endif">
+                <form action="{{url('admin/add_q')}}" method="post">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+
+                    <input type="hidden" name="jsn_sess" id="jsn_sess" value="">
+
+                    <input type="hidden" name="id_cnv" value="{{$idcnv}}">
+                    
+                    @if(isset($firstprsize))
+                        <input type="hidden" id="pr_size_cnv" name="pr_size" value="{{$firstprsize->id}}">
+                    @else 
+                    @if(isset($nowprsize))
+                        <input type="hidden" id="pr_size_cnv" name="pr_size" value="{{$nowprsize}}">
+                    @endif
+                    @endif
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
                     <button type="button" class="btn btn-primary" id="btn_shadow">Shadowify</button>
                     <button type="button" class="btn btn-primary" id="btn_gradient">Gradient</button>
                     <button type="button" class="btn btn-warning" id="btn_clip">Clip</button>
                     <button type="button" class="btn btn-danger" id="btn_remove">Remove</button>
+
+                
+
                     <label class="checkbox-inline" style="margin-left: 30px;" id="ch_public">
                     <input type="checkbox"
                     @if(isset($cvn)) @foreach($cvn as $iCvn) {{($iCvn->public == 1) ? 'checked' : null}} @endforeach @endif
@@ -26,12 +38,16 @@
                     {{-- slider --}}
                     <p>
                       <label>Banner - Starting: $</label>
-                      <input type="text" id="price_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="@if(isset($firstprsize)) {{$firstprsize->price}} 
-                      @else @foreach($cvn as $iCvn) {{$iCvn->price}} @endforeach @endif">
+                      <input type="text" id="price_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="
+                      @if(isset($firstprsize)) {{$firstprsize->price}} 
+                      @else @foreach($cvn as $iCvn) {{$iCvn->price}} @endforeach
+                      @endif">
 
                       <label>Banner - Size</label>
-                      <input type="text" id="size_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="@if(isset($firstprsize)) {{$firstprsize->size}}{{$firstprsize->title}}
-                       @else @foreach($cvn as $iCvn) {{$iCvn->size}} {{$iCvn->title}} @endforeach @endif">
+                      <input type="text" id="size_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="
+                      @if(isset($firstprsize)) {{$firstprsize->size}}{{$firstprsize->title}}
+                      @else @foreach($cvn as $iCvn) {{$iCvn->size}} {{$iCvn->title}} @endforeach
+                      @endif">
                     </p>
                     <div id="slider" style="width: 600px;"></div>
 
@@ -103,9 +119,11 @@
                     @else
                         <input id="save_json" style="width: 600px;" type="text" value="Canvas_{{rand()}}" class="form-control" /><br>
                     @endif
-                    <button type="button" class="btn btn-primary btn-sm btn_canvas_save">Save canvas</button><br><br>
+                    <button type="submit" class="btn btn-primary btn-sm btn_canvas_save">I have reviewed and approve my design.</button><br><br>
+
 
         </div>
+        </form>
 
         <div class="col-sm-4">
   

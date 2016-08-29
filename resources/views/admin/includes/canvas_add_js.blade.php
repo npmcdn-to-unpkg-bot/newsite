@@ -225,7 +225,11 @@ $('.btn_canvas_save').click(function(){
 
     $.post('/admin/create', {'_token' : <?php echo '\''.csrf_token().'\''; ?>,
                              'name' : $('#save_json').val(),
-                             'jsn' : jsn, 'public' : public, 'id_cat' : $("#sel_cat :selected").val(), 'id_mat' : $("#sel_mat :selected").val(), 'id_pr_size' : parseInt($('#pr_size_cnv').val())}, function(data){
+                             'jsn' : jsn, 'public' : public, 
+                             'id_cat' : $("#sel_cat :selected").val(), 
+                             'id_mat' : $("#sel_mat :selected").val(), 
+                             'id_pr_size' : parseInt($('#pr_size_cnv').val()), 
+                             'id_hanger' : parseInt($('#sel_han :selected').val())}, function(data){
                                 // alert(data);
 
 
