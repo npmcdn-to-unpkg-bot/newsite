@@ -11,7 +11,7 @@
 <div class="row">
 @foreach($orders as $iOrder)
 <div class="col-sm-4">
-<p>{{$iOrder->name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) | {{$iOrder->mat_title}}(+{{$iOrder->mat_price}}$)
+<p>{{$iOrder->name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) | {{$iOrder->mat_title}}(+{{$iOrder->mat_price}}$) | {{$iOrder->han_title}}(+{{$iOrder->han_price}}$)
 
 @if($iOrder->status == true)
 &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>

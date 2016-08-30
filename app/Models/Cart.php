@@ -63,11 +63,14 @@ class Cart extends Model{
 	public function getAllCnvCart($id){
 
 		return $this
-		->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv', 'carts.id as id', 
+		->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv', 
+				'carts.id as id', 'han.price as han_price',
+				'han.title as han_title',
 				'mat.title as mat_title', 'mat.price as mat_price')
 		->where('carts.id_user', $id)
 		->join('cnv', 'cnv.id', '=', 'carts.id_cnv')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->where('ordered', false)
 		->orderBy('carts.id', 'desc')
@@ -80,11 +83,14 @@ class Cart extends Model{
 	public function getAllCnvCartOrdered($id){
 
 		return $this
-		->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv', 'carts.id as id', 
+		->select('cnv.*', 'size_prices.*', 'cnv.id as id_cnv',
+				'carts.id as id', 'han.price as han_price',
+				'han.title as han_title',
 				'mat.title as mat_title', 'mat.price as mat_price')
 		->where('carts.id_user', $id)
 		->where('ordered', false)
 		->join('cnv', 'cnv.id', '=', 'carts.id_cnv')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
 		->get();
@@ -96,11 +102,14 @@ class Cart extends Model{
 	public function getAllCarts(){
 
 		return $this
-		->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name', 
+		->select('cnv.*', 'status', 'size_prices.*', 
+				'users.name as user_name', 'han.price as han_price',
+				'han.title as han_title',
 				'cnv.id as id_cnv', 'carts.id as id', 
 				'mat.title as mat_title', 'mat.price as mat_price')
 		->join('users', 'carts.id_user', '=', 'users.id')
 		->join('cnv', 'cnv.id', '=', 'carts.id_cnv')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
 		->paginate(6);
@@ -112,11 +121,14 @@ class Cart extends Model{
 	public function getAllCartsOrdered(){
 
 		return $this
-		->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name', 
+		->select('cnv.*', 'status', 'size_prices.*', 
+				'users.name as user_name', 'han.price as han_price',
+				'han.title as han_title',
 				'cnv.id as id_cnv', 'carts.id as id', 
 				'mat.title as mat_title', 'mat.price as mat_price')
 		->join('users', 'carts.id_user', '=', 'users.id')
 		->join('cnv', 'cnv.id', '=', 'carts.id_cnv')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
 		->where('ordered', 1)
@@ -130,11 +142,14 @@ class Cart extends Model{
 	public function getAllCartsStatus($user){
 
 		return $this
-		->select('cnv.*', 'status', 'size_prices.*', 'users.name as user_name',
+		->select('cnv.*', 'status', 'size_prices.*', 
+				'users.name as user_name', 'han.price as han_price',
+				'han.title as han_title',
 				'cnv.id as id_cnv', 'carts.id as id', 
 				'mat.title as mat_title', 'mat.price as mat_price')
 		->join('users', 'carts.id_user', '=', 'users.id')
 		->join('cnv', 'cnv.id', '=', 'carts.id_cnv')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('size_prices', 'cnv.id_pr_size', '=', 'size_prices.id')
 		->where('ordered', true)

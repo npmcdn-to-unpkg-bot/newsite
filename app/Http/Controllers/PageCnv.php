@@ -26,23 +26,21 @@ use App\Http\Requests;
 class PageCnv extends Controller{
 
     //method boot load
-    public function __construct(Cart $cartModel, Menu $menuModel){
+    public function __construct(Settings $settModel, Cart $cartModel, Menu $menuModel){
 
         $allMenu = $menuModel->getMenu();
+        $number = $settModel->getNumber();
 
         if (Auth::check()){
 
             $allCart = $cartModel->getAllCnvCart(Auth::user()->id);
 
 
-            if($allCart->count() > 0)
-                return view()->share(['cart' => $allCart->count(), 'menu' => $allMenu]);
-            else
-                return view()->share('menu', $allMenu);
+            return view()->share(['cart' => $allCart->count(), 'menu' => $allMenu, 'number'=> $number['number']]);
 
         }else{
 
-            return view()->share('menu', $allMenu);
+            return view()->share(['menu' => $allMenu, 'number' => $number['number']]);
         }
     }
 
@@ -92,23 +90,33 @@ class PageCnv extends Controller{
             $adminEmail = $iEmail->email;
         }
 
-        if($request->hasFile('zip_file')){
-            if($request->file('zip_file')->extension() != 'zip')
-                return redirect()->back()->with('errors', 'Incorrectly type file!');
-        }
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|max:55',
+            'last_name' => 'required|max:55',
+            'company' => 'required|max:120',
+            'adress_line_1' => 'required|max:100',
+            'adress_line_2' => 'required|max:100',
+            'city' => 'required|max:100',
+            'country' => 'required',
+            'state' => 'required',
+            'zip' => 'numeric|max:7',
+
+        ]);
+
+        
+
+        if ($validator->fails()) 
+            return redirect($request->fuulUrl())->back()->with('errors', 'Incorrectly filleds feedback!')->withInput();
 
         $send = $mail = Mail::send(['html' => 'emails.conf_order'], ['input' => $request], function($message) use ($request, $adminEmail)
         {
             $message->to($adminEmail);
             $message->subject('FeedBack of UP Group Printing');
             $message->from($request->get('user'));
-            if($request->hasFile('zip_file'))
-                $message->attach($request->file('zip_file')->getPathName(),
-            ['as' => $request->get('title_zip').'.'.$request->file('zip_file')->getClientOriginalExtension(), 'mime' => $request->file('zip_file')->getMimeType()]);
         });
 
         if($send)
-            return redirect()->back()->with('sended', 'Sended! Expect a message on your Email!');
+            return redirect('/')->with('sended', 'Sended! Expect a message on your Email!');
     }
 
     //===========================
@@ -234,7 +242,7 @@ class PageCnv extends Controller{
             ['as' => 'attach_file.'.$request->file('logo_file')->getClientOriginalExtension(), 'mime' => $request->file('logo_file')->getMimeType()]);
         });
 
-        return redirect('/')->with('sended', 'Order free design form sended!');;
+        return redirect('/')->with('sended', 'Order free design form sended! Expect a message on your Email!');;
     }
 
     //===========================

@@ -13,7 +13,20 @@ class Settings extends Model{
 	//=====================================
     public function getLogo(){
     	
-    	return $this->select('id', 'logo')->get();
+    	return $this
+                ->select('id', 'logo')
+                ->get();
+    }
+
+    //=====================================
+    //method select number
+    //=====================================
+    public function getNumber(){
+        
+        return $this
+        ->select('number')
+        ->first()
+        ->toArray();
     }
 
     //=====================================
@@ -21,10 +34,28 @@ class Settings extends Model{
 	//=====================================
     public function upLogo($data){
 
-        $image = $this->where('id', $data['id'])->select('logo')->get()->toArray()[0];
+        $image = $this
+                ->where('id', $data['id'])
+                ->select('logo')
+                ->get()
+                ->toArray()[0];
 
         $st = \File::delete('assets/images/'.$image['logo']);
     	
-    	return $this->where('id', $data['id'])->update(['logo'=>$data['image']]);
+    	return $this
+                ->where('id', $data['id'])
+                ->update(['logo'=>$data['image']]);
     }
+
+    //=====================================
+    //method up number
+    //=====================================
+    public function upNumber($data){
+        
+        return $this
+        ->where('id', '>', 0)
+        ->update(['number'=>$data['number']]);
+    }
+
+//end class
 }

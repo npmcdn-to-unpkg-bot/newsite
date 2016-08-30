@@ -17,6 +17,7 @@ class CreateCartsTable extends Migration
             $table->integer('id_user');
             $table->integer('id_cnv');
             $table->boolean('status')->nullable();
+            $table->boolean('ordered')->default(0);
             $table->timestamps();
         });
     }

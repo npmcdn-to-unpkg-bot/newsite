@@ -15,6 +15,7 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('logo', 255)->default('logo.png');
+            $table->string('number', 25)->defauls('+1.773.669.5155');
             $table->timestamps();
         });
     }

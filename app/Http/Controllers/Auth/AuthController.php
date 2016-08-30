@@ -39,8 +39,8 @@ class AuthController extends Controller
     public function __construct(Request $request)
     {
 
-        if(!empty($request->session()->get('q_url')))
-            $this->redirectTo = 'admin/create_q/'.$request->session()->get('q_url');
+        if(!empty($request->session()->get('jsn')))
+            $this->redirectTo = 'admin/add_q/';
         else
             $this->redirectTo = '/gallery';
 
@@ -77,9 +77,10 @@ class AuthController extends Controller
         ]);
     }
 
-    public function getLogout() {
+    public function getLogout(Request $request) {
 
         Auth::logout();
+        $request->session()->flush();
         return redirect('auth/login');
 
     }

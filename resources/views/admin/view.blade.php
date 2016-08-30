@@ -28,7 +28,7 @@
 <div class="row">
 @foreach($cvn as $iCvn)
 <div class="col-sm-6" id='my_name'>
-    <p>{{$iCvn->name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$)</p>
+    <p>{{$iCvn->name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$) | {{$iCvn->han_title}}(+{{$iCvn->han_price}}$)</p>
 <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
 <script type="text/javascript">
 
@@ -135,7 +135,7 @@ $(document).ready(function(){
 
     <button type="submit" class="btn btn-primary view_cnv-{{$iCvn->id}}" data-toggle="modal" data-target="#myModal">view</button>
     
-@if(!isset(Auth::user()->is_admin))
+@if(!isset(Auth::user()->is_admin) || !Auth::user()->is_admin)
     <button type="submit" class="btn btn-success buy_cnv-{{$iCvn->id}}">order</button>
 @endif
 

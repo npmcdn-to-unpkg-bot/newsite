@@ -12,7 +12,7 @@
 @foreach($orders as $iOrder)
 <div class="col-sm-6">
 <p><a href="{{url('view/'.$iOrder->id_cnv)}}">{{$iOrder->name}}</a> | {{$iOrder->user_name}} | {{$iOrder->price}}$ | {{$iOrder->title}}({{$iOrder->size}}) | {{$iOrder->mat_title}}(+{{$iOrder->mat_price}}$)
-
+ | {{$iOrder->han_title}}(+{{$iOrder->han_price}}$)
 @if($iOrder->status == true)
 &nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
 @else

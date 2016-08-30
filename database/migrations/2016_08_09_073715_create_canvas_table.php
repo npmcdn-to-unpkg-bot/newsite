@@ -16,6 +16,7 @@ class CreateCanvasTable extends Migration
             $table->increments('id');
             $table->integer('id_pr_size')->default(1);
             $table->integer('id_material')->default(1);
+            $table->integer('id_hanger')->default(1);
             $table->integer('id_user');
             $table->string('id_cat', 20)->default('event');
             $table->longText('json_data');

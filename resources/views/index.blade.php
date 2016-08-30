@@ -24,7 +24,7 @@
 	
 	<div class="container-fluid text-center section-2">
 		<h1 class="text-warning">Do not wasted your time.<br />Entrust us the job</h1>
-		<a href="{{url('auth/login')}}" class="btn btn-warning btn-warning-gradient btn-lg text-uppercase">Get started</a>
+		<a href="{{url('admin/prepair')}}" class="btn btn-warning btn-warning-gradient btn-lg text-uppercase">Get started</a>
 		<h1>Durable, waterproof vinyl</h1>
 	</div>
 	

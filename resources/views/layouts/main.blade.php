@@ -58,7 +58,7 @@
 			@if(isset($cart))<div class="count-cart">{{$cart}}</div>@endif
 				<ul class="header-items">
 					<li>
-						<a href="#">
+						<a href="callto://{{$number}}">
 							<span>Need help?<br />1.773.669.5155</span>
 							<img src="{{asset('assets/images/icons/headphone.png')}}" alt="Need help?" />
 						</a>
@@ -182,7 +182,7 @@
 								<a href="{{$iSoc->href}}" target="_blank"><img src="{{asset('assets/images/'.$iSoc->image)}}" /></a>
 							@endforeach
 							</div>
-							<h1 class="text-warning">1.773.669.5155</h1>
+							<h1 class="text-warning"><a href="callto://{{$number}}">{{$number}}</a></h1>
 						</div>
 					</div>
 				</div>

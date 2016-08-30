@@ -34,7 +34,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li><a href="{{ Url('/') }}"><span class="glyphicon glyphicon-home"></span>&nbsp;home</a></li>
-            @if(!isset(Auth::user()->is_admin))
+            @if(isset(Auth::user()->is_admin) && !Auth::user()->is_admin)
               <li><a href="{{ Url('/admin/cart') }}"><span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;cart @if(isset($cart))<span id="count_cart_span_admin" style="background-color: white; padding: 0 3px; color: black;">  {{$cart}} </span>@endif</a></li>
             @endif
             @if(isset(Auth::user()->name))
@@ -55,7 +55,7 @@
             <li><a href="{{Url('admin/create')}}"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;Create MyCanvas</a></li>
             <li><a href="{{Url('admin/mycnv')}}"><span class="glyphicon glyphicon-th-large"></span>&nbsp;&nbsp;&nbsp;Gallery MyCanvas</a></li>
 
-            @if(!isset(Auth::user()->is_admin))
+            @if(isset(Auth::user()->is_admin) && !Auth::user()->is_admin)
             <li><a href="{{Url('admin/status')}}"><span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;&nbsp;Status Ordered</a></li>
             @endif
             <li><a href="{{Url('gallery')}}"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;&nbsp;Gallery AllCanvas</a></li>
@@ -78,7 +78,7 @@
           </ul>
         </div>
 
-  @yield('content')
+      @yield('content')
       </div>
     </div>
   </body>

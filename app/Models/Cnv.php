@@ -14,9 +14,15 @@ class Cnv extends Model{
 	public function getAllGalleryCnv(){
 
 		return $this
-		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size',
-				'sp.title', 'users.name as user_name', 'categories.title as cat_name', 'mat.title as mat_title',
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 
+				'sp.price', 'sp.size',
+				'sp.title', 'users.name as user_name', 
+				'categories.title as cat_name', 
+				'han.price as han_price',
+				'han.title as han_title', 
+				'mat.title as mat_title',
 				'mat.price as mat_price')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->join('users', 'users.id', '=', 'cnv.id_user')
 		->join('categories', 'categories.id', '=', 'cnv.id_cat')
@@ -97,8 +103,12 @@ class Cnv extends Model{
 	public function getAllUserCnv($id_user){
 
 		return $this
-		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 'sp.size', 'sp.title',
+		->select('cnv.*', 'sp.size_h', 'sp.size_w', 'sp.price', 
+				'sp.size', 'sp.title',
+				'han.price as han_price',
+				'han.title as han_title',
 				'mat.title as mat_title', 'mat.price as mat_price')
+		->join('hangers as han', 'cnv.id_hanger', '=', 'han.id')
 		->join('size_prices as sp', 'cnv.id_pr_size', '=', 'sp.id')
 		->join('materials as mat', 'cnv.id_material', '=', 'mat.id')
 		->where('id_user', $id_user)
@@ -155,7 +165,9 @@ class Cnv extends Model{
 		
 		return $this
 		->insert(['name'=>$cnv['name'], 'json_data'=>$cnv['json_data'],
-				'id_user' => $id_user, 'id_pr_size' => $cnv['id_pr_size']]);
+				'id_user' => $id_user, 'public'=>$cnv['public'],
+				'id_pr_size' => $cnv['id_pr_size'], 
+				'id_material'=>$cnv['id_material'], 'id_hanger'=>$cnv['id_hanger']]);
 	}
 
  	//=====================================

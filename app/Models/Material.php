@@ -21,7 +21,7 @@ class Material extends Model{
 	//=====================================
 	public function addMat($data){
 
-		return $this->insert(['title'=>$data['title'], 'price' => $data['price']]);
+		return $this->insert(['title'=>$data['title'], 'price' => $data['price'], 'image'=>$data['image']]);
 	}
 
     //=====================================
@@ -29,7 +29,14 @@ class Material extends Model{
 	//=====================================
 	public function upMat($data){
 
-		return $this->where('id', $data['id'])->update(['title'=>$data['title'], 'price' => $data['price']]);
+		if (!empty($data['image'])){
+
+        	return $this->where('id', $data['id'])->update(['title'=>$data['title'], 'price' => $data['price'], 'image'=>$data['image']]);
+
+		}else{
+
+			return $this->where('id', $data['id'])->update(['title'=>$data['title'], 'price' => $data['price']]);
+		}
 	}
 
     //=====================================

@@ -57,6 +57,8 @@ Route::post('/admin/del_slider', ['as' => 'admin_del_slider_post', 'uses' => 'Ad
 
 Route::post('/admin/up_logo', ['as' => 'admin_up_logo_post', 'uses' => 'Admin\AdminCNV@postUpLogo']);
 
+Route::post('/admin/up_number', ['as' => 'admin_up_number_post', 'uses' => 'Admin\AdminCNV@postUpNumber']);
+
 Route::post('/admin/up_soc', ['as' => 'admin_up_soc_post', 'uses' => 'Admin\AdminCNV@postUpSoc']);
 
 Route::get('/admin/status', ['as' => 'admin_status_get', 'uses' => 'Admin\AdminCNV@getStatus']);

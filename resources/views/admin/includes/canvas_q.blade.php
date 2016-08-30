@@ -10,10 +10,10 @@
                     <input type="hidden" name="id_cnv" value="{{$idcnv}}">
                     
                     @if(isset($firstprsize))
-                        <input type="hidden" id="pr_size_cnv" name="pr_size" value="{{$firstprsize->id}}">
+                        <input type="hidden" id="pr_size_cnv" name="id_pr_size" value="{{$firstprsize->id}}">
                     @else 
                     @if(isset($nowprsize))
-                        <input type="hidden" id="pr_size_cnv" name="pr_size" value="{{$nowprsize}}">
+                        <input type="hidden" id="pr_size_cnv" name="id_pr_size" value="{{$nowprsize}}">
                     @endif
                     @endif
                     <button type="button" class="btn btn-primary" id="btn_bring_front">Bring to front</button>
@@ -25,7 +25,7 @@
                 
 
                     <label class="checkbox-inline" style="margin-left: 30px;" id="ch_public">
-                    <input type="checkbox"
+                    <input type="checkbox" name="public" 
                     @if(isset($cvn)) @foreach($cvn as $iCvn) {{($iCvn->public == 1) ? 'checked' : null}} @endforeach @endif
                     value="1">Public</label>
                     <br><br>
@@ -38,16 +38,22 @@
                     {{-- slider --}}
                     <p>
                       <label>Banner - Starting: $</label>
-                      <input type="text" id="price_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="
-                      @if(isset($firstprsize)) {{$firstprsize->price}} 
-                      @else @foreach($cvn as $iCvn) {{$iCvn->price}} @endforeach
-                      @endif">
+                      
+@if(isset($firstprsize))
+    <input type="text" id="price_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="{{$firstprsize->price}}">
+@else @foreach($cvn as $iCvn)
+    <input type="text" id="price_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="{{$iCvn->price}}"> 
+@endforeach
+@endif
 
                       <label>Banner - Size</label>
-                      <input type="text" id="size_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="
-                      @if(isset($firstprsize)) {{$firstprsize->size}}{{$firstprsize->title}}
-                      @else @foreach($cvn as $iCvn) {{$iCvn->size}} {{$iCvn->title}} @endforeach
-                      @endif">
+                      
+@if(isset($firstprsize)) 
+    <input type="text" id="size_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="{{$firstprsize->size}}{{$firstprsize->title}}">
+@else @foreach($cvn as $iCvn)
+    <input type="text" id="size_ban" readonly style="border:0; color:#f6931f; font-weight:bold;" value="{{$iCvn->size}} {{$iCvn->title}}">
+@endforeach
+@endif
                     </p>
                     <div id="slider" style="width: 600px;"></div>
 
@@ -113,11 +119,11 @@
                     @if(isset($cvn))
 
                     @foreach($cvn as $iCvn)
-                        <input id="save_json" style="width: 600px;" type="text" value="{{$iCvn->name}}" class="form-control" /><br>
+                        <input id="save_json" style="width: 600px;" type="text" name="name" value="{{$iCvn->name}}" class="form-control" /><br>
                     @endforeach
                         
                     @else
-                        <input id="save_json" style="width: 600px;" type="text" value="Canvas_{{rand()}}" class="form-control" /><br>
+                        <input id="save_json" style="width: 600px;" type="text" name="name" value="Canvas_{{rand()}}" class="form-control" /><br>
                     @endif
                     <button type="submit" class="btn btn-primary btn-sm btn_canvas_save">I have reviewed and approve my design.</button><br><br>
 

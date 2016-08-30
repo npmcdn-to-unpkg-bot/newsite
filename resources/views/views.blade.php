@@ -17,7 +17,7 @@
 
     <div class="row">
 
-        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$)</p>
+        <p><a href="{{url('view/'.$iCvn->id)}}">{{$iCvn->name}}</a> | {{$iCvn->user_name}} | {{$iCvn->price}}$ | {{$iCvn->title}}({{$iCvn->size}}) | {{$iCvn->mat_title}}(+{{$iCvn->mat_price}}$) | {{$iCvn->han_title}}(+{{$iCvn->han_price}}$)</p>
         <canvas style="border: 1px solid #DCDCDC; border-radius: 1px;" id="cnv-{{$iCvn->id}}"></canvas>
         
         <script type="text/javascript">

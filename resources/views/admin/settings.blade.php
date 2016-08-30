@@ -4,35 +4,16 @@
 @section('content')
 <div class="container">
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Preview</h4>
-      </div>
-        <div class="modal-body modal-lg">
-        <div class="container-fluid">
-              <div class="col-sm-10"><canvas style="" id="prev_cnv"></canvas></div>
-              <div class="col-sm-2" id="modal_prev_name" style="line-height: 500px;font-weight:bold;"></div>
-        </div>
-                
-          </div>
-    </div>
-  </div>
-</div>
-
 <div class="container-fluid bg-3 text-center">
 <h3>Settings</h3><br>
 <div class="row">
-
 
 {{-- content --}}
         <div class="col-md-10">
   
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#logo">Logo</a></li>
+                <li><a data-toggle="tab" href="#number">Number</a></li>
                 <li><a data-toggle="tab" href="#slider">Slider</a></li>
                 <li><a data-toggle="tab" href="#social">Social</a></li>
               </ul>
@@ -253,6 +234,37 @@
                         </div><br><br>
 
                     @endforeach
+
+                </div>
+
+                <div id="number" class="tab-pane fade">
+                    <br>
+                    <p>Change number.</p>
+                    <br> 
+
+                    <div class="row" style="">
+
+                        <div class="col-sm-6 col-sm-offset-3">
+                                <label>number</label>
+                        </div>
+ 
+                    </div><br>
+
+                        <form class="form" action="/admin/up_number" method="post">
+
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                        <div class="row" style="">
+
+                            <div class="col-sm-5 col-sm-offset-3">
+                                <input name="up_number" type="text" class="form-control" style="margin-top: 17px;" value="{{$number}}" />
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="submit" class="btn btn-primary btn-md" style="margin-top: 17px;">update</button>
+                            </div>
+                        </form>
+
+                        </div><br><br>
 
                 </div>
 

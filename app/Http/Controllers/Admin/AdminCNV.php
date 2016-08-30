@@ -99,7 +99,8 @@ class AdminCNV extends Controller{
                         ->withNowmat($nowMat)
                         ->withHan($allHan)
                         ->withNowhan($nowHan)
-                        ->withIdcnv($id);
+                        ->withIdcnv($id)
+                        ->with($id);
 
     }
 
@@ -188,23 +189,82 @@ class AdminCNV extends Controller{
 
             // dd($request->all());
 
-            // $data['name_cnv'] = $request->input('name');
-            // $data['jsn_cnv'] = $request->session()->('jsn');
-            // $data['ch_public'] = $request->input('public');
-            // $data['id_cat'] = $request->input('id_cat');
-            // $data['id_user'] = Auth::user()->id;
-            // $data['id_pr_size'] = $request->input('id_pr_size');
-            // $data['id_mat'] = $request->input('id_mat');
-            // $data['id_hanger'] = $request->input('id_hanger');
+            $data['name_cnv'] = $request->get('name');
 
-            // $cnvModel->addCnv($data);
+            $data['jsn_cnv'] = $request->get('jsn_sess');
 
-            return redirect('admin/mycnv');
+            if( empty($request->get('public')) )
+                $data['ch_public'] = 0;
+            else
+                $data['ch_public'] = $request->input('public');
+
+            $data['id_cat'] = $request->input('id_cat');
+
+            $data['id_user'] = Auth::user()->id;
+
+            $data['id_pr_size'] = $request->input('id_pr_size');
+
+            $data['id_mat'] = $request->input('id_mat');
+
+            $data['id_hanger'] = $request->input('id_han');
+
+            $add = $cnvModel->addCnv($data);
+
+            if($add)
+                return redirect('admin/mycnv');
 
         }else{
 
             $request->session()->put('jsn', $request->get('jsn_sess'));
-            $request->session()->put('q_url', $request->get('id_cnv').'/'.$request->get('pr_size').'/'.$request->get('id_han').'/'.$request->get('id_mat'));
+            $request->session()->put('name', $request->get('name'));
+
+            if( empty($request->get('public')) )
+                $request->session()->put('public', 0);
+            else
+                $request->session()->put('public', $request->get('public'));
+
+            $request->session()->put('id_pr_size', $request->get('id_pr_size'));
+            $request->session()->put('id_hanger', $request->get('id_han'));
+            $request->session()->put('id_mat', $request->get('id_mat'));
+            $request->session()->put('id_cat', $request->get('id_cat'));
+
+            return redirect('auth/login');
+
+        }
+        
+    }
+
+    //===========================
+    //method storage quickly cvs
+    //===========================
+    protected function getAddQ(Cnv $cnvModel, Request $request){
+
+        if(Auth::check()){
+
+            // dd($request->session()->all());
+
+            $data['name_cnv'] = $request->session()->get('name');
+
+            $data['jsn_cnv'] = $request->session()->get('jsn');
+
+            $data['ch_public'] = $request->session()->get('public');
+
+            $data['id_cat'] = $request->session()->get('id_cat');
+
+            $data['id_user'] = Auth::user()->id;
+
+            $data['id_pr_size'] = $request->session()->get('id_pr_size');
+
+            $data['id_mat'] = $request->session()->get('id_mat');;
+
+            $data['id_hanger'] = $request->session()->get('id_hanger');
+
+            $add = $cnvModel->addCnv($data);
+
+            if($add)
+                return redirect('admin/mycnv');
+
+        }else{
 
             return redirect('auth/login');
 
@@ -438,7 +498,7 @@ class AdminCNV extends Controller{
 
             foreach ($allCart as $iCart) {
                 
-                $cartPrice += $iCart->price + $iCart->mat_price;
+                $cartPrice += $iCart->price + $iCart->mat_price + $iCart->han_price;
             }
 
             return view('admin.cart')->withCvn($allCart)->withPrice($cartPrice);
@@ -615,7 +675,7 @@ class AdminCNV extends Controller{
 
 
    //===========================
-    //method update material
+    //method update hanger
     //===========================
     protected function postUpHanger(Hanger $hanModel, Request $request){
 
@@ -627,6 +687,18 @@ class AdminCNV extends Controller{
         if($valid->fails())
             return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
 
+        if($request->hasFile('up_han_image') && $request->file('up_han_image')->isValid()){
+
+            $data['image'] = $request->file('up_han_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_han_image')->move(public_path('assets/images/'), $data['image']);
+
+        }else{
+
+            $data['image'] = 'noimage.png';
+        }
+
         $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
         $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
         $data['id'] = $request->input('id');
@@ -637,7 +709,7 @@ class AdminCNV extends Controller{
     }
 
     //===========================
-    //method add material
+    //method add hanger
     //===========================
     protected function postAddHanger(Hanger $hanModel, Request $request){
 
@@ -649,6 +721,20 @@ class AdminCNV extends Controller{
         if($valid->fails())
             return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
 
+        if($request->hasFile('add_han_image') && $request->file('add_han_image')->isValid()){
+
+            $data['image'] = $request->file('add_han_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('add_han_image')->move(public_path('assets/images/'), $data['image']);
+
+
+
+        }else{
+
+            $data['image'] = 'noimage.png';
+        }
+
         $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
         $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
         $data['id'] = $request->input('id');
@@ -659,7 +745,7 @@ class AdminCNV extends Controller{
     }
 
     //===========================
-    //method del material
+    //method del hanger
     //===========================
     protected function postDelHanger(Hanger $hanModel, Request $request){
 
@@ -793,6 +879,18 @@ class AdminCNV extends Controller{
         if($valid->fails())
             return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
 
+        if($request->hasFile('up_mat_image') && $request->file('up_mat_image')->isValid()){
+
+            $data['image'] = $request->file('up_mat_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('up_mat_image')->move(public_path('assets/images/'), $data['image']);
+
+        }else{
+
+            $data['image'] = 'noimage.png';
+        }
+
         $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
         $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
         $data['id'] = $request->input('id');
@@ -814,6 +912,18 @@ class AdminCNV extends Controller{
 
         if($valid->fails())
             return redirect()->back()->with('errorsadmin', 'Incorrectly filleds!');
+
+        if($request->hasFile('add_mat_image') && $request->file('add_mat_image')->isValid()){
+
+            $data['image'] = $request->file('add_mat_image');
+            $data['image'] = $data['image']->getClientOriginalName();
+
+            $request->file('add_mat_image')->move(public_path('assets/images/'), $data['image']);
+
+        }else{
+
+            $data['image'] = 'noimage.png';
+        }
 
         $data['title'] = htmlspecialchars($request->input('title'), ENT_QUOTES);
         $data['price'] = htmlspecialchars($request->input('price'), ENT_QUOTES);
@@ -883,6 +993,26 @@ class AdminCNV extends Controller{
     }
 
     //===========================
+    //method delete cvs
+    //===========================
+    protected function postUpNumber(Settings $settModel, Request $request){
+
+        if (Auth::check()){
+
+            $data['number'] = $request->get('up_number');
+
+            $up = $settModel->upNumber($data);
+
+            if($up)
+                return redirect()->back()->with('successadmin', 'Update number!');
+            else
+                return redirect()->back()->with('errorsadmin', 'Error!');
+        }
+
+        return redirect('/');
+    }
+
+    //===========================
     //method settings site
     //===========================
     protected function getSettings(Slider $sliderModel, Settings $settModel, Social $socModel){
@@ -892,8 +1022,13 @@ class AdminCNV extends Controller{
             $allSlider = $sliderModel->getAllSliders();
             $logo = $settModel->getLogo();
             $soc = $socModel->getSoc();
+            $number = $settModel->getNumber();
             
-            return view('admin.settings')->withSlider($allSlider)->withLogo($logo)->withSoc($soc);
+            return view('admin.settings')
+                    ->withSlider($allSlider)
+                    ->withLogo($logo)
+                    ->withSoc($soc)
+                    ->withNumber($number['number']);
             
         }else{
 

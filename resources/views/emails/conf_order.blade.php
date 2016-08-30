@@ -7,4 +7,5 @@ Adress Line 2: {{$input->get('adress_line_2')}}<br>
 Sity: {{$input->get('sity')}}<br>
 Country: {{$input->get('country')}}<br>
 State: {{$input->get('state')}}<br>
+Zip: {{$input->get('zip')}}<br>
 

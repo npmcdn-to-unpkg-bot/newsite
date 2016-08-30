@@ -43,7 +43,7 @@
 			<div class="form-group">
 				<div>Country</div>
 				<div>
-					<select class="form-control">
+					<select class="form-control" name="country">
 					    <option>United States</option>
 					    <option>2</option>
 					    <option>3</option>
@@ -54,16 +54,15 @@
 			<div class="form-group">
 				<div>State/Province/Region</div>
 				<div>
-					<select class="form-control">
+					<select class="form-control" name="state">
 					    <option>State</option>
 				    </select>
 				</div>
 			</div>
 			<div class="form-group">
 				<div>Zip</div>
-				<div class="logo-container">
-					<input class="form-control" type="text" name="title_zip" placeholder="Zip" />
-					<label class="btn btn-warning"><input class="hidden" type="file" name="zip_file" />Upload your Zip</label>
+				<div>
+					<input class="form-control" type="text" name="zip" />
 				</div>
 			</div>
 		</div>
