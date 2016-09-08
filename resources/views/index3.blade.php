@@ -136,7 +136,7 @@
 	</div>
 	
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-    <script src="https://npmcdn.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3.0/dist/isotope.pkgd.min.js"></script>
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/common.js')}}"></script>
 
